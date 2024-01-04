@@ -1,0 +1,16 @@
+<tr>
+  <td>
+    {{problem.name}}
+  </td>
+  <td>
+    <input
+      class="checkbox"
+      type="checkbox"
+      [checked]="problem.is_available"
+      (click)="toggleAvailability()"
+    >
+  </td>
+  <td>
+    <button type="button" class="btn-close" (click)="removeProblem()"></button>
+  </td>
+</tr>

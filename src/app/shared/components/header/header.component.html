@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarToggler">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/start-page">DecisionMaker</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/about">O programie</a>
+      </li>
+      <li class="nav-item" *ngIf="isAdmin()">
+        <a class="nav-link" routerLink="/admin">Panel administracyjny</a>
+      </li>
+      <li class="nav-item" *ngIf="!isLogged()">
+        <a class="nav-link" routerLink="../auth">Zaloguj</a>
+      </li>
+      <li class="nav-item" *ngIf="isLogged()" (click)="logout()">
+        <a class="nav-link" routerLink="../auth">Wyloguj</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+

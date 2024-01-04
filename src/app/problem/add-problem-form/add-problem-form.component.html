@@ -1,0 +1,21 @@
+<form>
+  <div>
+    <label>Nazwa</label>
+    <input type="text" class="form-control" [(ngModel)]="newProblemName" name="newName">
+  </div>
+  <div>
+    <label>Opis</label>
+    <input type="text" class="form-control" [(ngModel)]="newProblemDescription" name="newDescription">
+  </div>
+  <div>
+    <label>Grupa</label>
+    <input type="number" class="form-control" [(ngModel)]="newProblemGroup" name="newGroup">
+  </div>
+  <div>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      (click)="$event.preventDefault(); addNewProblem()"
+    >Dodaj</button>
+  </div>
+</form>

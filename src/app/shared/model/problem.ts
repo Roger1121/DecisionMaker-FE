@@ -1,9 +1,10 @@
 export class Problem{
   constructor(
-    public id: number,
+    public name: string,
     public description: string,
     public is_available: boolean,
-    public group: number
+    public group: number,
+    public id?: number
   ){}
 }
 
