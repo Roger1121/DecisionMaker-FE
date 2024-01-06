@@ -1,5 +1,5 @@
 <form [formGroup]="problemForm" (ngSubmit)="$event.preventDefault(); submitForm()">
-  <div class="mb-3">
+  <div class="mb-3 ctrl-group">
     <label class="form-label">Nazwa</label>
     <input type="text" class="form-control" formControlName="name">
     <div *ngIf="problemForm.get('name')?.invalid && problemForm.get('name')?.touched">
@@ -11,7 +11,7 @@
       >Nazwa może zawierać maksymalnie 200 znaków</small>
     </div>
   </div>
-  <div class="mb-3">
+  <div class="mb-3 ctrl-group">
     <label class="form-label">Opis</label>
     <textarea rows="4" class="form-control" formControlName="description"></textarea>
     <div *ngIf="problemForm.get('description')?.invalid && problemForm.get('description')?.touched">
@@ -23,7 +23,7 @@
       >Opis może zawierać maksymalnie 2000 znaków</small>
     </div>
   </div>
-  <div class="mb-3">
+  <div class="mb-3 ctrl-group">
     <label>Grupa</label>
     <input type="number" class="form-control" formControlName="group">
     <div *ngIf="problemForm.get('group')?.invalid && problemForm.get('group')?.touched">
@@ -35,10 +35,54 @@
       >Grupa może zawierać maksymalnie 200 znaków</small>
     </div>
   </div>
-  <div>
+  <button
+    type="button"
+    class="btn btn-primary btn-margin"
+    (click)="$event.preventDefault(); addCriterion();"
+  >Dodaj kolejne kryterium
+  </button>
+  <div formArrayName="criteria">
+    <div
+      *ngFor="let criterion of criteria.controls; let i = index;"
+      [formGroupName]="i" class="mb-3 ctrl-group"
+    >
+      <div class="ctrl-group">
+        <label class="form-label">Nazwa</label>
+        <input type="text" class="form-control" formControlName="name">
+        <div *ngIf="criterion.get('name')?.invalid && problemForm.get('name')?.touched">
+          <small class="text-danger"
+                 *ngIf="criterion.get('name')?.hasError('required')"
+          >Nazwa jest wymagana</small>
+          <small class="text-danger"
+                 *ngIf="criterion.get('name')?.hasError('maxlength')"
+          >Nazwa może zawierać maksymalnie 200 znaków</small>
+        </div>
+      </div>
+      <div class="ctrl-group">
+        <label class="form-label">Typ</label>
+        <input type="text" class="form-control" formControlName="type">
+        <div *ngIf="criterion.get('type')?.invalid && problemForm.get('type')?.touched">
+          <small class="text-danger"
+                 *ngIf="criterion.get('name')?.hasError('required')"
+          >Typ jest wymagany</small>
+          <small class="text-danger"
+                 *ngIf="criterion.get('name')?.hasError('maxlength')"
+          >Typ może zawierać maksymalnie 200 znaków</small>
+        </div>
+      </div>
+      <div class="btn-right">
+        <button
+          type="button"
+          class="btn btn-danger btn-margin"
+          (click)="$event.preventDefault(); removeCriterion(i)"
+        >Usuń kryterium</button>
+      </div>
+    </div>
+  </div>
+  <div class="btn-right">
     <button
       type="submit"
-      class="btn btn-primary"
+      class="btn btn-primary btn-margin"
     >Zapisz
     </button>
   </div>

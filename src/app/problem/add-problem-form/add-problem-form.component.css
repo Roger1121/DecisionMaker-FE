@@ -1,0 +1,12 @@
+.ctrl-group{
+  margin: 10px;
+  padding: 5px;
+  border-style: outset;
+  border-radius: 10px;
+}
+.btn-margin {
+  margin: 10px
+}
+.btn-right {
+  text-align: right;
+}
