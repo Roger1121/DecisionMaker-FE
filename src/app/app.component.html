@@ -1,21 +1,5 @@
 <app-header/>
-<div class="container">
-  <div>
-    <add-problem-form
-      (addProblem)="this.addProblem($event)"
-    ></add-problem-form>
-  </div>
 
-  <div>
-    <problem-filter
-      [(filter)]="filter"
-    ></problem-filter>
-  </div>
+<router-outlet/>
 
-  <div>
-    <problem-list
-      [problems]="problems.filter(filter)"
-    ></problem-list>
-  </div>
-</div>
 <app-footer/>

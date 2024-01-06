@@ -1,21 +1,45 @@
-<form>
-  <div>
-    <label>Nazwa</label>
-    <input type="text" class="form-control" [(ngModel)]="newProblemName" name="newName">
+<form [formGroup]="problemForm" (ngSubmit)="$event.preventDefault(); submitForm()">
+  <div class="mb-3">
+    <label class="form-label">Nazwa</label>
+    <input type="text" class="form-control" formControlName="name">
+    <div *ngIf="problemForm.get('name')?.invalid && problemForm.get('name')?.touched">
+      <small class="text-danger"
+             *ngIf="problemForm.get('name')?.hasError('required')"
+      >Nazwa jest wymagana</small>
+      <small class="text-danger"
+             *ngIf="problemForm.get('name')?.hasError('maxlength')"
+      >Nazwa może zawierać maksymalnie 200 znaków</small>
+    </div>
   </div>
-  <div>
-    <label>Opis</label>
-    <input type="text" class="form-control" [(ngModel)]="newProblemDescription" name="newDescription">
+  <div class="mb-3">
+    <label class="form-label">Opis</label>
+    <textarea rows="4" class="form-control" formControlName="description"></textarea>
+    <div *ngIf="problemForm.get('description')?.invalid && problemForm.get('description')?.touched">
+      <small class="text-danger"
+             *ngIf="problemForm.get('description')?.hasError('required')"
+      >Opis jest wymagany</small>
+      <small class="text-danger"
+             *ngIf="problemForm.get('description')?.hasError('maxlength')"
+      >Opis może zawierać maksymalnie 2000 znaków</small>
+    </div>
   </div>
-  <div>
+  <div class="mb-3">
     <label>Grupa</label>
-    <input type="number" class="form-control" [(ngModel)]="newProblemGroup" name="newGroup">
+    <input type="number" class="form-control" formControlName="group">
+    <div *ngIf="problemForm.get('group')?.invalid && problemForm.get('group')?.touched">
+      <small class="text-danger"
+             *ngIf="problemForm.get('group')?.hasError('required')"
+      >Grupa jest wymagana</small>
+      <small class="text-danger"
+             *ngIf="problemForm.get('group')?.hasError('maxlength')"
+      >Grupa może zawierać maksymalnie 200 znaków</small>
+    </div>
   </div>
   <div>
     <button
       type="submit"
       class="btn btn-primary"
-      (click)="$event.preventDefault(); addNewProblem()"
-    >Dodaj</button>
+    >Zapisz
+    </button>
   </div>
 </form>
