@@ -1,4 +1,11 @@
-<div *ngIf="problems.length===0; then noProblems else problemList">
+<div class="container">
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="$event.preventDefault(); addProblem();"
+  >Dodaj nowy problem</button>
+  <div *ngIf="problems.length===0; then noProblems else problemList">
+  </div>
 </div>
 <ng-template #noProblems>
   Brak problemów do wyświetlenia
