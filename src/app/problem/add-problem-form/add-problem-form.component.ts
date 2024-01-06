@@ -1,8 +1,10 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {Problem} from "../../shared/model/problem";
 import {ReactiveFormsModule} from "@angular/forms";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {NgIf} from "@angular/common";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {ProblemService} from "../problem.service";
 
 @Component({
   selector: 'add-problem-form',
@@ -15,7 +17,9 @@ import {NgIf} from "@angular/common";
   styleUrl: './add-problem-form.component.css'
 })
 export class AddProblemFormComponent {
-  @Output() addProblem = new EventEmitter<Problem>();
+
+  constructor(private activeModal: NgbActiveModal, private problemService: ProblemService) {
+  }
 
   problemForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(200)]),
@@ -23,15 +27,10 @@ export class AddProblemFormComponent {
     group: new FormControl('', [Validators.required, Validators.maxLength(200)])
   });
 
-
-
-  submitForm(){
-    if(!this.problemForm.valid){
-      alert(" form invalid")
-    }
-  }
-
-  addNewProblem(){
-    // this.addProblem.emit(new Problem(this.newProblemName, this.newProblemDescription, false, this.newProblemGroup))
+  submitForm() {
+    let problem = new Problem(this.problemForm.get('name')?.getRawValue(), this.problemForm.get('description')?.getRawValue(), false, this.problemForm.get('group')?.getRawValue());
+    this.problemService.addProblem(problem).subscribe((data) => {
+      this.activeModal.close('Success');
+    });
   }
 }

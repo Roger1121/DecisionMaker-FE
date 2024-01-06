@@ -2,19 +2,16 @@
   <div class="collapse navbar-collapse" id="navbarToggler">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/start-page">DecisionMaker</a>
+        <a class="nav-link" routerLink="">DecisionMaker</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/about">O programie</a>
-      </li>
-      <li class="nav-item" *ngIf="isAdmin()">
-        <a class="nav-link" routerLink="/admin">Panel administracyjny</a>
+        <a class="nav-link" routerLink="problem">Problemy</a>
       </li>
       <li class="nav-item" *ngIf="!isLogged()">
-        <a class="nav-link" routerLink="../auth">Zaloguj</a>
+        <a class="nav-link" routerLink="auth">Zaloguj</a>
       </li>
       <li class="nav-item" *ngIf="isLogged()" (click)="logout()">
-        <a class="nav-link" routerLink="../auth">Wyloguj</a>
+        <a class="nav-link" routerLink="auth">Wyloguj</a>
       </li>
     </ul>
   </div>

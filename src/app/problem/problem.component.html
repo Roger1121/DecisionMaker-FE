@@ -1,19 +1,12 @@
 <div class="container">
-  <div>
-    <add-problem-form
-      (addProblem)="this.addProblem($event)"
-    ></add-problem-form>
-  </div>
-
-  <div>
-    <problem-filter
-      [(filter)]="filter"
-    ></problem-filter>
-  </div>
-
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="$event.preventDefault(); addProblem();"
+  >Dodaj nowy problem</button>
   <div>
     <problem-list
-      [problems]="problems.filter(filter)"
+      [problems]="problems"
     ></problem-list>
   </div>
 </div>

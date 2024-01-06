@@ -15,6 +15,10 @@ export class ProblemService {
     return this.http.get('http://localhost:8000/problem').pipe(catchError(this.errorHandler.handleWebError))
   }
 
+  getProblem(problem_id: any){
+    return this.http.get(`http://localhost:8000/problem/${problem_id}`)
+  }
+
   addProblem(problem: Problem){
     return this.http.post('http://localhost:8000/problem', problem)
   }

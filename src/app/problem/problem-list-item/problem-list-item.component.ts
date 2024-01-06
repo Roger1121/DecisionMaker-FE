@@ -1,11 +1,14 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {Problem} from "../../shared/model/problem";
 import {EventService} from "./../../shared/services/EventService";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'problem-list-item',
   standalone: true,
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './problem-list-item.component.html',
   styleUrl: './problem-list-item.component.css'
 })
