@@ -5,6 +5,9 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ProblemService} from "../problem.service";
+import {HttpResponse} from "@angular/common/http";
+import {CriterionService} from "../../criterion/criterion.service";
+import {Criterion} from "../../shared/model/criterion";
 
 @Component({
   selector: 'add-problem-form',
@@ -19,7 +22,7 @@ import {ProblemService} from "../problem.service";
 })
 export class AddProblemFormComponent {
 
-  constructor(private activeModal: NgbActiveModal, private problemService: ProblemService) {
+  constructor(private activeModal: NgbActiveModal, private problemService: ProblemService, private criterionService: CriterionService) {
   }
 
   problemForm = new FormGroup({
@@ -34,7 +37,7 @@ export class AddProblemFormComponent {
     ])
   });
 
-  addCriterion(){
+  addCriterion() {
     const criteriaList = <FormArray>this.problemForm.controls['criteria'];
     criteriaList.push(
       new FormGroup({
@@ -44,24 +47,39 @@ export class AddProblemFormComponent {
     )
   }
 
-  removeCriterion(index: number){
+  removeCriterion(index: number) {
     const criteriaList = <FormArray>this.problemForm.controls['criteria'];
     criteriaList.removeAt(index);
   }
 
   submitForm() {
-    let problem = new Problem(this.problemForm.get('name')?.getRawValue(), this.problemForm.get('description')?.getRawValue(), false, this.problemForm.get('group')?.getRawValue());
+    let problem = new Problem(this.problemForm.get('name')?.getRawValue(), this.problemForm.get('description')?.getRawValue(), false, this.problemForm.get('group')?.getRawValue(), 0);
     this.problemService.addProblem(problem).subscribe(
       (data) => {
-        console.log(data);
-        this.activeModal.close('Success');
+        const problem = data as Problem;
+        let criteriaList: Criterion[] = []
+        for (let criterion of this.criteria['controls']) {
+          const crit = criterion as FormGroup
+          criteriaList.push(new Criterion(crit.get('name')?.getRawValue(), problem.id!, crit.get('type')?.getRawValue()));
+        }
+        console.log(criteriaList)
+        this.criterionService.addCriteria(criteriaList)
+          .subscribe(
+            (data) => {
+              console.log(data);
+              this.activeModal.close('Success');
+            },
+            (error) => {
+              console.log(error);
+              this.activeModal.close('Failure');
+            })
       },
       (error) => {
         this.activeModal.close('Failure');
       });
   }
 
-  get criteria(){
+  get criteria() {
     return this.problemForm.get('criteria') as FormArray;
   }
 }
