@@ -17,7 +17,7 @@ export class CriterionService {
   }
 
   getCriteriaByProblemId(problem_id: any){
-    return this.http.get('http://localhost:8000/criterion/', {params: new HttpParams().set('problem_id', problem_id)}).pipe(catchError(this.errorHandler.handleWebError))
+    return this.http.get('http://localhost:8000/criterion', {params: new HttpParams().set('problem_id', problem_id)}).pipe(catchError(this.errorHandler.handleWebError))
   }
 
   getCriterion(criterion_id: any){
