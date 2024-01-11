@@ -1,0 +1,10 @@
+<div *ngIf="options.length===0; then noOptions else optionsList">
+</div>
+<ng-template #noOptions>
+  Zadanie nie posiada jeszcze żadnych opcji
+</ng-template>
+<ng-template #optionsList>
+<div class="row" *ngFor="let option of options">
+  <options-list-item [option]="option" [criteria]="criteria"/>
+</div>
+</ng-template>

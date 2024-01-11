@@ -10,4 +10,8 @@ import {Criterion} from "../../shared/model/criterion";
 })
 export class CriterionListItemComponent {
   @Input() criterion! : Criterion;
+
+  removeCriterion(){
+
+  }
 }

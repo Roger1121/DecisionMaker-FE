@@ -1,17 +1,43 @@
-<h1>{{ problem.name }}</h1>
-<p>{{ problem.description }}</p>
-<div class="form-switch">
-  <input
-    class="form-check-input"
-    type="checkbox"
-    role="switch"
-    [checked]="problem.is_available"
-    (click)="toggleAvailability()"
-  >
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>{{ problem.name }}</h1>
+      <div class="form-switch">
+        <input
+          class="form-check-input mb-3"
+          type="checkbox"
+          role="switch"
+          [checked]="problem.is_available"
+          (click)="toggleAvailability()">
+        <label>Zmień dostępność zadania</label>
+        <p>{{ problem.description }}</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h2>Kryteria oceny jakości opcji</h2>
+      <div *ngIf="criteria.length===0; then noCriteria else criteriaList">
+      </div>
+      <button
+        type="button"
+        class="btn btn-primary btn-margin mb-3"
+        (click)="$event.preventDefault(); addCriterion();"
+      >Dodaj kolejne kryterium
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <options-list [problemId]="problem.id" [criteria]="criteria"/>
+  </div>
 </div>
-<button type="button" class="btn-close" (click)="removeProblem()"></button>
-<ul *ngFor="let criterion of criteria">
-  <li>
+
+<ng-template #noCriteria>
+  <div class="row">
+    <p>Zadanie nie posiada jeszcze żadnych kryteriów oceny</p>
+  </div>
+</ng-template>
+
+<ng-template #criteriaList>
+  <div class="row" *ngFor="let criterion of criteria">
     <criterion-list-item [criterion]=criterion />
-  </li>
-</ul>
+  </div>
+</ng-template>

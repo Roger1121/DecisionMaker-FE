@@ -1,0 +1,8 @@
+<div *ngFor="let criterion of criteria">
+  <div class="col-md-6">
+    <p>{{ criterion.name }}</p>
+  </div>
+  <div class="col-md-6">
+    <p>{{ getOptionCriterionValue(criterion.id) }}</p>
+  </div>
+</div>

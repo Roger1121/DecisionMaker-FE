@@ -11,14 +11,12 @@
   Brak problemów do wyświetlenia
 </ng-template>
 <ng-template #problemList>
-  <table>
-    <tr>
-      <th>Nazwa</th>
-      <th>Czy odblokowane</th>
-    </tr>
-    <tr *ngFor="let problem of problems">
-      <problem-list-item
-        [problem]="problem"/>
-    </tr>
-  </table>
+  <div class="row mb-3">
+    <div class="col-md-4">Nazwa</div>
+    <div class="col-md-4">Czy odblokowane</div>
+  </div>
+  <div *ngFor="let problem of problems">
+    <problem-list-item
+      [problem]="problem"/>
+  </div>
 </ng-template>
