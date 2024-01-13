@@ -5,7 +5,6 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ProblemService} from "../problem.service";
-import {HttpResponse} from "@angular/common/http";
 import {CriterionService} from "../../criterion/criterion.service";
 import {Criterion} from "../../shared/model/criterion";
 

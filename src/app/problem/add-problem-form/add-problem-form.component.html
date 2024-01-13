@@ -49,7 +49,7 @@
       <div class="ctrl-group">
         <label class="form-label">Nazwa</label>
         <input type="text" class="form-control" formControlName="name">
-        <div *ngIf="criterion.get('name')?.invalid && problemForm.get('name')?.touched">
+        <div *ngIf="criterion.get('name')?.invalid && criterion.get('name')?.touched">
           <small class="text-danger"
                  *ngIf="criterion.get('name')?.hasError('required')"
           >Nazwa jest wymagana</small>
@@ -61,12 +61,12 @@
       <div class="ctrl-group">
         <label class="form-label">Typ</label>
         <input type="text" class="form-control" formControlName="type">
-        <div *ngIf="criterion.get('type')?.invalid && problemForm.get('type')?.touched">
+        <div *ngIf="criterion.get('type')?.invalid && criterion.get('type')?.touched">
           <small class="text-danger"
-                 *ngIf="criterion.get('name')?.hasError('required')"
+                 *ngIf="criterion.get('type')?.hasError('required')"
           >Typ jest wymagany</small>
           <small class="text-danger"
-                 *ngIf="criterion.get('name')?.hasError('maxlength')"
+                 *ngIf="criterion.get('type')?.hasError('maxlength')"
           >Typ może zawierać maksymalnie 200 znaków</small>
         </div>
       </div>

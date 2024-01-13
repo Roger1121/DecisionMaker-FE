@@ -1,6 +1,31 @@
-<p>add-criterion-form works!</p>
-<div class="btn-right">
-  <button
-    type="submit"
-    class="btn btn-primary btn-margin">Zapisz</button>
-</div>
+<form [formGroup]="criterionFrom" (ngSubmit)="$event.preventDefault(); addCriterion()">
+  <div class="ctrl-group">
+    <label class="form-label">Nazwa</label>
+    <input type="text" class="form-control" formControlName="name">
+    <div *ngIf="criterionFrom.get('name')?.invalid && criterionFrom.get('name')?.touched">
+      <small class="text-danger"
+             *ngIf="criterionFrom.get('name')?.hasError('required')"
+      >Nazwa jest wymagana</small>
+      <small class="text-danger"
+             *ngIf="criterionFrom.get('name')?.hasError('maxlength')"
+      >Nazwa może zawierać maksymalnie 200 znaków</small>
+    </div>
+  </div>
+  <div class="ctrl-group">
+    <label class="form-label">Typ</label>
+    <input type="text" class="form-control" formControlName="type">
+    <div *ngIf="criterionFrom.get('type')?.invalid && criterionFrom.get('type')?.touched">
+      <small class="text-danger"
+             *ngIf="criterionFrom.get('typpe')?.hasError('required')"
+      >Typ jest wymagany</small>
+      <small class="text-danger"
+             *ngIf="criterionFrom.get('type')?.hasError('maxlength')"
+      >Typ może zawierać maksymalnie 200 znaków</small>
+    </div>
+  </div>
+  <div class="btn-right">
+    <button
+      type="submit"
+      class="btn btn-primary btn-margin">Zapisz</button>
+  </div>
+</form>

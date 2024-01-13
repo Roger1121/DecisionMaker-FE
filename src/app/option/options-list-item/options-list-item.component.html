@@ -1,8 +1,30 @@
-<div *ngFor="let criterion of criteria">
-  <div class="col-md-6">
-    <p>{{ criterion.name }}</p>
+<div class="row">
+  <div class="col-md-3">
+    <p>{{option.name}}</p>
   </div>
-  <div class="col-md-6">
-    <p>{{ getOptionCriterionValue(criterion.id) }}</p>
+  <div class="col-md-9">
+    <div class="row" *ngFor="let criterion of criteria">
+      <div class="col-md-6">
+        <p>{{ criterion.name }}</p>
+      </div>
+      <div class="col-md-6">
+        <ng-container
+          [ngTemplateOutlet]="getOptionCriterionValue(criterion.id) ? criterionValue : addCriterionOption"
+          [ngTemplateOutletContext]="{criterion:criterion}"
+        ></ng-container>
+      </div>
+    </div>
   </div>
 </div>
+
+<ng-template #criterionValue let-criterion='criterion'>
+  <p>{{ getOptionCriterionValue(criterion.id) }}</p>
+</ng-template>
+<ng-template #addCriterionOption let-criterion='criterion'>
+  <button
+    class="btn btn-primary" (click)="$event.preventDefault(); addCriterionOptionValue(criterion.id)">
+    Dodaj wartość kryterium dla opcji
+  </button>
+</ng-template>
+
+

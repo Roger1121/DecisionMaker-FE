@@ -18,23 +18,19 @@ export class OptionService {
   }
 
   getOptionCriteria(option_id: any) {
-    return this.http.get('http://localhost:8000/option/criteria', {params: new HttpParams().set('option_id', option_id)}).pipe(catchError(this.errorHandler.handleWebError))
+    return this.http.get('http://localhost:8000/crit-option', {params: new HttpParams().set('option_id', option_id)}).pipe(catchError(this.errorHandler.handleWebError))
   }
 
-  addOptions(options: Option[]) {
-    return this.http.post('http://localhost:8000/option', options)
+  addOption(option: Option) {
+    return this.http.post('http://localhost:8000/option', option)
   }
 
-  addOptionCriteria(optionCriteria: CriterionOption[]) {
-    return this.http.post('http://localhost:8000/option/criteria', optionCriteria)
+  addOptionCriterion(optionCriteria: CriterionOption) {
+    return this.http.post('http://localhost:8000/crit-option', optionCriteria)
   }
 
   updateOption(option: Option) {
     return this.http.put('http://localhost:8000/option', option)
-  }
-
-  updateOptionCriterion(optionCriterion: CriterionOption) {
-    return this.http.put('http://localhost:8000/option/criteria', optionCriterion)
   }
 
   deleteOption(option_id: any){

@@ -1,0 +1,19 @@
+<form [formGroup]="optionCriterionForm" (ngSubmit)="$event.preventDefault(); addOptionCriterion()">
+  <div class="ctrl-group">
+    <label class="form-label">Wartość</label>
+    <input type="text" class="form-control" formControlName="value">
+    <div *ngIf="optionCriterionForm.get('value')?.invalid && optionCriterionForm.get('value')?.touched">
+      <small class="text-danger"
+             *ngIf="optionCriterionForm.get('value')?.hasError('required')"
+      >Wartość jest wymagana</small>
+      <small class="text-danger"
+             *ngIf="optionCriterionForm.get('value')?.hasError('maxlength')"
+      >Wartość może zawierać maksymalnie 200 znaków</small>
+    </div>
+  </div>
+  <div class="btn-right">
+    <button
+      type="submit"
+      class="btn btn-primary btn-margin">Zapisz</button>
+  </div>
+</form>

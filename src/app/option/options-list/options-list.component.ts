@@ -1,10 +1,13 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, signal, SimpleChanges} from '@angular/core';
 import {OptionService} from "../option.service";
-import {CriterionService} from "../../criterion/criterion.service";
 import {Criterion} from "../../shared/model/criterion";
 import {Option} from "../../shared/model/option";
 import {NgForOf, NgIf} from "@angular/common";
 import {OptionsListItemComponent} from "../options-list-item/options-list-item.component";
+import {AddCriterionFormComponent} from "../../criterion/add-criterion-form/add-criterion-form.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {AddOptionModalComponent} from "../add-option-modal/add-option-modal.component";
+import {EventService} from "../../shared/services/EventService";
 
 @Component({
   selector: 'options-list',
@@ -23,13 +26,35 @@ export class OptionsListComponent {
 
   options: Option[] = [];
 
-  constructor(private optionService: OptionService){}
-
-  ngOnInit(){
-    this.optionService.getOptionsByProblemId(this.problemId).subscribe((data:any)=>{
-      this.options = data;
-    })
+  constructor(private optionService: OptionService, private modalService: NgbModal, private eventService: EventService) {
+    this.eventService.listen('criterion-deleted', (criterionId) => this.loadOptions())
   }
 
+  ngOnInit() {
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.loadOptions();
+  }
+
+  loadOptions() {
+    if (this.problemId) {
+      this.optionService.getOptionsByProblemId(this.problemId).subscribe((data: any) => {
+        this.options = data;
+      })
+    }
+  }
+
+  addOption() {
+    const modalRef = this.modalService.open(AddOptionModalComponent);
+    modalRef.componentInstance.problemId = this.problemId;
+    modalRef.result.then(
+      (result) => {
+        if (result === 'Success') {
+          this.optionService.getOptionsByProblemId(this.problemId).subscribe((options: any) => this.options = options);
+        }
+      }
+    )
+  };
 
 }

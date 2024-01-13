@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Criterion} from "../../shared/model/criterion";
+import {EventService} from "../../shared/services/EventService";
 
 @Component({
   selector: 'criterion-list-item',
@@ -11,7 +12,10 @@ import {Criterion} from "../../shared/model/criterion";
 export class CriterionListItemComponent {
   @Input() criterion! : Criterion;
 
-  removeCriterion(){
+  constructor(private eventService: EventService) {
+  }
 
+  removeCriterion(criterionId: any){
+    this.eventService.emit('delete-criterion', criterionId);
   }
 }
