@@ -1,0 +1,41 @@
+import { Component } from '@angular/core';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {UserService} from "../user.service";
+import {Login} from "../../shared/model/user/login";
+import {Router} from "@angular/router"
+import {NgIf} from "@angular/common";
+
+@Component({
+  selector: 'login',
+  standalone: true,
+  imports: [
+    FormsModule,
+    NgIf,
+    ReactiveFormsModule
+  ],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
+})
+export class LoginComponent {
+  constructor(private userService: UserService, private router: Router) {
+  }
+
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.maxLength(200)]),
+    password: new FormControl('', [Validators.required, Validators.maxLength(200)])
+  })
+
+  login(){
+    let credentials : Login = new Login(this.loginForm.get('email')?.getRawValue(), this.loginForm.get('password')?.getRawValue())
+    this.userService.login(credentials).subscribe(
+      (response: any) => {
+        window.sessionStorage.removeItem("USER_TOKEN");
+        window.sessionStorage.setItem('USER_TOKEN', response['access']);
+        this.router.navigate(['/problem']).then()
+      },
+      (error) => {
+        alert(error);
+      }
+    )
+  }
+}

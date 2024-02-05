@@ -1,0 +1,42 @@
+<div class="container">
+  <form [formGroup]="loginForm" (ngSubmit)="$event.preventDefault(); login()">
+    <div class="ctrl-group">
+      <label class="form-label">Email</label>
+      <input type="text" class="form-control" formControlName="email">
+      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+        <small class="text-danger"
+               *ngIf="loginForm.get('email')?.hasError('required')"
+        >Email jest wymagany</small>
+        <small class="text-danger"
+               *ngIf="loginForm.get('name')?.hasError('maxlength')"
+        >Email może zawierać maksymalnie 200 znaków</small>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <label class="form-label">Hasło</label>
+      <input type="password" class="form-control" formControlName="password">
+      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+        <small class="text-danger"
+               *ngIf="loginForm.get('password')?.hasError('required')"
+        >Hasło jest wymagane</small>
+        <small class="text-danger"
+               *ngIf="loginForm.get('password')?.hasError('maxlength')"
+        >Hasło może zawierać maksymalnie 200 znaków</small>
+      </div>
+    </div>
+    <div class="btn-right">
+      <button
+        type="submit"
+        class="btn btn-primary btn-margin">Zaloguj
+      </button>
+    </div>
+  </form>
+</div>
+<div class="container">
+  <p>
+    Nie pamiętasz hasła? Przejdź <a href="/recovery">tutaj</a> aby je zresetować.
+  </p>
+  <p>
+    Nie masz jeszcze konta? Zarejestruj się <a href="/register">tutaj</a>.
+  </p>
+</div>
