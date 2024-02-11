@@ -7,6 +7,8 @@ import {AvailableListComponent} from "./problem/user/available-list/available-li
 import {CriteriaWeightsComponent} from "./criterion/user/criteria-weights/criteria-weights.component";
 import {HellwigComponent} from "./solve/hellwig/hellwig.component";
 import {TopsisComponent} from "./solve/topsis/topsis.component";
+import {IdealSolutionComponent} from "./solve/hellwig/ideal-solution/ideal-solution.component";
+import {HellwigResultComponent} from "./solve/hellwig/hellwig-result/hellwig-result.component";
 
 export const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -16,5 +18,7 @@ export const routes: Routes = [
   {path: 'problem/:id', component: ProblemDetailsComponent},
   {path: 'criteria/weights/:problemId', component: CriteriaWeightsComponent},
   {path: 'solve/hellwig/:problemId', component: HellwigComponent},
+  {path: 'solve/hellwig/ideal/:problemId', component: IdealSolutionComponent},
+  {path: 'solve/hellwig/results/:problemId', component: HellwigResultComponent},
   {path: 'solve/topsis/:problemId', component: TopsisComponent},
 ];

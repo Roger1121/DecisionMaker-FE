@@ -1,0 +1,27 @@
+<div class="container" >
+  <div class="row">
+    <div class="col-md-5">
+      <available-details [problem]="problem"/>
+    </div>
+    <div class="col-md-7">
+      <h1>
+        Metoda Hellwiga - wyznaczanie wzorca rozwoju
+      </h1>
+      <p>
+        Ostatnią informacją potrzebną do wyznaczenia rankingu z wykorzystaniem metody Hellwiga jest określenie rozwiązania idealnego, nazywanego również wzorcem rozwoju.
+        Aby znaleźć takie rozwiązanie, dla każdego z badanych kryteriów należy wskazać najbardziej atrakcyjną spośród dostępnych opcji.
+      </p>
+      <div *ngFor="let criterion of criteria; let i = index;">
+        <div class="border rounded">
+          <h5>{{criterion.name}}</h5>
+          <select class="form-select" id="{{i}}">
+            <option value="default"></option>
+              <option *ngFor="let option of getCriterionOptions(criterion.id)"
+                      value="{{option.id}}">{{option.value}}</option>
+          </select>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveIdealSolution()">Zapisz wzorzec rozwoju</button>
+    </div>
+  </div>
+</div>

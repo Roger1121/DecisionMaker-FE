@@ -4,6 +4,8 @@ import {catchError} from "rxjs";
 import {ErrorHandlerService} from "../shared/services/ErrorHandlerService";
 import {Option} from "../shared/model/option";
 import {CriterionOption} from "../shared/model/criterion-option";
+import {OptionWeight} from "../shared/model/option-weight";
+import {IdealSolution} from "../shared/model/ideal-solution";
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +37,13 @@ export class OptionService {
 
   deleteOption(option_id: any){
     return this.http.delete(`http://localhost:8000/option/${option_id}`)
+  }
+
+  saveOptionWeights(weightList: OptionWeight[]) {
+    return this.http.post('http://localhost:8000/crit-option/weights', weightList)
+  }
+
+  saveIdealSolutions(solutions: IdealSolution[]) {
+    return this.http.post('http://localhost:8000/solutions', solutions)
   }
 }

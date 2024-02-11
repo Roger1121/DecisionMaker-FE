@@ -8,6 +8,8 @@ import {UserService} from "../../user/user.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {CriterionWeight} from "../../shared/model/criterion-weight";
 import {CriterionOption} from "../../shared/model/criterion-option";
+import {OptionWeight} from "../../shared/model/option-weight";
+import {OptionService} from "../../option/option.service";
 
 @Component({
   selector: 'app-hellwig',
@@ -29,6 +31,7 @@ export class HellwigComponent {
 
   constructor(private problemService: ProblemService,
               private criteriaService: CriterionService,
+              private optionService: OptionService,
               private userService: UserService,
               private route: ActivatedRoute,
               private router: Router) {
@@ -41,8 +44,8 @@ export class HellwigComponent {
         this.problem = problem;
         this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
           this.criteria = criteria;
-          for(let criterion of this.getDescriptiveCriteria()){
-            this.criteriaService.getCriterionOptions(criterion.id).subscribe((data:any) => {
+          for (let criterion of this.getDescriptiveCriteria()) {
+            this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
               this.critOptions.push(...(data as CriterionOption[]));
             })
           }
@@ -51,7 +54,6 @@ export class HellwigComponent {
     });
     this.userService.checkScaleType().subscribe((isNumeric: any) => {
       this.isNumericScale = isNumeric;
-      console.log(JSON.stringify(isNumeric));
     })
   }
 
@@ -68,13 +70,15 @@ export class HellwigComponent {
   }
 
 
-  getDescriptiveWeights(): CriterionWeight[] {
-    let weightList: CriterionWeight[] = [];
-    for (let criterion of this.criteria) {
-      for (let i = 1; i <= 5; i++) {
-        let radio: any = document.getElementById(criterion.id?.toString(10) + i.toString(10));
-        if (radio.checked) {
-          weightList.push(new CriterionWeight(criterion.id, radio.value));
+  getDescriptiveWeights(): OptionWeight[] {
+    let weightList: OptionWeight[] = [];
+    for (let criterion of this.getDescriptiveCriteria()) {
+      for (let option of this.getCriterionOptions(criterion.id)) {
+        for (let i = 1; i <= 7; i++) {
+          let radio: any = document.getElementById(option.id?.toString(10) + i.toString(10));
+          if (radio.checked) {
+            weightList.push(new OptionWeight(option.id, radio.value));
+          }
         }
       }
     }
@@ -82,15 +86,27 @@ export class HellwigComponent {
   }
 
   getNumericWeights() {
-    let weightList: CriterionWeight[] = [];
-    for (let criterion of this.criteria) {
-      let slider: any = document.getElementById(criterion.id?.toString(10) + "");
-      weightList.push(new CriterionWeight(criterion.id, slider.value));
+    let weightList: OptionWeight[] = [];
+    for (let criterion of this.getDescriptiveCriteria()) {
+      for (let option of this.getCriterionOptions(criterion.id)) {
+        let slider: any = document.getElementById(option.id?.toString(10) + "");
+        weightList.push(new OptionWeight(option.id, slider.value));
+      }
     }
     return weightList;
   }
 
   saveOptionWeights() {
-
+    let weightList: OptionWeight[]
+    if (this.isNumericScale === 0) {
+      weightList = this.getNumericWeights();
+    } else {
+      weightList = this.getDescriptiveWeights();
+    }
+    this.optionService.saveOptionWeights(weightList).subscribe((response: any) => {
+        this.router.navigate(['/solve/hellwig/ideal/'+this.problem.id]).then();
+    }, (error) => {
+      alert("Nie można zapisać wag opcji: " + error.error.res);
+    })
   }
 }
