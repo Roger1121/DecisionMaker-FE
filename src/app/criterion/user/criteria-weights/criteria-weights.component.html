@@ -1,0 +1,66 @@
+<div class="container" >
+  <div class="row">
+    <div class="col-md-5">
+      <available-details [problem]="problem"/>
+    </div>
+    <div class="col-md-7">
+      <h1>
+        Określenie wag kryteriów
+      </h1>
+      <p>
+        Pierwszym etapem analizy problemu jest ustalenie ważności poszczególnych kryteriów decyzyjnych.
+        Pozwala nam to określić, jak bardzo od danego kryterium będzie zależała końcowa ocena każdego z końcowych rozwiązań problemu.
+        Na poniższej liście znajdują się kryteria, w oparciu o które będą analizowane wszystkie przewidziane w niniejszym problemie warianty decyzyjne.
+      </p>
+      <div *ngFor="let criterion of criteria">
+        <div class="border rounded">
+          <h5>{{criterion.name}}</h5>
+          <ng-container
+            [ngTemplateOutlet]="numericScaleChoosen() ? slider : radio"
+            [ngTemplateOutletContext]="{criterion:criterion}"
+          ></ng-container>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveCriteriaWeights()">Zapisz wagi kryteriów</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #slider let-criterion='criterion'>
+  <input id="{{criterion.id}}" type="range" class="form-range" min="0" max="100" step="1" value="50"
+         oninput="this.nextElementSibling.value = this.value">
+  <output>50</output>
+</ng-template>
+
+<ng-template #radio let-criterion='criterion'>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion.id}}" id="{{criterion.id}}1" value="0.99">
+    <label class="form-check-label" for="{{criterion.id}}1">
+      Kluczowe
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion.id}}" id="{{criterion.id}}2" value="0.75">
+    <label class="form-check-label" for="{{criterion.id}}2">
+      Bardzo ważne
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion.id}}" id="{{criterion.id}}3" value="0.5" checked>
+    <label class="form-check-label" for="{{criterion.id}}3">
+      Średnio ważne
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion.id}}" id="{{criterion.id}}4" value="0.25">
+    <label class="form-check-label" for="{{criterion.id}}4">
+      Niezbyt ważne
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion.id}}" id="{{criterion.id}}5" value="0.01">
+    <label class="form-check-label" for="{{criterion.id}}5">
+      Nieistotne
+    </label>
+  </div>
+</ng-template>

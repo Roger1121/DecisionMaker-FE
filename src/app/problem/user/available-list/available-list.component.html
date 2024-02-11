@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>
+    Dostępne problemy decyzyjne
+  </h1>
+  <div *ngIf="problems.length===0; then noProblems else problemList">
+  </div>
+</div>
+<ng-template #noProblems>
+  Brak problemów do wyświetlenia
+</ng-template>
+<ng-template #problemList>
+  <div *ngFor="let problem of problems">
+    <available-list-item
+      [problem]="problem"/>
+  </div>
+</ng-template>

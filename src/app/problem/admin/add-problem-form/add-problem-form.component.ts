@@ -1,12 +1,12 @@
 import {Component, Output, EventEmitter} from '@angular/core';
-import {Problem} from "../../shared/model/problem";
+import {Problem} from "../../../shared/model/problem";
 import {FormArray, ReactiveFormsModule} from "@angular/forms";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {ProblemService} from "../problem.service";
-import {CriterionService} from "../../criterion/criterion.service";
-import {Criterion} from "../../shared/model/criterion";
+import {ProblemService} from "../../problem.service";
+import {CriterionService} from "../../../criterion/criterion.service";
+import {Criterion} from "../../../shared/model/criterion";
 
 @Component({
   selector: 'add-problem-form',

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import {Problem} from "../../shared/model/problem";
-import {EventService} from "./../../shared/services/EventService";
+import {Problem} from "../../../shared/model/problem";
+import {EventService} from "../../../shared/services/EventService";
 import {RouterLink} from "@angular/router";
 
 @Component({

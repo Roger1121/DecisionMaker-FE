@@ -1,14 +1,14 @@
 import {Component, signal} from '@angular/core';
-import {ProblemService} from "../problem.service";
+import {ProblemService} from "../../problem.service";
 import {ActivatedRoute, ParamMap} from "@angular/router";
-import {CriterionService} from "../../criterion/criterion.service";
-import {Criterion} from "../../shared/model/criterion";
-import {CriterionListItemComponent} from "../../criterion/criterion-list-item/criterion-list-item.component";
+import {CriterionService} from "../../../criterion/criterion.service";
+import {Criterion} from "../../../shared/model/criterion";
+import {CriterionListItemComponent} from "../../../criterion/admin/criterion-list-item/criterion-list-item.component";
 import {NgForOf, NgIf} from "@angular/common";
-import {OptionsListComponent} from "../../option/options-list/options-list.component";
+import {OptionsListComponent} from "../../../option/options-list/options-list.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AddCriterionFormComponent} from "../../criterion/add-criterion-form/add-criterion-form.component";
-import {EventService} from "../../shared/services/EventService";
+import {AddCriterionFormComponent} from "../../../criterion/admin/add-criterion-form/add-criterion-form.component";
+import {EventService} from "../../../shared/services/EventService";
 
 @Component({
   selector: 'app-problem-details',

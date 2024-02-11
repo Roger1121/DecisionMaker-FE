@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Criterion} from "../../shared/model/criterion";
-import {EventService} from "../../shared/services/EventService";
+import {Criterion} from "../../../shared/model/criterion";
+import {EventService} from "../../../shared/services/EventService";
 
 @Component({
   selector: 'criterion-list-item',

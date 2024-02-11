@@ -4,7 +4,7 @@ import {Criterion} from "../../shared/model/criterion";
 import {Option} from "../../shared/model/option";
 import {OptionService} from "../option.service";
 import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
-import {AddCriterionFormComponent} from "../../criterion/add-criterion-form/add-criterion-form.component";
+import {AddCriterionFormComponent} from "../../criterion/admin/add-criterion-form/add-criterion-form.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AddOptionCriterionModalComponent} from "../add-option-criterion-modal/add-option-criterion-modal.component";
 

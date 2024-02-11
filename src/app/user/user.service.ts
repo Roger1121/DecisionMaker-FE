@@ -17,4 +17,8 @@ export class UserService {
   register(registrationData: Registration){
     return this.http.post('http://localhost:8000/register', registrationData)
   }
+
+  checkScaleType() {
+    return this.http.get('http://localhost:8000/user/scale')
+  }
 }

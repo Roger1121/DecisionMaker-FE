@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {CriterionService} from "../criterion.service";
+import {CriterionService} from "../../criterion.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Criterion} from "../../shared/model/criterion";
+import {Criterion} from "../../../shared/model/criterion";
 import {NgIf} from "@angular/common";
 
 @Component({

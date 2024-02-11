@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import {Problem} from "../../shared/model/problem";
+import {Problem} from "../../../shared/model/problem";
 import {NgForOf, NgIf} from "@angular/common";
 import {ProblemListItemComponent} from "../problem-list-item/problem-list-item.component";
-import {EventService} from "../../shared/services/EventService";
-import {ProblemService} from "../problem.service";
+import {EventService} from "../../../shared/services/EventService";
+import {ProblemService} from "../../problem.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AddProblemFormComponent} from "../add-problem-form/add-problem-form.component";
 

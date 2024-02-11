@@ -1,0 +1,14 @@
+<div class="row mb-3">
+  <div class="col-md-4">
+    <h3>
+      {{ problem.name }}
+    </h3>
+    <p>
+      {{ (problem.description.length > 100) ? (problem.description | slice:0:100) + '...' : (problem.description) }}
+    </p>
+  </div>
+  <div class="col-md-4">
+    <button type="button" class="btn btn-primary" (click)="router.navigate(['/criteria/weights', problem.id]);">Otwórz
+    </button>
+  </div>
+</div>

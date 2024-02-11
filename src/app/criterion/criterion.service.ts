@@ -4,6 +4,7 @@ import {ErrorHandlerService} from "../shared/services/ErrorHandlerService";
 import {catchError} from "rxjs";
 import {Problem} from "../shared/model/problem";
 import {Criterion} from "../shared/model/criterion";
+import {CriterionWeight} from "../shared/model/criterion-weight";
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +39,9 @@ export class CriterionService {
 
   deleteCriterion(criterion_id: any){
     return this.http.delete(`http://localhost:8000/criterion/${criterion_id}`)
+  }
+
+  saveCriteriaWeights(weightList: CriterionWeight[]) {
+    return this.http.post('http://localhost:8000/criterion/weights', weightList)
   }
 }
