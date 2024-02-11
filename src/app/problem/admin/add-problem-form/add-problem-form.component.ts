@@ -61,15 +61,12 @@ export class AddProblemFormComponent {
           const crit = criterion as FormGroup
           criteriaList.push(new Criterion(crit.get('name')?.getRawValue(), problem.id!, crit.get('type')?.getRawValue()));
         }
-        console.log(criteriaList)
         this.criterionService.addCriteria(criteriaList)
           .subscribe(
             (data) => {
-              console.log(data);
               this.activeModal.close('Success');
             },
             (error) => {
-              console.log(error);
               this.activeModal.close('Failure');
             })
       },

@@ -44,4 +44,8 @@ export class CriterionService {
   saveCriteriaWeights(weightList: CriterionWeight[]) {
     return this.http.post('http://localhost:8000/criterion/weights', weightList)
   }
+
+  getCriterionOptions(criterion_id: any) {
+    return this.http.get('http://localhost:8000/crit-option', {params: new HttpParams().set('criterion_id', criterion_id)}).pipe(catchError(this.errorHandler.handleWebError))
+  }
 }

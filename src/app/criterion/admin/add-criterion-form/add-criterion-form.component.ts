@@ -31,11 +31,9 @@ export class AddCriterionFormComponent {
     let criterion = new Criterion(this.criterionFrom.get('name')?.getRawValue(), this.problemId, this.criterionFrom.get('type')?.getRawValue())
     this.criterionService.addCriterion(criterion).subscribe(
       (data) => {
-        console.log(data);
         this.activeModal.close('Success');
       },
       (error) => {
-        console.log(error);
         this.activeModal.close('Failure');
       }
     );

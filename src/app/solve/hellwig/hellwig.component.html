@@ -1,0 +1,84 @@
+<div class="container" >
+  <div class="row">
+    <div class="col-md-5">
+      <available-details [problem]="problem"/>
+    </div>
+    <div class="col-md-7">
+      <h1>
+        Metoda Hellwiga
+      </h1>
+      <p>
+        Metoda Hellwiga jest metodą porządkowania liniowego opartą na porównaniu analizowanych rozwiązań z rozwiązaniem idealnym.
+        Porównanie takie wymaga jednak ręcznego określenia numerycznych wartości opcji dla kryteriów wyrażonych w skali opisowej.
+        Na poniższej liście znajdują się wszystkie kryteria wymagające ręcznego określenia ważności opcji.
+      </p>
+      <div *ngFor="let criterion of getDescriptiveCriteria()">
+        <div class="border rounded">
+          <h5>{{criterion.name}}</h5>
+          <div *ngFor="let option of getCriterionOptions(criterion.id)">
+            <div class="border rounded">
+              <p>{{option.value}}</p>
+              <ng-container
+                [ngTemplateOutlet]="numericScaleChoosen() ? slider : radio"
+                [ngTemplateOutletContext]="{option:option}"
+              ></ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveOptionWeights()">Zapisz wagi opcji</button>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #slider let-option='option'>
+  <input id="{{option.id}}" type="range" class="form-range" min="0" max="100" step="1" value="50"
+         oninput="this.nextElementSibling.value = this.value">
+  <output>50</output>
+</ng-template>
+
+<ng-template #radio let-option='option'>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{option.id}}" id="{{option.id}}1" value="99">
+    <label class="form-check-label" for="{{option.id}}1">
+      Najlepsze
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{option.id}}" id="{{option.id}}2" value="83">
+    <label class="form-check-label" for="{{option.id}}2">
+      Bardzo dobre
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{option.id}}" id="{{option.id}}3" value="67">
+    <label class="form-check-label" for="{{option.id}}3">
+      Dobre
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{option.id}}" id="{{option.id}}4" value="50" checked>
+    <label class="form-check-label" for="{{option.id}}4">
+      Przeciętne
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{option.id}}" id="{{option.id}}5" value="33">
+    <label class="form-check-label" for="{{option.id}}5">
+      Słabe
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{option.id}}" id="{{option.id}}6" value="17">
+    <label class="form-check-label" for="{{option.id}}6">
+      Bardzo słabe
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{option.id}}" id="{{option.id}}7" value="1">
+    <label class="form-check-label" for="{{option.id}}7">
+      Beznadziejne
+    </label>
+  </div>
+</ng-template>

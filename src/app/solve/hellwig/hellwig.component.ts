@@ -1,15 +1,16 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {ProblemService} from "../../../problem/problem.service";
-import {Criterion} from "../../../shared/model/criterion";
-import {CriterionService} from "../../criterion.service";
-import {AvailableDetailsComponent} from "../../../problem/user/available-details/available-details.component";
+import {AvailableDetailsComponent} from "../../problem/user/available-details/available-details.component";
 import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
-import {UserService} from "../../../user/user.service";
-import {CriterionWeight} from "../../../shared/model/criterion-weight";
+import {Criterion} from "../../shared/model/criterion";
+import {ProblemService} from "../../problem/problem.service";
+import {CriterionService} from "../../criterion/criterion.service";
+import {UserService} from "../../user/user.service";
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
+import {CriterionWeight} from "../../shared/model/criterion-weight";
+import {CriterionOption} from "../../shared/model/criterion-option";
 
 @Component({
-  selector: 'criteria-weights',
+  selector: 'app-hellwig',
   standalone: true,
   imports: [
     AvailableDetailsComponent,
@@ -17,13 +18,14 @@ import {CriterionWeight} from "../../../shared/model/criterion-weight";
     NgIf,
     NgTemplateOutlet
   ],
-  templateUrl: './criteria-weights.component.html',
-  styleUrl: './criteria-weights.component.css'
+  templateUrl: './hellwig.component.html',
+  styleUrl: './hellwig.component.css'
 })
-export class CriteriaWeightsComponent {
+export class HellwigComponent {
   problem: any = {};
   criteria: Criterion[] = [];
-  isNumericScale: boolean = true;
+  critOptions: CriterionOption[] = [];
+  isNumericScale: number = 0;
 
   constructor(private problemService: ProblemService,
               private criteriaService: CriterionService,
@@ -37,17 +39,34 @@ export class CriteriaWeightsComponent {
       let id = params.get('problemId');
       this.problemService.getProblem(id).subscribe((problem) => {
         this.problem = problem;
-        this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => this.criteria = criteria);
+        this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
+          this.criteria = criteria;
+          for(let criterion of this.getDescriptiveCriteria()){
+            this.criteriaService.getCriterionOptions(criterion.id).subscribe((data:any) => {
+              this.critOptions.push(...(data as CriterionOption[]));
+            })
+          }
+        });
       });
     });
     this.userService.checkScaleType().subscribe((isNumeric: any) => {
       this.isNumericScale = isNumeric;
+      console.log(JSON.stringify(isNumeric));
     })
   }
 
-  numericScaleChoosen() {
-    return this.isNumericScale;
+  getDescriptiveCriteria() {
+    return this.criteria.filter(criterion => criterion.type === "opisowe")
   }
+
+  getCriterionOptions(criterion_id: any) {
+    return this.critOptions.filter(option => option.criterion === criterion_id)
+  }
+
+  numericScaleChoosen() {
+    return this.isNumericScale === 0;
+  }
+
 
   getDescriptiveWeights(): CriterionWeight[] {
     let weightList: CriterionWeight[] = [];
@@ -71,21 +90,7 @@ export class CriteriaWeightsComponent {
     return weightList;
   }
 
-  saveCriteriaWeights() {
-    let weightList: CriterionWeight[]
-    if (this.isNumericScale) {
-      weightList = this.getNumericWeights()
-    } else {
-      weightList = this.getDescriptiveWeights()
-    }
-    this.criteriaService.saveCriteriaWeights(weightList).subscribe((response: any) => {
-      if (response === 0) {
-        this.router.navigate(['/solve/hellwig/'+this.problem.id]).then()
-      } else {
-        this.router.navigate(['/solve/topsis/'+this.problem.id]).then()
-      }
-    }, (error) => {
-      alert("Nie można zapisać wag kryteriów: " + error.error.res)
-    })
+  saveOptionWeights() {
+
   }
 }

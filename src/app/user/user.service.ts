@@ -21,4 +21,8 @@ export class UserService {
   checkScaleType() {
     return this.http.get('http://localhost:8000/user/scale')
   }
+
+  checkUserGroup(){
+    return this.http.get('http://localhost:8000/user/group')
+  }
 }
