@@ -23,7 +23,7 @@ import {CriterionWeight} from "../../../shared/model/criterion-weight";
 export class CriteriaWeightsComponent {
   problem: any = {};
   criteria: Criterion[] = [];
-  isNumericScale: boolean = true;
+  scaleType: number = 0;
 
   constructor(private problemService: ProblemService,
               private criteriaService: CriterionService,
@@ -40,13 +40,13 @@ export class CriteriaWeightsComponent {
         this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => this.criteria = criteria);
       });
     });
-    this.userService.checkScaleType().subscribe((isNumeric: any) => {
-      this.isNumericScale = isNumeric;
+    this.userService.checkScaleType().subscribe((scaleType: any) => {
+      this.scaleType = scaleType;
     })
   }
 
-  numericScaleChoosen() {
-    return this.isNumericScale;
+  getScaleType() {
+    return this.scaleType;
   }
 
   getDescriptiveWeights(): CriterionWeight[] {
@@ -73,7 +73,7 @@ export class CriteriaWeightsComponent {
 
   saveCriteriaWeights() {
     let weightList: CriterionWeight[]
-    if (this.isNumericScale) {
+    if (this.scaleType === 0) {
       weightList = this.getNumericWeights()
     } else {
       weightList = this.getDescriptiveWeights()

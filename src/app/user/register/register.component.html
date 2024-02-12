@@ -36,6 +36,13 @@
         >Hasło może zawierać maksymalnie 200 znaków</small>
       </div>
     </div>
+    <div class="ctrl-group">
+      <label class="form-label">Preferowany sposób oceny rozwiązań</label>
+      <select class="form-control" formControlName="scaleType">
+        <option value="0">liczbowy (np. w skali od 1 do 100)</option>
+        <option value="1">opisowy (opis słowny, np. dobry, zły itp.)</option>
+      </select>
+    </div>
     <div class="btn-right">
       <button
         type="submit"

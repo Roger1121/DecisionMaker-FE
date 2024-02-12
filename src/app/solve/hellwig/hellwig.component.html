@@ -19,7 +19,7 @@
             <div class="border rounded">
               <p>{{option.value}}</p>
               <ng-container
-                [ngTemplateOutlet]="numericScaleChoosen() ? slider : radio"
+                [ngTemplateOutlet]="getScaleType() ? slider : radio"
                 [ngTemplateOutletContext]="{option:option}"
               ></ng-container>
             </div>

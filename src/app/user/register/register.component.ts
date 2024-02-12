@@ -23,13 +23,15 @@ export class RegisterComponent {
   registerForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.maxLength(200)]),
     password: new FormControl('', [Validators.required, Validators.maxLength(200)]),
-    passwordConfirm: new FormControl('', [Validators.required, Validators.maxLength(200)])
+    passwordConfirm: new FormControl('', [Validators.required, Validators.maxLength(200)]),
+    scaleType: new FormControl('0', [Validators.required])
   })
 
   register(){
     let credentials : Registration = new Registration(this.registerForm.get('email')?.getRawValue(),
       this.registerForm.get('password')?.getRawValue(),
-      this.registerForm.get('passwordConfirm')?.getRawValue())
+      this.registerForm.get('passwordConfirm')?.getRawValue(),
+      this.registerForm.get('scaleType')?.getRawValue() as number)
     this.userService.register(credentials).subscribe(
       (response: any) => {
         this.router.navigate(['']).then()

@@ -16,7 +16,7 @@
         <div class="border rounded">
           <h5>{{criterion.name}}</h5>
           <ng-container
-            [ngTemplateOutlet]="numericScaleChoosen() ? slider : radio"
+            [ngTemplateOutlet]="getScaleType() === 0 ? slider : radio"
             [ngTemplateOutletContext]="{criterion:criterion}"
           ></ng-container>
         </div>

@@ -27,7 +27,7 @@ export class HellwigComponent {
   problem: any = {};
   criteria: Criterion[] = [];
   critOptions: CriterionOption[] = [];
-  isNumericScale: number = 0;
+  scaleType: number = 0;
 
   constructor(private problemService: ProblemService,
               private criteriaService: CriterionService,
@@ -44,7 +44,7 @@ export class HellwigComponent {
         this.problem = problem;
         this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
           this.criteria = criteria;
-          for (let criterion of this.getDescriptiveCriteria()) {
+          for (let criterion of this.criteria) {
             this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
               this.critOptions.push(...(data as CriterionOption[]));
             })
@@ -52,8 +52,8 @@ export class HellwigComponent {
         });
       });
     });
-    this.userService.checkScaleType().subscribe((isNumeric: any) => {
-      this.isNumericScale = isNumeric;
+    this.userService.checkScaleType().subscribe((scaleType: any) => {
+      this.scaleType = scaleType;
     })
   }
 
@@ -61,12 +61,26 @@ export class HellwigComponent {
     return this.criteria.filter(criterion => criterion.type === "opisowe")
   }
 
+  getNumericCriteria() {
+    return this.criteria.filter(criterion => criterion.type === "liczbowe")
+  }
+
+  private getWeightsForNumericCriteria() {
+    let weightList: OptionWeight[] = [];
+    for (let criterion of this.getNumericCriteria()){
+      for( let option of this.getCriterionOptions(criterion.id)){
+        weightList.push(new OptionWeight(option.id, option.value as unknown as number));
+      }
+    }
+    return weightList;
+  }
+
   getCriterionOptions(criterion_id: any) {
     return this.critOptions.filter(option => option.criterion === criterion_id)
   }
 
-  numericScaleChoosen() {
-    return this.isNumericScale === 0;
+  getScaleType() {
+    return this.scaleType === 0;
   }
 
 
@@ -98,13 +112,14 @@ export class HellwigComponent {
 
   saveOptionWeights() {
     let weightList: OptionWeight[]
-    if (this.isNumericScale === 0) {
+    if (this.scaleType === 0) {
       weightList = this.getNumericWeights();
     } else {
       weightList = this.getDescriptiveWeights();
     }
+    weightList.push(...(this.getWeightsForNumericCriteria()));
     this.optionService.saveOptionWeights(weightList).subscribe((response: any) => {
-        this.router.navigate(['/solve/hellwig/ideal/'+this.problem.id]).then();
+      this.router.navigate(['/solve/hellwig/ideal/' + this.problem.id]).then();
     }, (error) => {
       alert("Nie można zapisać wag opcji: " + error.error.res);
     })

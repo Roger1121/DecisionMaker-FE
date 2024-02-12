@@ -2,6 +2,7 @@ export class Registration{
   constructor(
     public email: string,
     public password: string,
-    public passwordConfirmation: string
+    public passwordConfirmation: string,
+    public scaleType: number
   ) {}
 }

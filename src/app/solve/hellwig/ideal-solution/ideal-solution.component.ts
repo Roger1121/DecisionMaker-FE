@@ -24,12 +24,10 @@ export class IdealSolutionComponent {
   problem: any = {};
   criteria: Criterion[] = [];
   critOptions: CriterionOption[] = [];
-  isNumericScale: number = 0;
 
   constructor(private problemService: ProblemService,
               private criteriaService: CriterionService,
               private optionService: OptionService,
-              private userService: UserService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -49,9 +47,6 @@ export class IdealSolutionComponent {
         });
       });
     });
-    this.userService.checkScaleType().subscribe((isNumeric: any) => {
-      this.isNumericScale = isNumeric;
-    })
   }
 
   getCriterionOptions(criterion_id: any) {
