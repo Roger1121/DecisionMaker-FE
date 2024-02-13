@@ -46,4 +46,8 @@ export class OptionService {
   saveIdealSolutions(solutions: IdealSolution[]) {
     return this.http.post('http://localhost:8000/solutions', solutions)
   }
+
+  getOptionWeights(problem_id: any) {
+    return this.http.get(`http://localhost:8000/crit-option/weights`, {params: new HttpParams().set('problem_id', problem_id)})
+  }
 }

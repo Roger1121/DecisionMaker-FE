@@ -1,12 +1,84 @@
 import { Component } from '@angular/core';
+import {AvailableDetailsComponent} from "../../../problem/user/available-details/available-details.component";
+import {NgForOf} from "@angular/common";
+import {Criterion} from "../../../shared/model/criterion";
+import {CriterionOption} from "../../../shared/model/criterion-option";
+import {ProblemService} from "../../../problem/problem.service";
+import {CriterionService} from "../../../criterion/criterion.service";
+import {OptionService} from "../../../option/option.service";
+import {UserService} from "../../../user/user.service";
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
+import {CriterionWeight} from "../../../shared/model/criterion-weight";
+import {OptionWeight} from "../../../shared/model/option-weight";
+import {Option} from "../../../shared/model/option";
 
 @Component({
   selector: 'app-hellwig-result',
   standalone: true,
-  imports: [],
+  imports: [
+    AvailableDetailsComponent,
+    NgForOf
+  ],
   templateUrl: './hellwig-result.component.html',
   styleUrl: './hellwig-result.component.css'
 })
 export class HellwigResultComponent {
+  problem: any = {};
+  criteria: Criterion[] = [];
+  criteriaWeights: CriterionWeight[] = [];
+  critOptions: CriterionOption[] = [];
+  options: Option[] = [];
+  optionWeights: OptionWeight[] = [];
+  scaleType: number = 0;
 
+  constructor(private problemService: ProblemService,
+              private criteriaService: CriterionService,
+              private optionService: OptionService,
+              private userService: UserService,
+              private route: ActivatedRoute,
+              private router: Router) {
+  }
+
+  ngOnInit() {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      let id = params.get('problemId');
+      this.problemService.getProblem(id).subscribe((problem) => {
+        this.problem = problem;
+        this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
+          this.criteria = criteria;
+          for (let criterion of this.criteria) {
+            this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
+              this.critOptions.push(...(data as CriterionOption[]));
+            })
+          }
+        });
+      });
+      this.criteriaService.getCriteriaWeights(id).subscribe((data: any) => {this.criteriaWeights = data;});
+      this.optionService.getOptionsByProblemId(id).subscribe((data: any) => {this.options = data;});
+      this.optionService.getOptionWeights(id).subscribe((data: any) => {this.optionWeights = data;});
+    });
+    this.userService.checkScaleType().subscribe((scaleType: any) => {
+      this.scaleType = scaleType;
+    })
+  }
+
+  getCriterionWeight(criterion_id : number|undefined){
+    return this.criteriaWeights.filter(criterion => criterion_id === criterion.criterion)[0].weight
+  }
+
+  getOptionWeight(option_id : any, criterion_id : any){
+    let options = this.critOptions
+      .filter(option =>  criterion_id == option.criterion && option_id == option.option)
+    return this.optionWeights.filter(option => option.criterionOption === options[0].id)[0].weight;
+  }
+
+  getCriterionOptionName(option_id : any, criterion_id : any){
+    let options = this.critOptions
+      .filter(option =>  criterion_id == option.criterion && option_id == option.option)
+    return options[0].value
+  }
+
+  getIdealForCriterion(criterion_id : any){
+    return "XXX"
+  }
 }

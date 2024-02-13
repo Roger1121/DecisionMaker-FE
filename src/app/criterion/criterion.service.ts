@@ -48,4 +48,8 @@ export class CriterionService {
   getCriterionOptions(criterion_id: any) {
     return this.http.get('http://localhost:8000/crit-option', {params: new HttpParams().set('criterion_id', criterion_id)}).pipe(catchError(this.errorHandler.handleWebError))
   }
+
+  getCriteriaWeights(problem_id: any) {
+    return this.http.get(`http://localhost:8000/criterion/weights`, {params: new HttpParams().set('problem_id', problem_id)})
+  }
 }

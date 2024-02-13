@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Login} from "../shared/model/user/login";
-import {TokenRefresh} from "../shared/model/user/token-refresh";
 import {Registration} from "../shared/model/user/registration";
 
 @Injectable({

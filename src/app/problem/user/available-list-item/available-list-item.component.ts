@@ -15,7 +15,47 @@ import {SlicePipe} from "@angular/common";
 })
 export class AvailableListItemComponent {
   @Input() problem! : Problem;
+  @Input() problemStage! :number;
+  @Input() userGroup! :number;
 
   constructor(protected router: Router) {
+  }
+
+  getButtonContent(){
+    switch (this.problemStage) {
+      case 0:
+        return "Otwórz";
+      case 3:
+        return "Zobacz wyniki";
+      default:
+        return "Kontynuuj rozwiązywanie";
+    }
+  }
+
+  redirectToProblem(problem_id : number|undefined){
+    let url = ""
+    if((this.userGroup + this.problem.group) % 2 === 1){
+      // Route to Hellwig
+      switch (this.problemStage) {
+        case 0:
+          url = "/criteria/weights"
+          break;
+        case 1:
+          url = "/solve/hellwig/" + this.problem.id
+          break;
+        case 2:
+          url = "/solve/hellwig/ideal/" + this.problem.id
+          break;
+        case 3:
+          url = "/solve/hellwig/results/" + this.problem.id
+          break;
+      }
+    } else {
+      //Route to TOPSIS
+      switch (this.problemStage){
+
+      }
+    }
+    this.router.navigate([url]).then();
   }
 }

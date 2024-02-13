@@ -6,7 +6,6 @@ import {ProblemService} from "../../problem/problem.service";
 import {CriterionService} from "../../criterion/criterion.service";
 import {UserService} from "../../user/user.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {CriterionWeight} from "../../shared/model/criterion-weight";
 import {CriterionOption} from "../../shared/model/criterion-option";
 import {OptionWeight} from "../../shared/model/option-weight";
 import {OptionService} from "../../option/option.service";

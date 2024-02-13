@@ -1,1 +1,38 @@
-<p>hellwig-result works!</p>
+<div class="container" >
+  <div class="row">
+    <div class="col-md-5">
+      <available-details [problem]="problem"/>
+    </div>
+    <div class="col-md-7">
+      <h1>
+        Metoda Hellwiga - wyniki
+      </h1>
+      <p>
+        Poniżej zaprezentowane są opcje wybrane podczas rozwiązywania problemu oraz ranking końcowy analizowanych opcji.
+      </p>
+      <h3>Wagi kryteriów</h3>
+      <div *ngFor="let criterion of criteria">
+        <h4>{{criterion.name}}</h4>
+        <p>{{ getCriterionWeight(criterion.id) }}</p>
+        <h5>Wagi opcji</h5>
+        <div *ngFor="let option of options">
+          <h6>{{option.name}}</h6>
+          <p>{{getCriterionOptionName(option.id, criterion.id)}} ---> {{getOptionWeight(option.id, criterion.id)}}</p>
+        </div>
+      </div>
+      <h3>
+        Wzorzec rozwoju
+      </h3>
+      <div *ngFor="let criterion of criteria">
+        <h5>{{criterion.name}}</h5>
+        <p>{{getIdealForCriterion(criterion.id)}}</p>
+      </div>
+      <h3>
+        Ranking końcowy
+      </h3>
+      <div>
+
+      </div>
+    </div>
+  </div>
+</div>

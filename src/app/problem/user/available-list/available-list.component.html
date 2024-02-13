@@ -11,6 +11,8 @@
 <ng-template #problemList>
   <div *ngFor="let problem of problems">
     <available-list-item
-      [problem]="problem"/>
+      [problem]="problem"
+      [problemStage]="getStageByProblem(problem.id)"
+      [userGroup]="userGroup"/>
   </div>
 </ng-template>
