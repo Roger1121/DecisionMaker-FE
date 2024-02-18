@@ -24,4 +24,8 @@ export class UserService {
   checkUserGroup(){
     return this.http.get('http://localhost:8000/user/group')
   }
+
+  checkUserPrivileges(){
+    return this.http.get('http://localhost:8000/user/privileges')
+  }
 }

@@ -1,16 +1,22 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="collapse navbar-collapse" id="navbarToggler">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+  <div class="navbar-collapse d-sm-inline-flex justify-content-between" id="navbarContent">
+    <ul class="navbar-nav flex-grow-1">
       <li class="nav-item">
-        <a class="nav-link" routerLink="">DecisionMaker</a>
+        <a class="nav-link">DecisionMaker</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="isAdminObs | async">
         <a class="nav-link" routerLink="problem">Problemy</a>
       </li>
-      <li class="nav-item" *ngIf="!isLogged()">
+      <li class="nav-item" *ngIf="(isAdminObs | async) === false && (isAuthenticatedObs | async)">
+        <a class="nav-link" routerLink="problem/available">Problemy</a>
+      </li>
+      <li class="nav-item" *ngIf="(isAdminObs | async) === false && (isAuthenticatedObs | async)">
+        <a class="nav-link">Ankieta ewaluacyjna</a>
+      </li>
+      <li class="nav-item" *ngIf="(isAuthenticatedObs | async) === false">
         <a class="nav-link" routerLink="auth">Zaloguj</a>
       </li>
-      <li class="nav-item" *ngIf="isLogged()" (click)="logout()">
+      <li class="nav-item" *ngIf="(isAuthenticatedObs | async) === true" (click)="logout()">
         <a class="nav-link" routerLink="auth">Wyloguj</a>
       </li>
     </ul>

@@ -4,6 +4,7 @@ import {UserService} from "../user.service";
 import {Login} from "../../shared/model/user/login";
 import {Router} from "@angular/router"
 import {NgIf} from "@angular/common";
+import {EventService} from "../../shared/services/EventService";
 
 @Component({
   selector: 'login',
@@ -17,7 +18,7 @@ import {NgIf} from "@angular/common";
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private eventService: EventService) {
   }
 
   loginForm = new FormGroup({
@@ -31,6 +32,7 @@ export class LoginComponent {
       (response: any) => {
         window.sessionStorage.removeItem("USER_TOKEN");
         window.sessionStorage.setItem('USER_TOKEN', response['access']);
+        this.eventService.emit("user-logged-in", response['access']);
         this.router.navigate(['/problem']).then()
       },
       (error) => {

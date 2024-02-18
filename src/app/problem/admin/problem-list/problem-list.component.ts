@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import {Problem} from "../../../shared/model/problem";
 import {NgForOf, NgIf} from "@angular/common";
 import {ProblemListItemComponent} from "../problem-list-item/problem-list-item.component";
