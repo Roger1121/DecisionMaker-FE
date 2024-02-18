@@ -38,16 +38,16 @@ export class AvailableListItemComponent {
       // Route to Hellwig
       switch (this.problemStage) {
         case 0:
-          url = "/criteria/weights"
+          url = "/criteria/weights/"
           break;
         case 1:
-          url = "/solve/hellwig/" + this.problem.id
+          url = "/solve/hellwig/"
           break;
         case 2:
-          url = "/solve/hellwig/ideal/" + this.problem.id
+          url = "/solve/hellwig/ideal/"
           break;
         case 3:
-          url = "/solve/hellwig/results/" + this.problem.id
+          url = "/solve/hellwig/results/"
           break;
       }
     } else {
@@ -56,6 +56,6 @@ export class AvailableListItemComponent {
 
       }
     }
-    this.router.navigate([url]).then();
+    this.router.navigate([url, this.problem.id]).then();
   }
 }

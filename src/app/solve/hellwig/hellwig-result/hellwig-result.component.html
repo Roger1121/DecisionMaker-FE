@@ -1,4 +1,4 @@
-<div class="container" >
+<div class="container">
   <div class="row">
     <div class="col-md-5">
       <available-details [problem]="problem"/>
@@ -12,26 +12,28 @@
       </p>
       <h3>Wagi kryteriów</h3>
       <div *ngFor="let criterion of criteria">
-        <h4>{{criterion.name}}</h4>
+        <h4>{{ criterion.name }}</h4>
         <p>{{ getCriterionWeight(criterion.id) }}</p>
         <h5>Wagi opcji</h5>
         <div *ngFor="let option of options">
-          <h6>{{option.name}}</h6>
-          <p>{{getCriterionOptionName(option.id, criterion.id)}} ---> {{getOptionWeight(option.id, criterion.id)}}</p>
+          <h6>{{ option.name }}</h6>
+          <p>{{ getCriterionOptionName(option.id, criterion.id) }}
+            ---> {{ getOptionWeight(option.id, criterion.id) }}</p>
         </div>
       </div>
       <h3>
         Wzorzec rozwoju
       </h3>
       <div *ngFor="let criterion of criteria">
-        <h5>{{criterion.name}}</h5>
-        <p>{{getIdealForCriterion(criterion.id)}}</p>
+        <h5>{{ criterion.name }}</h5>
+        <p>{{ getIdealForCriterion(criterion.id)?.value }}</p>
       </div>
       <h3>
         Ranking końcowy
       </h3>
-      <div>
-
+      <div *ngFor="let result of finalRanks; let i = index;">
+        <h4>{{i+1}}. {{ getOptionName(result.option) }}</h4>
+        <p>{{result.synth_var}}</p>
       </div>
     </div>
   </div>

@@ -3,12 +3,11 @@ import {Criterion} from "../../../shared/model/criterion";
 import {CriterionOption} from "../../../shared/model/criterion-option";
 import {ProblemService} from "../../../problem/problem.service";
 import {CriterionService} from "../../../criterion/criterion.service";
-import {OptionService} from "../../../option/option.service";
-import {UserService} from "../../../user/user.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {AvailableDetailsComponent} from "../../../problem/user/available-details/available-details.component";
 import {NgForOf} from "@angular/common";
 import {IdealSolution} from "../../../shared/model/ideal-solution";
+import {HellwigService} from "../hellwig.service";
 
 @Component({
   selector: 'app-ideal-solution',
@@ -27,7 +26,7 @@ export class IdealSolutionComponent {
 
   constructor(private problemService: ProblemService,
               private criteriaService: CriterionService,
-              private optionService: OptionService,
+              private hellwigService: HellwigService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -67,7 +66,7 @@ export class IdealSolutionComponent {
       let solution = new IdealSolution(select.value as number);
       solutions.push(solution);
     }
-    this.optionService.saveIdealSolutions(solutions).subscribe((response: any) => {
+    this.hellwigService.saveIdealSolutions(solutions).subscribe((response: any) => {
       this.router.navigate(['/solve/hellwig/results/'+this.problem.id]).then();
     }, (error) => {
       alert("Nie można zapisać wzorca rozwoju: " + error.error.res);

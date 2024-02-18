@@ -8,7 +8,7 @@ import {UserService} from "../../user/user.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {CriterionOption} from "../../shared/model/criterion-option";
 import {OptionWeight} from "../../shared/model/option-weight";
-import {OptionService} from "../../option/option.service";
+import {HellwigService} from "./hellwig.service";
 
 @Component({
   selector: 'app-hellwig',
@@ -30,7 +30,7 @@ export class HellwigComponent {
 
   constructor(private problemService: ProblemService,
               private criteriaService: CriterionService,
-              private optionService: OptionService,
+              private hellwigService: HellwigService,
               private userService: UserService,
               private route: ActivatedRoute,
               private router: Router) {
@@ -117,7 +117,7 @@ export class HellwigComponent {
       weightList = this.getDescriptiveWeights();
     }
     weightList.push(...(this.getWeightsForNumericCriteria()));
-    this.optionService.saveOptionWeights(weightList).subscribe((response: any) => {
+    this.hellwigService.saveOptionWeights(weightList).subscribe((response: any) => {
       this.router.navigate(['/solve/hellwig/ideal/' + this.problem.id]).then();
     }, (error) => {
       alert("Nie można zapisać wag opcji: " + error.error.res);

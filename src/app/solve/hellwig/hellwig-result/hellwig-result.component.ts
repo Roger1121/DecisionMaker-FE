@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AvailableDetailsComponent} from "../../../problem/user/available-details/available-details.component";
 import {NgForOf} from "@angular/common";
 import {Criterion} from "../../../shared/model/criterion";
@@ -11,6 +11,8 @@ import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {CriterionWeight} from "../../../shared/model/criterion-weight";
 import {OptionWeight} from "../../../shared/model/option-weight";
 import {Option} from "../../../shared/model/option";
+import {HellwigResult} from "../../../shared/model/hellwig-result";
+import {HellwigService} from "../hellwig.service";
 
 @Component({
   selector: 'app-hellwig-result',
@@ -29,14 +31,16 @@ export class HellwigResultComponent {
   critOptions: CriterionOption[] = [];
   options: Option[] = [];
   optionWeights: OptionWeight[] = [];
+  ideals: number[] = [];
+  finalRanks: HellwigResult[] = [];
   scaleType: number = 0;
 
   constructor(private problemService: ProblemService,
               private criteriaService: CriterionService,
               private optionService: OptionService,
+              private hellwigService: HellwigService,
               private userService: UserService,
-              private route: ActivatedRoute,
-              private router: Router) {
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -53,32 +57,56 @@ export class HellwigResultComponent {
           }
         });
       });
-      this.criteriaService.getCriteriaWeights(id).subscribe((data: any) => {this.criteriaWeights = data;});
-      this.optionService.getOptionsByProblemId(id).subscribe((data: any) => {this.options = data;});
-      this.optionService.getOptionWeights(id).subscribe((data: any) => {this.optionWeights = data;});
+      this.criteriaService.getCriteriaWeights(id).subscribe((data: any) => {
+        this.criteriaWeights = data;
+      });
+      this.optionService.getOptionsByProblemId(id).subscribe((data: any) => {
+        this.options = data;
+      });
+      this.hellwigService.getOptionWeights(id).subscribe((data: any) => {
+        this.optionWeights = data;
+      });
+      this.hellwigService.getIdealSolutions(id).subscribe((data: any) => {
+        this.ideals = data;
+      });
+      this.hellwigService.getResults(id).subscribe((data: any) => {
+        this.finalRanks = data;
+      });
     });
     this.userService.checkScaleType().subscribe((scaleType: any) => {
       this.scaleType = scaleType;
     })
   }
 
-  getCriterionWeight(criterion_id : number|undefined){
+  getCriterionWeight(criterion_id: number | undefined) {
     return this.criteriaWeights.filter(criterion => criterion_id === criterion.criterion)[0].weight
   }
 
-  getOptionWeight(option_id : any, criterion_id : any){
+  getOptionWeight(option_id: any, criterion_id: any) {
     let options = this.critOptions
-      .filter(option =>  criterion_id == option.criterion && option_id == option.option)
-    return this.optionWeights.filter(option => option.criterionOption === options[0].id)[0].weight;
+      .filter(option => criterion_id == option.criterion && option_id == option.option)
+    if (options.length === 0) {
+      return null;
+    }
+    let weights = this.optionWeights.filter(option => option.criterionOption === options[0].id);
+    return weights.length > 0 ? weights[0].weight : null;
   }
 
-  getCriterionOptionName(option_id : any, criterion_id : any){
+  getCriterionOptionName(option_id: any, criterion_id: any) {
     let options = this.critOptions
-      .filter(option =>  criterion_id == option.criterion && option_id == option.option)
-    return options[0].value
+      .filter(option => criterion_id == option.criterion && option_id == option.option)
+    return options.length > 0 ? options[0].value : null;
   }
 
-  getIdealForCriterion(criterion_id : any){
-    return "XXX"
+  getIdealForCriterion(criterion_id: any) {
+    let ideal = this.critOptions.filter(option => {
+      return option.id != null && option.criterion === criterion_id && this.ideals.includes(option.id)
+    });
+    return ideal.length > 0 ? ideal[0] : null;
+  }
+
+  getOptionName(option_id : number){
+    let options = this.options.filter(option => option.id === option_id)
+    return options.length === 0 ? null : options[0].name;
   }
 }

@@ -38,16 +38,4 @@ export class OptionService {
   deleteOption(option_id: any){
     return this.http.delete(`http://localhost:8000/option/${option_id}`)
   }
-
-  saveOptionWeights(weightList: OptionWeight[]) {
-    return this.http.post('http://localhost:8000/crit-option/weights', weightList)
-  }
-
-  saveIdealSolutions(solutions: IdealSolution[]) {
-    return this.http.post('http://localhost:8000/solutions', solutions)
-  }
-
-  getOptionWeights(problem_id: any) {
-    return this.http.get(`http://localhost:8000/crit-option/weights`, {params: new HttpParams().set('problem_id', problem_id)})
-  }
 }
