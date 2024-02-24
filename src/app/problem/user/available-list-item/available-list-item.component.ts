@@ -51,9 +51,17 @@ export class AvailableListItemComponent {
           break;
       }
     } else {
-      //Route to TOPSIS
+      //Route to AHP
       switch (this.problemStage){
-
+        case 0:
+          url = "/criteria/comparison/"
+          break;
+        case 2:
+          url = "/option/comparison/"
+          break;
+        case 3:
+          url = "/solve/ahp/results/"
+          break;
       }
     }
     this.router.navigate([url, this.problem.id]).then();

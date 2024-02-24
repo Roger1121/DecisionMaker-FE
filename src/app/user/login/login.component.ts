@@ -33,7 +33,13 @@ export class LoginComponent {
         window.sessionStorage.removeItem("USER_TOKEN");
         window.sessionStorage.setItem('USER_TOKEN', response['access']);
         this.eventService.emit("user-logged-in", response['access']);
-        this.router.navigate(['/problem']).then()
+        this.userService.checkUserPrivileges().subscribe((data)=> {
+          if(data==='ADMIN'){
+            this.router.navigate(['/problem']).then();
+          } else {
+            this.router.navigate(['/problem/available']).then();
+          }
+        });
       },
       (error) => {
         alert(error);

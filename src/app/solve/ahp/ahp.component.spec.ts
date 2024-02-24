@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TopsisComponent } from './topsis.component';
+import { AhpComponent } from './ahp.component';
 
-describe('TopsisComponent', () => {
-  let component: TopsisComponent;
-  let fixture: ComponentFixture<TopsisComponent>;
+describe('AhpComponent', () => {
+  let component: AhpComponent;
+  let fixture: ComponentFixture<AhpComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TopsisComponent]
+      imports: [AhpComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(TopsisComponent);
+    fixture = TestBed.createComponent(AhpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

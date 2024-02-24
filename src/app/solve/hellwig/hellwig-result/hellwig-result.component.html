@@ -33,7 +33,8 @@
       </h3>
       <div *ngFor="let result of finalRanks; let i = index;">
         <h4>{{i+1}}. {{ getOptionName(result.option) }}</h4>
-        <p>{{result.synth_var}}</p>
+        <h6>Ocena rozwiązania w skali od 0 do 100</h6>
+        <p>{{math.trunc(result.synth_var * 100)}}</p>
       </div>
     </div>
   </div>

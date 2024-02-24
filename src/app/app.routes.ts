@@ -6,9 +6,11 @@ import {RegisterComponent} from "./user/register/register.component";
 import {AvailableListComponent} from "./problem/user/available-list/available-list.component";
 import {CriteriaWeightsComponent} from "./criterion/user/criteria-weights/criteria-weights.component";
 import {HellwigComponent} from "./solve/hellwig/hellwig.component";
-import {TopsisComponent} from "./solve/topsis/topsis.component";
 import {IdealSolutionComponent} from "./solve/hellwig/ideal-solution/ideal-solution.component";
 import {HellwigResultComponent} from "./solve/hellwig/hellwig-result/hellwig-result.component";
+import {AhpComponent} from "./solve/ahp/ahp.component";
+import {AhpResultComponent} from "./solve/ahp/ahp-result/ahp-result.component";
+import {OptionComparisonComponent} from "./solve/ahp/option-comparison/option-comparison.component";
 
 export const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -20,5 +22,7 @@ export const routes: Routes = [
   {path: 'solve/hellwig/:problemId', component: HellwigComponent},
   {path: 'solve/hellwig/ideal/:problemId', component: IdealSolutionComponent},
   {path: 'solve/hellwig/results/:problemId', component: HellwigResultComponent},
-  {path: 'solve/topsis/:problemId', component: TopsisComponent},
+  {path: 'solve/ahp/results/:problemId', component: AhpResultComponent},
+  {path: 'criteria/comparison/:problemId', component: AhpComponent},
+  {path: 'option/comparison/:problemId', component: OptionComparisonComponent},
 ];

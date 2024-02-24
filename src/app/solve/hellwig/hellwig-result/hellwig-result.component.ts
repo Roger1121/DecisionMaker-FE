@@ -34,6 +34,7 @@ export class HellwigResultComponent {
   ideals: number[] = [];
   finalRanks: HellwigResult[] = [];
   scaleType: number = 0;
+  math = Math;
 
   constructor(private problemService: ProblemService,
               private criteriaService: CriterionService,

@@ -33,14 +33,14 @@
 
 
 <ng-template #slider let-option='option'>
-  <input id="{{option.id}}" type="range" class="form-range" min="0" max="100" step="1" value="50"
+  <input id="{{option.id}}" type="range" class="form-range" min="1" max="100" step="1" value="50"
          oninput="this.nextElementSibling.value = this.value">
   <output>50</output>
 </ng-template>
 
 <ng-template #radio let-option='option'>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="flexRadio-{{option.id}}" id="{{option.id}}1" value="99">
+    <input class="form-check-input" type="radio" name="flexRadio-{{option.id}}" id="{{option.id}}1" value="100">
     <label class="form-check-label" for="{{option.id}}1">
       Najlepsze
     </label>
