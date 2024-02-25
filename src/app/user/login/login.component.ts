@@ -29,10 +29,10 @@ export class LoginComponent {
   login(){
     let credentials : Login = new Login(this.loginForm.get('email')?.getRawValue(), this.loginForm.get('password')?.getRawValue())
     this.userService.login(credentials).subscribe(
-      (response: any) => {
+      (data: any) => {
         window.sessionStorage.removeItem("USER_TOKEN");
-        window.sessionStorage.setItem('USER_TOKEN', response['access']);
-        this.eventService.emit("user-logged-in", response['access']);
+        window.sessionStorage.setItem('USER_TOKEN', data['access']);
+        this.eventService.emit("user-logged-in", data['access']);
         this.userService.checkUserPrivileges().subscribe((data)=> {
           if(data==='ADMIN'){
             this.router.navigate(['/problem']).then();
@@ -42,7 +42,7 @@ export class LoginComponent {
         });
       },
       (error) => {
-        alert(error);
+        this.eventService.emit("alert-error", "Nieprawidłowy login lub hasło");
       }
     )
   }
