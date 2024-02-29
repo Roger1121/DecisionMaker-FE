@@ -1,7 +1,7 @@
 <div class="container">
   <button
     type="button"
-    class="btn btn-primary"
+    class="btn btn-primary btn-margin"
     (click)="$event.preventDefault(); addProblem();"
   >Dodaj nowy problem</button>
   <div *ngIf="problems.length===0; then noProblems else problemList">

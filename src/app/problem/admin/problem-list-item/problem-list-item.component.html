@@ -1,4 +1,4 @@
-<div class="row mb-3">
+<div class="row mb-3 list-item">
   <div class="col-md-4">
     <a [routerLink]="['/problem', problem.id]">
       {{ problem.name }}
@@ -12,7 +12,7 @@
       (click)="$event.preventDefault();toggleAvailability()"
     >
   </div>
-  <div class="col-md-4">
+  <div class="col-md-4 btn-right">
     <button type="button" class="btn btn-danger" (click)="$event.preventDefault();removeProblem()">Usuń</button>
   </div>
 </div>

@@ -10,18 +10,11 @@
              *ngIf="criterionFrom.get('name')?.hasError('maxlength')"
       >Nazwa może zawierać maksymalnie 200 znaków</small>
     </div>
-  </div>
-  <div class="ctrl-group">
     <label class="form-label">Typ</label>
-    <input type="text" class="form-control" formControlName="type">
-    <div *ngIf="criterionFrom.get('type')?.invalid && criterionFrom.get('type')?.touched">
-      <small class="text-danger"
-             *ngIf="criterionFrom.get('typpe')?.hasError('required')"
-      >Typ jest wymagany</small>
-      <small class="text-danger"
-             *ngIf="criterionFrom.get('type')?.hasError('maxlength')"
-      >Typ może zawierać maksymalnie 200 znaków</small>
-    </div>
+    <select class="form-select" formControlName="type">
+      <option value="liczbowe" selected>liczbowe</option>
+      <option value="opisowe">opisowe</option>
+    </select>
   </div>
   <div class="btn-right">
     <button

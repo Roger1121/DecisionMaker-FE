@@ -1,5 +1,5 @@
 <div class="container" >
-  <div class="row">
+  <div class="row ctrl-group">
     <div class="col-md-5">
       <available-details [problem]="problem"/>
     </div>
@@ -12,7 +12,7 @@
         Aby znaleźć takie rozwiązanie, dla każdego z badanych kryteriów należy wskazać najbardziej atrakcyjną spośród dostępnych opcji.
       </p>
       <div *ngFor="let criterion of criteria; let i = index;">
-        <div class="border rounded">
+        <div class="inner-group">
           <h5>{{criterion.name}}</h5>
           <select class="form-select" id="{{i}}">
             <option value="default"></option>
@@ -21,7 +21,9 @@
           </select>
         </div>
       </div>
-      <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveIdealSolution()">Zapisz wzorzec rozwoju</button>
+      <div class="btn-right">
+        <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveIdealSolution()">Zapisz wzorzec rozwoju</button>
+      </div>
     </div>
   </div>
 </div>

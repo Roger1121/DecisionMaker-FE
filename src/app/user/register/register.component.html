@@ -1,58 +1,54 @@
 <div class="container">
-  <form [formGroup]="registerForm" (ngSubmit)="$event.preventDefault(); register()">
-    <div class="ctrl-group">
-      <label class="form-label">Email</label>
-      <input type="text" class="form-control" formControlName="email">
-      <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-        <small class="text-danger"
-               *ngIf="registerForm.get('email')?.hasError('required')"
-        >Email jest wymagany</small>
-        <small class="text-danger"
-               *ngIf="registerForm.get('name')?.hasError('maxlength')"
-        >Email może zawierać maksymalnie 200 znaków</small>
+  <div class="ctrl-group">
+    <form [formGroup]="registerForm" (ngSubmit)="$event.preventDefault(); register()">
+      <div class="inner-group">
+        <label class="form-label">Email</label>
+        <input type="text" class="form-control" formControlName="email">
+        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          <small class="text-danger"
+                 *ngIf="registerForm.get('email')?.hasError('required')"
+          >Email jest wymagany</small>
+          <small class="text-danger"
+                 *ngIf="registerForm.get('name')?.hasError('maxlength')"
+          >Email może zawierać maksymalnie 200 znaków</small>
+        </div>
+        <label class="form-label">Hasło</label>
+        <input type="password" class="form-control" formControlName="password">
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          <small class="text-danger"
+                 *ngIf="registerForm.get('password')?.hasError('required')"
+          >Hasło jest wymagane</small>
+          <small class="text-danger"
+                 *ngIf="registerForm.get('password')?.hasError('maxlength')"
+          >Hasło może zawierać maksymalnie 200 znaków</small>
+        </div>
+        <label class="form-label">Potwierdź hasło</label>
+        <input type="password" class="form-control" formControlName="passwordConfirm">
+        <div *ngIf="registerForm.get('passwordConfirm')?.invalid && registerForm.get('passwordConfirm')?.touched">
+          <small class="text-danger"
+                 *ngIf="registerForm.get('passwordConfirm')?.hasError('required')"
+          >Hasło jest wymagane</small>
+          <small class="text-danger"
+                 *ngIf="registerForm.get('passwordConfirm')?.hasError('maxlength')"
+          >Hasło może zawierać maksymalnie 200 znaków</small>
+        </div>
+        <label class="form-label">Preferowany sposób oceny rozwiązań</label>
+        <select class="form-control" formControlName="scaleType">
+          <option value="0">liczbowy (np. w skali od 1 do 100)</option>
+          <option value="1">opisowy (opis słowny, np. dobry, zły itp.)</option>
+        </select>
       </div>
-    </div>
-    <div class="ctrl-group">
-      <label class="form-label">Hasło</label>
-      <input type="password" class="form-control" formControlName="password">
-      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-        <small class="text-danger"
-               *ngIf="registerForm.get('password')?.hasError('required')"
-        >Hasło jest wymagane</small>
-        <small class="text-danger"
-               *ngIf="registerForm.get('password')?.hasError('maxlength')"
-        >Hasło może zawierać maksymalnie 200 znaków</small>
+      <div class="btn-right">
+        <button
+          type="submit"
+          class="btn btn-primary btn-margin">Zarejestruj
+        </button>
       </div>
-    </div>
-    <div class="ctrl-group">
-      <label class="form-label">Potwierdź hasło</label>
-      <input type="password" class="form-control" formControlName="passwordConfirm">
-      <div *ngIf="registerForm.get('passwordConfirm')?.invalid && registerForm.get('passwordConfirm')?.touched">
-        <small class="text-danger"
-               *ngIf="registerForm.get('passwordConfirm')?.hasError('required')"
-        >Hasło jest wymagane</small>
-        <small class="text-danger"
-               *ngIf="registerForm.get('passwordConfirm')?.hasError('maxlength')"
-        >Hasło może zawierać maksymalnie 200 znaków</small>
-      </div>
-    </div>
-    <div class="ctrl-group">
-      <label class="form-label">Preferowany sposób oceny rozwiązań</label>
-      <select class="form-control" formControlName="scaleType">
-        <option value="0">liczbowy (np. w skali od 1 do 100)</option>
-        <option value="1">opisowy (opis słowny, np. dobry, zły itp.)</option>
-      </select>
-    </div>
-    <div class="btn-right">
-      <button
-        type="submit"
-        class="btn btn-primary btn-margin">Zarejestruj
-      </button>
-    </div>
-  </form>
-</div>
-<div class="container">
-  <p>
-    Posiadasz już konto? Zaloguj się <a href="">tutaj</a>.
-  </p>
+    </form>
+  </div>
+  <div class="container">
+    <p>
+      Posiadasz już konto? Zaloguj się <a href="">tutaj</a>.
+    </p>
+  </div>
 </div>

@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row">
+  <div class="row ctrl-group">
     <div class="col-md-5">
       <available-details [problem]="problem"/>
     </div>
@@ -11,24 +11,28 @@
         Metoda AHP jest metodą porządkowania bazującą na porównaniach parami i określeniu siły preferencji jednej opcji
         względem drugiej.
       </p>
-      <div *ngFor="let criterion of criteria;">
+      <div class="inner-group" *ngFor="let criterion of criteria;">
         <h3>{{criterion.name}}</h3>
         <div *ngFor="let option1 of getCriterionOptions(criterion.id); let i = index;">
           <div *ngFor="let option2 of getCriterionOptions(criterion.id); let j = index;">
-            <div *ngIf="j > i">
-              {{ option1.value }}
-              <ng-container
-                [ngTemplateOutlet]="getScaleType() ? slider : radio"
-                [ngTemplateOutletContext]="{option1:option1, option2:option2}"
-              ></ng-container>
-              {{ option2.value }}
+            <div class="row" *ngIf="j > i">
+              <div class="col-md-2">{{option1.value}}</div>
+              <div class="col-md-8">
+                <ng-container
+                  [ngTemplateOutlet]="getScaleType() ? slider : radio"
+                  [ngTemplateOutletContext]="{option1:option1, option2:option2}"
+                ></ng-container>
+              </div>
+              <div class="col-md-2">{{option2.value}}</div>
             </div>
           </div>
         </div>
       </div>
+      <div class="btn-right">
       <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveOptionComparison()">
         Zapisz porównania opcji
       </button>
+    </div>
     </div>
   </div>
 </div>

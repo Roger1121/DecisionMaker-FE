@@ -1,52 +1,48 @@
 <form [formGroup]="problemForm" (ngSubmit)="$event.preventDefault(); submitForm()">
-  <div class="mb-3 ctrl-group">
-    <label class="form-label">Nazwa</label>
-    <input type="text" class="form-control" formControlName="name">
-    <div *ngIf="problemForm.get('name')?.invalid && problemForm.get('name')?.touched">
-      <small class="text-danger"
-             *ngIf="problemForm.get('name')?.hasError('required')"
-      >Nazwa jest wymagana</small>
-      <small class="text-danger"
-             *ngIf="problemForm.get('name')?.hasError('maxlength')"
-      >Nazwa może zawierać maksymalnie 200 znaków</small>
-    </div>
+  <div class="ctrl-group">
+      <label class="form-label">Nazwa</label>
+      <input type="text" class="form-control" formControlName="name">
+      <div *ngIf="problemForm.get('name')?.invalid && problemForm.get('name')?.touched">
+        <small class="text-danger"
+               *ngIf="problemForm.get('name')?.hasError('required')"
+        >Nazwa jest wymagana</small>
+        <small class="text-danger"
+               *ngIf="problemForm.get('name')?.hasError('maxlength')"
+        >Nazwa może zawierać maksymalnie 200 znaków</small>
+      </div>
+      <label class="form-label">Opis</label>
+      <textarea rows="4" class="form-control" formControlName="description"></textarea>
+      <div *ngIf="problemForm.get('description')?.invalid && problemForm.get('description')?.touched">
+        <small class="text-danger"
+               *ngIf="problemForm.get('description')?.hasError('required')"
+        >Opis jest wymagany</small>
+        <small class="text-danger"
+               *ngIf="problemForm.get('description')?.hasError('maxlength')"
+        >Opis może zawierać maksymalnie 2000 znaków</small>
+      </div>
+      <label>Grupa</label>
+      <input type="number" class="form-control" formControlName="group">
+      <div *ngIf="problemForm.get('group')?.invalid && problemForm.get('group')?.touched">
+        <small class="text-danger"
+               *ngIf="problemForm.get('group')?.hasError('required')"
+        >Grupa jest wymagana</small>
+        <small class="text-danger"
+               *ngIf="problemForm.get('group')?.hasError('maxlength')"
+        >Grupa może zawierać maksymalnie 200 znaków</small>
+      </div>
   </div>
-  <div class="mb-3 ctrl-group">
-    <label class="form-label">Opis</label>
-    <textarea rows="4" class="form-control" formControlName="description"></textarea>
-    <div *ngIf="problemForm.get('description')?.invalid && problemForm.get('description')?.touched">
-      <small class="text-danger"
-             *ngIf="problemForm.get('description')?.hasError('required')"
-      >Opis jest wymagany</small>
-      <small class="text-danger"
-             *ngIf="problemForm.get('description')?.hasError('maxlength')"
-      >Opis może zawierać maksymalnie 2000 znaków</small>
-    </div>
-  </div>
-  <div class="mb-3 ctrl-group">
-    <label>Grupa</label>
-    <input type="number" class="form-control" formControlName="group">
-    <div *ngIf="problemForm.get('group')?.invalid && problemForm.get('group')?.touched">
-      <small class="text-danger"
-             *ngIf="problemForm.get('group')?.hasError('required')"
-      >Grupa jest wymagana</small>
-      <small class="text-danger"
-             *ngIf="problemForm.get('group')?.hasError('maxlength')"
-      >Grupa może zawierać maksymalnie 200 znaków</small>
-    </div>
-  </div>
-  <button
-    type="button"
-    class="btn btn-primary btn-margin"
-    (click)="$event.preventDefault(); addCriterion();"
-  >Dodaj kolejne kryterium
-  </button>
+  <div class="ctrl-group">
+    <button
+      type="button"
+      class="btn btn-primary btn-margin"
+      (click)="$event.preventDefault(); addCriterion();"
+    >Dodaj kolejne kryterium
+    </button>
   <div formArrayName="criteria">
     <div
       *ngFor="let criterion of criteria.controls; let i = index;"
-      [formGroupName]="i" class="mb-3 ctrl-group"
-    >
-      <div class="ctrl-group">
+      [formGroupName]="i" >
+      <div class="inner-group">
         <label class="form-label">Nazwa</label>
         <input type="text" class="form-control" formControlName="name">
         <div *ngIf="criterion.get('name')?.invalid && criterion.get('name')?.touched">
@@ -57,8 +53,6 @@
                  *ngIf="criterion.get('name')?.hasError('maxlength')"
           >Nazwa może zawierać maksymalnie 200 znaków</small>
         </div>
-      </div>
-      <div class="ctrl-group">
         <label class="form-label">Typ</label>
         <input type="text" class="form-control" formControlName="type">
         <div *ngIf="criterion.get('type')?.invalid && criterion.get('type')?.touched">
@@ -75,9 +69,11 @@
           type="button"
           class="btn btn-danger btn-margin"
           (click)="$event.preventDefault(); removeCriterion(i)"
-        >Usuń kryterium</button>
+        >Usuń kryterium
+        </button>
       </div>
     </div>
+  </div>
   </div>
   <div class="btn-right">
     <button

@@ -1,5 +1,5 @@
 <div class="container" >
-  <div class="row">
+  <div class="row ctrl-group">
     <div class="col-md-5">
       <available-details [problem]="problem"/>
     </div>
@@ -12,17 +12,21 @@
       </p>
       <div *ngFor="let criterion1 of criteria; let i = index;">
         <div *ngFor="let criterion2 of criteria; let j = index;">
-          <div *ngIf="j > i">
-            {{criterion1.name}}
+          <div class="row inner-group" *ngIf="j > i">
+            <div class="col-md-2">{{criterion1.name}}</div>
+            <div class="col-md-8">
             <ng-container
               [ngTemplateOutlet]="getScaleType() ? slider : radio"
               [ngTemplateOutletContext]="{criterion1:criterion1, criterion2:criterion2}"
             ></ng-container>
-            {{criterion2.name}}
+            </div>
+            <div class="col-md-2">{{criterion2.name}}</div>
           </div>
         </div>
       </div>
-      <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveCriteriaComparison()">Zapisz porównania kryteriów</button>
+      <div class="btn-right">
+        <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveCriteriaComparison()">Zapisz porównania kryteriów</button>
+      </div>
     </div>
   </div>
 </div>

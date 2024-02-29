@@ -1,3 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeng/resources/themes/nano/theme.css";
 @import "primeng/resources/primeng.css";
+
+.ctrl-group{
+  margin: 10px;
+  padding: 5px;
+  border-style: outset;
+  border-radius: 10px;
+  background-color: #B08968;
+}
+
+.inner-group{
+  margin: 10px;
+  padding: 5px;
+  border-style: outset;
+  border-radius: 10px;
+  background-color: #DDB892;
+}
+
+.list-item {
+  padding: 5px;
+  border-style: solid;
+  background-color: #DDB892;
+}
+
+.item-border {
+  border-style: solid;
+}
+
+.btn-margin {
+  margin: 10px
+}
+
+.btn-right {
+  text-align: right;
+}
+
+body {
+  background: #463f3a;
+}

@@ -1,5 +1,5 @@
 <div class="container" >
-  <div class="row">
+  <div class="row ctrl-group">
     <div class="col-md-5">
       <available-details [problem]="problem"/>
     </div>
@@ -13,7 +13,7 @@
         Na poniższej liście znajdują się kryteria, w oparciu o które będą analizowane wszystkie przewidziane w niniejszym problemie warianty decyzyjne.
       </p>
       <div *ngFor="let criterion of criteria">
-        <div class="border rounded">
+        <div class="inner-group">
           <h5>{{criterion.name}}</h5>
           <ng-container
             [ngTemplateOutlet]="getScaleType() === 0 ? slider : radio"
@@ -21,7 +21,9 @@
           ></ng-container>
         </div>
       </div>
-      <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveCriteriaWeights()">Zapisz wagi kryteriów</button>
+      <div class="btn-right">
+        <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveCriteriaWeights()">Zapisz wagi kryteriów</button>
+      </div>
     </div>
   </div>
 </div>

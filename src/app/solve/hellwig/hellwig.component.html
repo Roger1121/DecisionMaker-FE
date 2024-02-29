@@ -1,5 +1,5 @@
 <div class="container" >
-  <div class="row">
+  <div class="row ctrl-group">
     <div class="col-md-5">
       <available-details [problem]="problem"/>
     </div>
@@ -13,10 +13,10 @@
         Na poniższej liście znajdują się wszystkie kryteria wymagające ręcznego określenia ważności opcji.
       </p>
       <div *ngFor="let criterion of getDescriptiveCriteria()">
-        <div class="border rounded">
+        <div class="inner-group">
           <h5>{{criterion.name}}</h5>
           <div *ngFor="let option of getCriterionOptions(criterion.id)">
-            <div class="border rounded">
+            <div class="list-item">
               <p>{{option.value}}</p>
               <ng-container
                 [ngTemplateOutlet]="getScaleType() ? slider : radio"
@@ -26,7 +26,9 @@
           </div>
         </div>
       </div>
-      <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveOptionWeights()">Zapisz wagi opcji</button>
+      <div class="btn-right">
+        <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveOptionWeights()">Zapisz wagi opcji</button>
+      </div>
     </div>
   </div>
 </div>

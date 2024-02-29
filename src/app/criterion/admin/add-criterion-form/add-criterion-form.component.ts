@@ -24,7 +24,7 @@ export class AddCriterionFormComponent {
 
   criterionFrom = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(200)]),
-    type: new FormControl('', [Validators.required, Validators.maxLength(200)])
+    type: new FormControl('liczbowe', [Validators.required, Validators.maxLength(200)])
   })
 
   addCriterion() {

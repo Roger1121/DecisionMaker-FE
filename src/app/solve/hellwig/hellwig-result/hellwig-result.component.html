@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row">
+  <div class="row ctrl-group">
     <div class="col-md-5">
       <available-details [problem]="problem"/>
     </div>
@@ -11,7 +11,7 @@
         Poniżej zaprezentowane są opcje wybrane podczas rozwiązywania problemu oraz ranking końcowy analizowanych opcji.
       </p>
       <h3>Wagi kryteriów</h3>
-      <div *ngFor="let criterion of criteria">
+      <div class="inner-group" *ngFor="let criterion of criteria">
         <h4>{{ criterion.name }}</h4>
         <p>{{ getCriterionWeight(criterion.id) }}</p>
         <h5>Wagi opcji</h5>
@@ -24,14 +24,14 @@
       <h3>
         Wzorzec rozwoju
       </h3>
-      <div *ngFor="let criterion of criteria">
+      <div class="inner-group" *ngFor="let criterion of criteria">
         <h5>{{ criterion.name }}</h5>
         <p>{{ getIdealForCriterion(criterion.id)?.value }}</p>
       </div>
       <h3>
         Ranking końcowy
       </h3>
-      <div *ngFor="let result of finalRanks; let i = index;">
+      <div class="inner-group" *ngFor="let result of finalRanks; let i = index;">
         <h4>{{i+1}}. {{ getOptionName(result.option) }}</h4>
         <h6>Ocena rozwiązania w skali od 0 do 100</h6>
         <p>{{math.trunc(result.synth_var * 100)}}</p>
