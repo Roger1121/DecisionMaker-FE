@@ -36,6 +36,15 @@
   text-align: right;
 }
 
+.text-light{
+  color: #FFEBCD
+}
 body {
   background: #463f3a;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

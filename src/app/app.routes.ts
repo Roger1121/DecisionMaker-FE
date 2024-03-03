@@ -11,6 +11,8 @@ import {HellwigResultComponent} from "./solve/hellwig/hellwig-result/hellwig-res
 import {AhpComponent} from "./solve/ahp/ahp.component";
 import {AhpResultComponent} from "./solve/ahp/ahp-result/ahp-result.component";
 import {OptionComparisonComponent} from "./solve/ahp/option-comparison/option-comparison.component";
+import {QuestionListComponent} from "./question/question-list/question-list.component";
+import {SurveyComponent} from "./survey/survey.component";
 
 export const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -25,4 +27,6 @@ export const routes: Routes = [
   {path: 'solve/ahp/results/:problemId', component: AhpResultComponent},
   {path: 'criteria/comparison/:problemId', component: AhpComponent},
   {path: 'option/comparison/:problemId', component: OptionComparisonComponent},
+  {path: 'question', component: QuestionListComponent},
+  {path: 'survey', component: SurveyComponent}
 ];

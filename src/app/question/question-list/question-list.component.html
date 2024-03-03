@@ -1,0 +1,29 @@
+<div class="container">
+  <div *ngIf="questions.length===0; then noOptions else optionsList">
+  </div>
+  <div class="row">
+    <button type="button" class="btn btn-primary btn-margin mb-3" (click)="$event.preventDefault();addQuestion()">Dodaj
+      pytanie
+    </button>
+  </div>
+</div>
+<ng-template #noOptions>
+  <p class="text-light">
+    Do ankiety podsumowującej nie dodano żadnych pytań.
+  </p>
+</ng-template>
+<ng-template #optionsList>
+  <div class="ctrl-group">
+    <h2>
+      Lista pytań
+    </h2>
+    <div class="row" *ngFor="let question of questions; let i = index">
+      <div class="col-md-8">
+        <p>{{ i + 1 }}. {{ question.content }}</p>
+      </div>
+      <div class="col-md-4">
+        <button type="button" class="btn btn-danger" (click)="$event.preventDefault(); deleteQuestion(question.id)">Usuń pytanie</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="ctrl-group">
+    <h1>Ankieta ewaluacyjna</h1>
+    <div class="inner-group" *ngFor="let question of questions; let i = index;">
+      <h2>{{i+1}}. {{question.content}}</h2>
+      <ng-container
+        [ngTemplateOutlet]="checkResponseExists(question.id) ? existingResponse : addResponse"
+        [ngTemplateOutletContext]="{question:question}"
+      ></ng-container>
+    </div>
+    <div class="btn-right">
+      <button class="btn btn-primary" (click)="$event.preventDefault(); saveResponses()">Zapisz</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #existingResponse let-question='question'>
+  <p>{{ getResponseContent(question.id) }}</p>
+</ng-template>
+<ng-template #addResponse let-question='question'>
+  <input type="text" id="response{{question.id}}"/>
+</ng-template>

@@ -1,0 +1,19 @@
+<form [formGroup]="questionForm" (ngSubmit)="$event.preventDefault(); addQuestion()">
+  <div class="ctrl-group">
+    <label class="form-label">Treść pytania</label>
+    <input type="text" class="form-control" formControlName="content">
+    <div *ngIf="questionForm.get('content')?.invalid && questionForm.get('content')?.touched">
+      <small class="text-danger"
+             *ngIf="questionForm.get('content')?.hasError('required')"
+      >Treść pytania jest wymagana</small>
+      <small class="text-danger"
+             *ngIf="questionForm.get('content')?.hasError('maxlength')"
+      >Treść pytania może zawierać maksymalnie 200 znaków</small>
+    </div>
+  </div>
+  <div class="btn-right">
+    <button
+      type="submit"
+      class="btn btn-primary btn-margin">Zapisz</button>
+  </div>
+</form>
