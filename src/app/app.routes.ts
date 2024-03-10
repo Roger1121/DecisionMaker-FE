@@ -13,6 +13,10 @@ import {AhpResultComponent} from "./solve/ahp/ahp-result/ahp-result.component";
 import {OptionComparisonComponent} from "./solve/ahp/option-comparison/option-comparison.component";
 import {QuestionListComponent} from "./question/question-list/question-list.component";
 import {SurveyComponent} from "./survey/survey.component";
+import {PasswordRecoveryComponent} from "./user/password-recovery/password-recovery.component";
+import {
+  PasswordRecoveryRequestComponent
+} from "./user/password-recovery/password-recovery-request/password-recovery-request.component";
 
 export const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -28,5 +32,7 @@ export const routes: Routes = [
   {path: 'criteria/comparison/:problemId', component: AhpComponent},
   {path: 'option/comparison/:problemId', component: OptionComparisonComponent},
   {path: 'question', component: QuestionListComponent},
-  {path: 'survey', component: SurveyComponent}
+  {path: 'survey', component: SurveyComponent},
+  {path: 'password/recovery/request', component: PasswordRecoveryRequestComponent},
+  {path: 'password/reset/:token', component: PasswordRecoveryComponent}
 ];

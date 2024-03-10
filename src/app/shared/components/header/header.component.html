@@ -17,10 +17,10 @@
         <a class="nav-link" routerLink="survey">Ankieta ewaluacyjna</a>
       </li>
       <li class="nav-item" *ngIf="(isAuthenticatedObs | async) === false">
-        <a class="nav-link" routerLink="auth">Zaloguj</a>
+        <a class="nav-link" routerLink="">Zaloguj</a>
       </li>
       <li class="nav-item" *ngIf="(isAuthenticatedObs | async) === true" (click)="logout()">
-        <a class="nav-link" routerLink="auth">Wyloguj</a>
+        <a class="nav-link" routerLink="">Wyloguj</a>
       </li>
     </ul>
   </div>
