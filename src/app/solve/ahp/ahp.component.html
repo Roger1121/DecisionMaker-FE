@@ -1,4 +1,4 @@
-<div class="container" >
+<div class="container">
   <div class="row ctrl-group">
     <div class="col-md-7">
       <available-details [problem]="problem"/>
@@ -8,15 +8,24 @@
         Metoda AHP
       </h1>
       <p>
-        Metoda AHP jest metodą porządkowania bazującą na porównaniach parami i określeniu siły preferencji jednej opcji względem drugiej.
+        Metoda AHP jest metodą porządkowania bazującą na porównaniach parami i określeniu siły preferencji jednej opcji
+        względem drugiej. Znaczenie poszczególnych wag jest następujące:
       </p>
+      <ol>
+        <li>Kryteria A i B są sobie równoważne</li>
+        <li>Kryterium A jest słabo preferowane względem kryterium B</li>
+        <li>Kryterium A jest silnie preferowane względem kryterium B</li>
+        <li>Kryterium A jest bardzo silnie preferowane względem kryterium B</li>
+        <li>Kryterium A jest ekstremalnie preferowane względem kryterium B</li>
+      </ol>
+      <p>Wagi 2, 4, 6 i 8 są opcjami pośrednimi.</p>
       <div *ngFor="let criterion1 of criteria; let i = index;">
         <div *ngFor="let criterion2 of criteria; let j = index;">
           <div class="row inner-group" *ngIf="j > i">
             <button
               class="btn btn-primary"
               type="button"
-              (click)="reverseItem(i, j)" >Odwróć opcje</button>
+              (click)="reverseItem(i, j)">Odwróć kryteria</button>
             <ng-container
               [ngTemplateOutlet]="reverseArray[i][j] ? reverseComparison : comparison"
               [ngTemplateOutletContext]="{criterion1:criterion1, criterion2:criterion2}"
@@ -25,32 +34,34 @@
         </div>
       </div>
       <div class="btn-right">
-        <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveCriteriaComparison()">Zapisz porównania kryteriów</button>
+        <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveCriteriaComparison()">Zapisz
+          porównania kryteriów
+        </button>
       </div>
     </div>
   </div>
 </div>
 
 <ng-template #comparison let-criterion1='criterion1' let-criterion2='criterion2'>
-  <div class="col-md-2">{{criterion1.name}}</div>
+  <div class="col-md-2">{{ criterion1.name }}</div>
   <div class="col-md-8">
     <ng-container
       [ngTemplateOutlet]="getScaleType() ? slider : radio"
       [ngTemplateOutletContext]="{criterion1:criterion1, criterion2:criterion2}"
     ></ng-container>
   </div>
-  <div class="col-md-2">{{criterion2.name}}</div>
+  <div class="col-md-2">{{ criterion2.name }}</div>
 </ng-template>
 
 <ng-template #reverseComparison let-criterion1='criterion1' let-criterion2='criterion2'>
-  <div class="col-md-2">{{criterion2.name}}</div>
+  <div class="col-md-2">{{ criterion2.name }}</div>
   <div class="col-md-8">
     <ng-container
       [ngTemplateOutlet]="getScaleType() ? slider : radio"
       [ngTemplateOutletContext]="{criterion1:criterion1, criterion2:criterion2}"
     ></ng-container>
   </div>
-  <div class="col-md-2">{{criterion1.name}}</div>
+  <div class="col-md-2">{{ criterion1.name }}</div>
 </ng-template>
 
 <ng-template #slider let-criterion1='criterion1' let-criterion2='criterion2'>
@@ -61,55 +72,64 @@
 
 <ng-template #radio let-criterion1='criterion1' let-criterion2='criterion2'>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}" id="{{criterion1.id}}{{criterion2.id}}1" value="9">
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}"
+           id="{{criterion1.id}}{{criterion2.id}}1" value="9">
     <label class="form-check-label" for="{{criterion1.id}}{{criterion2.id}}1">
       Absolutna przewaga
     </label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}" id="{{criterion1.id}}{{criterion2.id}}2" value="8">
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}"
+           id="{{criterion1.id}}{{criterion2.id}}2" value="8">
     <label class="form-check-label" for="{{criterion1.id}}{{criterion2.id}}2">
       Bardzo duża lub absolutna przewaga
     </label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}" id="{{criterion1.id}}{{criterion2.id}}3" value="7">
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}"
+           id="{{criterion1.id}}{{criterion2.id}}3" value="7">
     <label class="form-check-label" for="{{criterion1.id}}{{criterion2.id}}3">
       Bardzo duża przewaga
     </label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}" id="{{criterion1.id}}{{criterion2.id}}4" value="6" checked>
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}"
+           id="{{criterion1.id}}{{criterion2.id}}4" value="6" checked>
     <label class="form-check-label" for="{{criterion1.id}}{{criterion2.id}}4">
       Duża lub bardzo duża przewaga
     </label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}" id="{{criterion1.id}}{{criterion2.id}}5" value="5">
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}"
+           id="{{criterion1.id}}{{criterion2.id}}5" value="5">
     <label class="form-check-label" for="{{criterion1.id}}{{criterion2.id}}5">
       Duża przewaga
     </label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}" id="{{criterion1.id}}{{criterion2.id}}6" value="4">
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}"
+           id="{{criterion1.id}}{{criterion2.id}}6" value="4">
     <label class="form-check-label" for="{{criterion1.id}}{{criterion2.id}}6">
       Umiarkowana lub duża przewaga
     </label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}" id="{{criterion1.id}}{{criterion2.id}}7" value="3">
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}"
+           id="{{criterion1.id}}{{criterion2.id}}7" value="3">
     <label class="form-check-label" for="{{criterion1.id}}{{criterion2.id}}7">
       Słaba lub umiarkowana przewaga
     </label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}" id="{{criterion1.id}}{{criterion2.id}}7" value="2">
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}"
+           id="{{criterion1.id}}{{criterion2.id}}7" value="2">
     <label class="form-check-label" for="{{criterion1.id}}{{criterion2.id}}8">
       Jednakowe lub słaba przewaga
     </label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}" id="{{criterion1.id}}{{criterion2.id}}7" value="1">
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion1.id}}{{criterion2.id}}"
+           id="{{criterion1.id}}{{criterion2.id}}7" value="1">
     <label class="form-check-label" for="{{criterion1.id}}{{criterion2.id}}9">
       Jednakowe znaczenie
     </label>

@@ -1,0 +1,10 @@
+ol {
+  counter-reset: odd-numbers -1;
+  list-style-type: none;
+}
+li {
+  counter-increment: odd-numbers 2;
+}
+li:before {
+  content: counter(odd-numbers) " - ";
+}

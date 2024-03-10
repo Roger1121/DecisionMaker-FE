@@ -11,6 +11,14 @@
         Metoda AHP jest metodą porządkowania bazującą na porównaniach parami i określeniu siły preferencji jednej opcji
         względem drugiej.
       </p>
+      <ol>
+        <li>Opcje A i B są sobie równoważne</li>
+        <li>Opcja A jest słabo preferowane względem opcji B</li>
+        <li>Opcja A jest silnie preferowane względem opcji B</li>
+        <li>Opcja A jest bardzo silnie preferowane względem opcji B</li>
+        <li>Opcja A jest ekstremalnie preferowane względem opcji B</li>
+      </ol>
+      <p>Wagi 2, 4, 6 i 8 są opcjami pośrednimi.</p>
       <div class="inner-group" *ngFor="let criterion of criteria; let c = index;">
         <h3>{{criterion.name}}</h3>
         <div *ngFor="let option1 of getCriterionOptions(criterion.id); let i = index;">
