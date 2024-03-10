@@ -13,14 +13,14 @@
       <div *ngFor="let criterion1 of criteria; let i = index;">
         <div *ngFor="let criterion2 of criteria; let j = index;">
           <div class="row inner-group" *ngIf="j > i">
-            <div class="col-md-2">{{criterion1.name}}</div>
-            <div class="col-md-8">
+            <button
+              class="btn btn-primary"
+              type="button"
+              (click)="reverseItem(i, j)" >Odwróć opcje</button>
             <ng-container
-              [ngTemplateOutlet]="getScaleType() ? slider : radio"
+              [ngTemplateOutlet]="reverseArray[i][j] ? reverseComparison : comparison"
               [ngTemplateOutletContext]="{criterion1:criterion1, criterion2:criterion2}"
             ></ng-container>
-            </div>
-            <div class="col-md-2">{{criterion2.name}}</div>
           </div>
         </div>
       </div>
@@ -31,6 +31,27 @@
   </div>
 </div>
 
+<ng-template #comparison let-criterion1='criterion1' let-criterion2='criterion2'>
+  <div class="col-md-2">{{criterion1.name}}</div>
+  <div class="col-md-8">
+    <ng-container
+      [ngTemplateOutlet]="getScaleType() ? slider : radio"
+      [ngTemplateOutletContext]="{criterion1:criterion1, criterion2:criterion2}"
+    ></ng-container>
+  </div>
+  <div class="col-md-2">{{criterion2.name}}</div>
+</ng-template>
+
+<ng-template #reverseComparison let-criterion1='criterion1' let-criterion2='criterion2'>
+  <div class="col-md-2">{{criterion2.name}}</div>
+  <div class="col-md-8">
+    <ng-container
+      [ngTemplateOutlet]="getScaleType() ? slider : radio"
+      [ngTemplateOutletContext]="{criterion1:criterion1, criterion2:criterion2}"
+    ></ng-container>
+  </div>
+  <div class="col-md-2">{{criterion1.name}}</div>
+</ng-template>
 
 <ng-template #slider let-criterion1='criterion1' let-criterion2='criterion2'>
   <input id="{{criterion1.id}}{{criterion2.id}}" type="range" class="form-range" min="1" max="9" step="1" value="1"

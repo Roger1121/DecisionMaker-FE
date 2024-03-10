@@ -28,6 +28,7 @@ export class OptionComparisonComponent {
   criteria: Criterion[] = [];
   critOptions: CriterionOption[] = [];
   scaleType: number = 0;
+  reverseArray: boolean[][][] = [];
 
   constructor(private problemService: ProblemService,
               private criteriaService: CriterionService,
@@ -47,14 +48,22 @@ export class OptionComparisonComponent {
           for (let criterion of this.criteria) {
             this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
               this.critOptions.push(...(data as CriterionOption[]));
-            })
+              this.reverseArray.push([]);
+              let c = this.reverseArray.length - 1;
+              for (let i = 0; i < this.critOptions.length; i++) {
+                this.reverseArray[c].push([]);
+                for (let j = 0; j < this.critOptions.length; j++) {
+                  this.reverseArray[c][i].push(false);
+                }
+              }
+            });
           }
         });
       });
     });
     this.userService.checkScaleType().subscribe((scaleType: any) => {
       this.scaleType = scaleType;
-    })
+    });
   }
 
   getCriterionOptions(criterion_id: any) {
@@ -75,7 +84,11 @@ export class OptionComparisonComponent {
             for (let i = 1; i <= 9; i++) {
               let radio: any = document.getElementById("" + optionA.id?.toString(10) + optionB.id?.toString(10) + i.toString(10));
               if (radio.checked) {
-                weightList.push(new OptionComparison(optionA.id, optionB.id, radio.value));
+                if (this.reverseArray[this.criteria.indexOf(criterion)][this.getCriterionOptions(criterion.id).indexOf(optionA)][this.getCriterionOptions(criterion.id).indexOf(optionA)]) {
+                  weightList.push(new OptionComparison(optionB.id, optionA.id, radio.value));
+                } else {
+                  weightList.push(new OptionComparison(optionA.id, optionB.id, radio.value));
+                }
               }
             }
           }
@@ -93,7 +106,11 @@ export class OptionComparisonComponent {
         for (let optionB of options) {
           if (options.indexOf(optionB) > options.indexOf(optionA)) {
             let slider: any = document.getElementById("" + optionA.id?.toString(10) + optionB.id?.toString(10));
-            weightList.push(new OptionComparison(optionA.id, optionB.id, slider.value));
+            if (this.reverseArray[this.criteria.indexOf(criterion)][this.getCriterionOptions(criterion.id).indexOf(optionA)][this.getCriterionOptions(criterion.id).indexOf(optionA)]) {
+              weightList.push(new OptionComparison(optionB.id, optionA.id, slider.value));
+            } else {
+              weightList.push(new OptionComparison(optionA.id, optionB.id, slider.value));
+            }
           }
         }
       }
@@ -111,5 +128,9 @@ export class OptionComparisonComponent {
     this.ahpService.saveOptionComparisons(comparisons).subscribe((data) => {
       this.router.navigate(['solve/ahp/results/' + this.problem.id]).then();
     });
+  }
+
+  reverseItem(c: number, i: number, j: number) {
+    this.reverseArray[c][i][j] = !this.reverseArray[c][i][j];
   }
 }

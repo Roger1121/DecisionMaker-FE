@@ -10,6 +10,7 @@ import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {AhpService} from "./ahp.service";
 import {CriteriaComparison} from "../../shared/model/criteria-comparison";
 import {CriterionWeight} from "../../shared/model/criterion-weight";
+import {OptionComparison} from "../../shared/model/option-comparison";
 
 @Component({
   selector: 'app-ahp',
@@ -27,6 +28,7 @@ export class AhpComponent {
   problem: any = {};
   criteria: Criterion[] = [];
   scaleType: number = 0;
+  reverseArray: boolean[][] = [];
 
   constructor(private problemService: ProblemService,
               private criteriaService: CriterionService,
@@ -43,6 +45,12 @@ export class AhpComponent {
         this.problem = problem;
         this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
           this.criteria = criteria;
+          for (let i = 0; i < this.criteria.length; i++) {
+            this.reverseArray.push([]);
+            for (let j = 0; j < this.criteria.length; j++) {
+              this.reverseArray[i].push(false);
+            }
+          }
         });
       });
     });
@@ -63,7 +71,11 @@ export class AhpComponent {
           for (let i = 1; i <= 9; i++) {
             let radio: any = document.getElementById("" + criterionA.id?.toString(10) + criterionB.id?.toString(10) + i.toString(10));
             if (radio.checked) {
-              weightList.push(new CriteriaComparison(criterionA.id, criterionB.id, radio.value));
+              if (this.reverseArray[this.criteria.indexOf(criterionA)][this.criteria.indexOf(criterionB)]) {
+                weightList.push(new CriteriaComparison(criterionB.id, criterionA.id, radio.value));
+              } else {
+                weightList.push(new CriteriaComparison(criterionA.id, criterionB.id, radio.value));
+              }
             }
           }
         }
@@ -78,7 +90,11 @@ export class AhpComponent {
       for (let criterionB of this.criteria) {
         if (this.criteria.indexOf(criterionB) > this.criteria.indexOf(criterionA)) {
           let slider: any = document.getElementById("" + criterionA.id?.toString(10) + criterionB.id?.toString(10));
-          weightList.push(new CriteriaComparison(criterionA.id, criterionB.id, slider.value));
+          if (this.reverseArray[this.criteria.indexOf(criterionA)][this.criteria.indexOf(criterionB)]) {
+            weightList.push(new CriteriaComparison(criterionB.id, criterionA.id, slider.value));
+          } else {
+            weightList.push(new CriteriaComparison(criterionA.id, criterionB.id, slider.value));
+          }
         }
       }
     }
@@ -95,5 +111,9 @@ export class AhpComponent {
     this.ahpService.saveCriteriaComparisons(comparisons).subscribe((data) => {
       this.router.navigate(['option/comparison/' + this.problem.id]).then();
     });
+  }
+
+  reverseItem(i: number, j: number) {
+    this.reverseArray[i][j] = !this.reverseArray[i][j];
   }
 }

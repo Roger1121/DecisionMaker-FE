@@ -11,19 +11,20 @@
         Metoda AHP jest metodą porządkowania bazującą na porównaniach parami i określeniu siły preferencji jednej opcji
         względem drugiej.
       </p>
-      <div class="inner-group" *ngFor="let criterion of criteria;">
+      <div class="inner-group" *ngFor="let criterion of criteria; let c = index;">
         <h3>{{criterion.name}}</h3>
         <div *ngFor="let option1 of getCriterionOptions(criterion.id); let i = index;">
           <div *ngFor="let option2 of getCriterionOptions(criterion.id); let j = index;">
             <div class="row" *ngIf="j > i">
-              <div class="col-md-2">{{option1.value}}</div>
-              <div class="col-md-8">
-                <ng-container
-                  [ngTemplateOutlet]="getScaleType() ? slider : radio"
-                  [ngTemplateOutletContext]="{option1:option1, option2:option2}"
-                ></ng-container>
-              </div>
-              <div class="col-md-2">{{option2.value}}</div>
+              <button
+                class="btn btn-primary"
+                type="button"
+                (click)="reverseItem(c, i, j)"
+              >Odwróć opcje</button>
+              <ng-container
+                [ngTemplateOutlet]="reverseArray[c][i][j] ? reverseComparison : comparison"
+                [ngTemplateOutletContext]="{option1:option1, option2:option2}"
+              ></ng-container>
             </div>
           </div>
         </div>
@@ -37,6 +38,27 @@
   </div>
 </div>
 
+<ng-template #comparison let-option1='option1' let-option2='option2'>
+  <div class="col-md-2">{{option1.value}}</div>
+  <div class="col-md-8">
+    <ng-container
+      [ngTemplateOutlet]="getScaleType() ? slider : radio"
+      [ngTemplateOutletContext]="{option1:option1, option2:option2}"
+    ></ng-container>
+  </div>
+  <div class="col-md-2">{{option2.value}}</div>
+</ng-template>
+
+<ng-template #reverseComparison let-option1='option1' let-option2='option2'>
+  <div class="col-md-2">{{option2.value}}</div>
+  <div class="col-md-8">
+    <ng-container
+      [ngTemplateOutlet]="getScaleType() ? slider : radio"
+      [ngTemplateOutletContext]="{option1:option1, option2:option2}"
+    ></ng-container>
+  </div>
+  <div class="col-md-2">{{option1.value}}</div>
+</ng-template>
 
 <ng-template #slider let-option1='option1' let-option2='option2'>
   <input id="{{option1.id}}{{option2.id}}" type="range" class="form-range" min="1" max="9" step="1" value="1"
