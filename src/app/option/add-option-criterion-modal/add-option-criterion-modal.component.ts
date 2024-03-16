@@ -39,7 +39,7 @@ export class AddOptionCriterionModalComponent {
         this.activeModal.close('Success');
       },
       (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
         this.activeModal.close('Failure');
       }
     );

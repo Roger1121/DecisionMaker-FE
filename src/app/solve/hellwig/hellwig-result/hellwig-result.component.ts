@@ -60,38 +60,38 @@ export class HellwigResultComponent {
           }
         });
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
       this.criteriaService.getCriteriaWeights(id).subscribe((data: any) => {
         this.criteriaWeights = data;
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
       this.optionService.getOptionsByProblemId(id).subscribe((data: any) => {
         this.options = data;
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
       this.hellwigService.getOptionWeights(id).subscribe((data: any) => {
         this.optionWeights = data;
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
       this.hellwigService.getIdealSolutions(id).subscribe((data: any) => {
         this.ideals = data;
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
       this.hellwigService.getResults(id).subscribe((data: any) => {
         this.finalRanks = data;
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
     });
     this.userService.checkScaleType().subscribe((scaleType: any) => {
       this.scaleType = scaleType;
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     })
   }
 

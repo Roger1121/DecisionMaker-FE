@@ -49,20 +49,20 @@ export class HellwigComponent {
             this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
               this.critOptions.push(...(data as CriterionOption[]));
             }, (error) => {
-              this.eventService.emit("alert-error", error);
+              this.eventService.emit("alert-error", error.error);
             })
           }
         }, (error) => {
-          this.eventService.emit("alert-error", error);
+          this.eventService.emit("alert-error", error.error);
         });
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
     });
     this.userService.checkScaleType().subscribe((scaleType: any) => {
       this.scaleType = scaleType;
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     })
   }
 
@@ -131,7 +131,7 @@ export class HellwigComponent {
       this.eventService.emit("alert-success", data);
       this.router.navigate(['/solve/hellwig/ideal/' + this.problem.id]).then();
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     })
   }
 }

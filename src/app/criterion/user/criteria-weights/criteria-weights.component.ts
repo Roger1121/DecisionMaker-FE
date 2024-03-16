@@ -42,16 +42,16 @@ export class CriteriaWeightsComponent {
         this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
           this.criteria = criteria
         }, (error) => {
-          this.eventService.emit("alert-error", error);
+          this.eventService.emit("alert-error", error.error);
         });
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
     });
     this.userService.checkScaleType().subscribe((scaleType: any) => {
       this.scaleType = scaleType;
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     })
   }
 
@@ -96,7 +96,7 @@ export class CriteriaWeightsComponent {
         this.router.navigate(['/solve/topsis/'+this.problem.id]).then();
       }
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     })
   }
 }

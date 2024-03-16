@@ -43,10 +43,10 @@ export class ProblemDetailsComponent {
       this.problemService.getProblem(id).subscribe((problem) => {
         this.problem = problem;
         this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {this.criteria = criteria}, (error) => {
-          this.eventService.emit("alert-error", error);
+          this.eventService.emit("alert-error", error.error);
         });
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
     })
   }
@@ -60,7 +60,7 @@ export class ProblemDetailsComponent {
         this.eventService.emit("alert-info", "Zadanie zostało zamknięte. Brak możliwości zgłaszania rozwiązań.");
       }
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     })
   }
 
@@ -73,7 +73,7 @@ export class ProblemDetailsComponent {
           this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
             this.criteria = criteria
           }, (error) => {
-            this.eventService.emit("alert-error", error);
+            this.eventService.emit("alert-error", error.error);
           });
         }
       }
@@ -86,11 +86,11 @@ export class ProblemDetailsComponent {
       this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
         this.criteria = criteria
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
       this.eventService.emit('criterion-deleted', criterionId);
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     })
   }
 }

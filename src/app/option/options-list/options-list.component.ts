@@ -43,7 +43,7 @@ export class OptionsListComponent {
       this.optionService.getOptionsByProblemId(this.problemId).subscribe((data: any) => {
         this.options = data;
       }, (error)=>{
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       })
     }
   }
@@ -57,7 +57,7 @@ export class OptionsListComponent {
           this.optionService.getOptionsByProblemId(this.problemId).subscribe((options: any) => {
             this.options = options
           }, (error) => {
-            this.eventService.emit("alert-error", error);
+            this.eventService.emit("alert-error", error.error);
           });
         }
       }

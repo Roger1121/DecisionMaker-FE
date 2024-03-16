@@ -54,40 +54,40 @@ export class AhpResultComponent {
             this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
               this.critOptions.push(...(data as CriterionOption[]));
             }, (error) => {
-              this.eventService.emit("alert-error", error);
+              this.eventService.emit("alert-error", error.error);
             })
           }
         }, (error) => {
-          this.eventService.emit("alert-error", error);
+          this.eventService.emit("alert-error", error.error);
         });
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
       this.criteriaService.getCriteriaWeights(id).subscribe((data: any) => {
         this.criteriaWeights = data;
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
       this.optionService.getOptionsByProblemId(id).subscribe((data: any) => {
         this.options = data;
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
       this.ahpService.getCriteriaMatrix(id).subscribe((data: any) => {
         this.criteriaMatrix = data;
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
       this.ahpService.getOptionMatrices(id).subscribe((data: any) => {
         this.optionMatrices = data;
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
     });
     this.userService.checkScaleType().subscribe((scaleType: any) => {
       this.scaleType = scaleType;
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     })
   }
 

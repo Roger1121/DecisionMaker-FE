@@ -54,16 +54,16 @@ export class AhpComponent {
             }
           }
         }, (error) => {
-          this.eventService.emit("alert-error", error);
+          this.eventService.emit("alert-error", error.error);
         });
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
     });
     this.userService.checkScaleType().subscribe((scaleType: any) => {
       this.scaleType = scaleType;
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     })
   }
 
@@ -120,7 +120,7 @@ export class AhpComponent {
       this.eventService.emit("alert-success", data);
       this.router.navigate(['option/comparison/' + this.problem.id]).then();
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     });
   }
 

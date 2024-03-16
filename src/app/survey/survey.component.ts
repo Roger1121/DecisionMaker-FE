@@ -36,7 +36,7 @@ export class SurveyComponent {
         this.router.navigate(['/problem/available']).then();
       }
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     })
   }
 
@@ -44,12 +44,12 @@ export class SurveyComponent {
     this.questionService.getQuestions().subscribe((data: any) => {
       this.questions = data;
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     });
     this.surveyService.getResponses().subscribe((data: any) => {
       this.responses = data;
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     })
   }
 

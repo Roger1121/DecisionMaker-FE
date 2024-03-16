@@ -34,7 +34,7 @@ export class QuestionListComponent {
       this.questionService.getQuestions().subscribe((data: any) => {
         this.questions = data;
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       })
   }
 
@@ -54,7 +54,7 @@ export class QuestionListComponent {
       this.eventService.emit("alert-success", data);
       this.loadQuestions();
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     });
   }
 }

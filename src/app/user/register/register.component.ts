@@ -41,7 +41,7 @@ export class RegisterComponent {
         this.router.navigate(['']).then()
       },
       (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
         alert(error);
       }
     )

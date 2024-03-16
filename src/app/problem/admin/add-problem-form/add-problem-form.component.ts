@@ -71,12 +71,12 @@ export class AddProblemFormComponent {
               this.activeModal.close('Success');
             },
             (error) => {
-              this.eventService.emit("alert-error", error);
+              this.eventService.emit("alert-error", error.error);
               this.activeModal.close('Failure');
             })
       },
       (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
         this.activeModal.close('Failure');
       });
   }

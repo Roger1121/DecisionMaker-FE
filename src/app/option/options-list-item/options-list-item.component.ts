@@ -35,7 +35,7 @@ export class OptionsListItemComponent {
     this.optionService.getOptionCriteria(this.option.id).subscribe((data: any) => {
       this.optionCriteria = data;
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     })
   }
 
@@ -53,7 +53,7 @@ export class OptionsListItemComponent {
           this.optionService.getOptionCriteria(this.option.id).subscribe((data: any) => {
             this.optionCriteria = data;
           }, (error) => {
-            this.eventService.emit("alert-error", error);
+            this.eventService.emit("alert-error", error.error);
           })
         }
       }

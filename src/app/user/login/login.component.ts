@@ -40,7 +40,7 @@ export class LoginComponent {
             this.router.navigate(['/problem/available']).then();
           }
         }, (error) => {
-          this.eventService.emit("alert-error", error);
+          this.eventService.emit("alert-error", error.error);
         });
       },
       (error) => {

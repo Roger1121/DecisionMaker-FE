@@ -44,14 +44,14 @@ export class IdealSolutionComponent {
             this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
               this.critOptions.push(...(data as CriterionOption[]));
             }, (error) => {
-              this.eventService.emit("alert-error", error);
+              this.eventService.emit("alert-error", error.error);
             })
           }
         }, (error) => {
-          this.eventService.emit("alert-error", error);
+          this.eventService.emit("alert-error", error.error);
         });
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
     });
   }
@@ -78,7 +78,7 @@ export class IdealSolutionComponent {
       this.eventService.emit("alert-success", data);
       this.router.navigate(['/solve/hellwig/results/'+this.problem.id]).then();
     }, (error) => {
-      this.eventService.emit("alert-error", error);
+      this.eventService.emit("alert-error", error.error);
     })
   }
 }

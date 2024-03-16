@@ -33,9 +33,9 @@ export class AvailableListComponent {
               private userService: UserService,
               private eventService: EventService) {}
   loadProblemList(){
-    this.problemService.getAvailableProblems().subscribe((data: any) => {this.problems =data;}, (error) => this.eventService.emit("alert-error", error));
-    this.problemService.getProblemStages().subscribe((data: any) => {this.problemStages =data;}, (error) => this.eventService.emit("alert-error", error));
-    this.userService.checkUserGroup().subscribe((data: any) => {this.userGroup =data;}, (error) => this.eventService.emit("alert-error", error));
+    this.problemService.getAvailableProblems().subscribe((data: any) => {this.problems =data;}, (error) => this.eventService.emit("alert-error", error.error));
+    this.problemService.getProblemStages().subscribe((data: any) => {this.problemStages =data;}, (error) => this.eventService.emit("alert-error", error.error));
+    this.userService.checkUserGroup().subscribe((data: any) => {this.userGroup =data;}, (error) => this.eventService.emit("alert-error", error.error));
   }
 
   getStageByProblem(problem_id: number|undefined){

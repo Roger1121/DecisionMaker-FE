@@ -33,7 +33,7 @@ export class ProblemListComponent {
         this.eventService.emit("alert-success", data);
         this.loadProblemList();
       }, (error) => {
-        this.eventService.emit("alert-error", error);
+        this.eventService.emit("alert-error", error.error);
       });
     })
   }
@@ -49,6 +49,6 @@ export class ProblemListComponent {
   }
 
   loadProblemList(){
-    this.problemService.getProblems().subscribe((data: any) => {this.problems =data;}, (error) => this.eventService.emit("alert-error", error));
+    this.problemService.getProblems().subscribe((data: any) => {this.problems =data;}, (error) => this.eventService.emit("alert-error", error.error));
   }
 }
