@@ -44,7 +44,7 @@
             <tr *ngFor="let option of options; let i = index;">
               <th scope="row">{{ getCriterionOptionName(option.id, criterion.id) }}</th>
               <td
-                *ngFor="let option of options; let j = index;">{{ getComparisonValue(getOptionMatrix(criterion.id)?.at(i)?.at(j)) }}
+                *ngFor="let option of options; let j = index;">{{ getComparisonValue(getOptionMatrix(criterion.id).at(i)?.at(j)) }}
               </td>
             </tr>
             </tbody>
