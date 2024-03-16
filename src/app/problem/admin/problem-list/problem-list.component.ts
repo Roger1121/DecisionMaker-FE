@@ -25,10 +25,15 @@ export class ProblemListComponent {
     this.loadProblemList();
   }
 
-  constructor(events: EventService, private problemService: ProblemService, private modalService: NgbModal) {
-    events.listen("removeProblem", (problem: Problem) =>{
+  constructor(private problemService: ProblemService,
+              private modalService: NgbModal,
+              private eventService: EventService) {
+    eventService.listen("removeProblem", (problem: Problem) =>{
       this.problemService.deleteProblem(problem.id).subscribe((data)=>{
+        this.eventService.emit("alert-success", data);
         this.loadProblemList();
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
     })
   }
@@ -44,6 +49,6 @@ export class ProblemListComponent {
   }
 
   loadProblemList(){
-    this.problemService.getProblems().subscribe((data: any) => {this.problems =data;}, (error) => alert(error.message));
+    this.problemService.getProblems().subscribe((data: any) => {this.problems =data;}, (error) => this.eventService.emit("alert-error", error));
   }
 }

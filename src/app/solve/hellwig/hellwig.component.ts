@@ -9,6 +9,7 @@ import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {CriterionOption} from "../../shared/model/criterion-option";
 import {OptionWeight} from "../../shared/model/option-weight";
 import {HellwigService} from "./hellwig.service";
+import {EventService} from "../../shared/services/EventService";
 
 @Component({
   selector: 'app-hellwig',
@@ -33,7 +34,8 @@ export class HellwigComponent {
               private hellwigService: HellwigService,
               private userService: UserService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -46,13 +48,21 @@ export class HellwigComponent {
           for (let criterion of this.criteria) {
             this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
               this.critOptions.push(...(data as CriterionOption[]));
+            }, (error) => {
+              this.eventService.emit("alert-error", error);
             })
           }
+        }, (error) => {
+          this.eventService.emit("alert-error", error);
         });
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
     });
     this.userService.checkScaleType().subscribe((scaleType: any) => {
       this.scaleType = scaleType;
+    }, (error) => {
+      this.eventService.emit("alert-error", error);
     })
   }
 
@@ -117,10 +127,11 @@ export class HellwigComponent {
       weightList = this.getDescriptiveWeights();
     }
     weightList.push(...(this.getWeightsForNumericCriteria()));
-    this.hellwigService.saveOptionWeights(weightList).subscribe((response: any) => {
+    this.hellwigService.saveOptionWeights(weightList).subscribe((data: any) => {
+      this.eventService.emit("alert-success", data);
       this.router.navigate(['/solve/hellwig/ideal/' + this.problem.id]).then();
     }, (error) => {
-      alert("Nie można zapisać wag opcji: " + error.error.res);
+      this.eventService.emit("alert-error", error);
     })
   }
 }

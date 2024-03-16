@@ -34,7 +34,7 @@ export class PasswordRecoveryRequestComponent {
         this.router.navigate(['']).then();
       },
       (error) => {
-        this.eventService.emit("alert-error", "Wystąpił błąd podczas próby resetu hasła. Spróbuj ponownie później.");
+        this.eventService.emit("alert-error", error);
       }
     )
   }

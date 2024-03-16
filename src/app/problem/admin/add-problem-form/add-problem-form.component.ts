@@ -7,6 +7,7 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ProblemService} from "../../problem.service";
 import {CriterionService} from "../../../criterion/criterion.service";
 import {Criterion} from "../../../shared/model/criterion";
+import {EventService} from "../../../shared/services/EventService";
 
 @Component({
   selector: 'add-problem-form',
@@ -21,7 +22,10 @@ import {Criterion} from "../../../shared/model/criterion";
 })
 export class AddProblemFormComponent {
 
-  constructor(private activeModal: NgbActiveModal, private problemService: ProblemService, private criterionService: CriterionService) {
+  constructor(private activeModal: NgbActiveModal,
+              private problemService: ProblemService,
+              private criterionService: CriterionService,
+              private eventService: EventService) {
   }
 
   problemForm = new FormGroup({
@@ -61,16 +65,18 @@ export class AddProblemFormComponent {
           const crit = criterion as FormGroup
           criteriaList.push(new Criterion(crit.get('name')?.getRawValue(), problem.id!, crit.get('type')?.getRawValue()));
         }
-        this.criterionService.addCriteria(criteriaList)
-          .subscribe(
+        this.criterionService.addCriteria(criteriaList).subscribe(
             (data) => {
+              this.eventService.emit("alert-success", data);
               this.activeModal.close('Success');
             },
             (error) => {
+              this.eventService.emit("alert-error", error);
               this.activeModal.close('Failure');
             })
       },
       (error) => {
+        this.eventService.emit("alert-error", error);
         this.activeModal.close('Failure');
       });
   }

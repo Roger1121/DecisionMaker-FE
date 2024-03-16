@@ -4,6 +4,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {OptionService} from "../option.service";
 import {Option} from "../../shared/model/option";
+import {EventService} from "../../shared/services/EventService";
 
 @Component({
   selector: 'app-add-option-modal',
@@ -19,7 +20,9 @@ export class AddOptionModalComponent {
 
   problemId: number = 0;
 
-  constructor(private activeModal: NgbActiveModal, private optionService: OptionService) {
+  constructor(private activeModal: NgbActiveModal,
+              private optionService: OptionService,
+              private eventService: EventService) {
   }
 
 
@@ -31,9 +34,11 @@ export class AddOptionModalComponent {
     let option : Option = new Option(this.optionForm.get('name')?.getRawValue(), this.problemId)
     this.optionService.addOption(option).subscribe(
       (data) => {
+        this.eventService.emit("alert-success", data);
         this.activeModal.close('Success');
       },
       (error) => {
+        this.eventService.emit("alert-error", error);
         this.activeModal.close('Failure');
       }
     );

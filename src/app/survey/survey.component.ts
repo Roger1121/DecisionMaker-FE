@@ -35,15 +35,21 @@ export class SurveyComponent {
         this.eventService.emit("alert-info", "Ankieta ewaluacyjna jest dostępna dopiero po rozwiązaniu dwóch zadań.");
         this.router.navigate(['/problem/available']).then();
       }
+    }, (error) => {
+      this.eventService.emit("alert-error", error);
     })
   }
 
   private loadQuestions() {
     this.questionService.getQuestions().subscribe((data: any) => {
       this.questions = data;
+    }, (error) => {
+      this.eventService.emit("alert-error", error);
     });
     this.surveyService.getResponses().subscribe((data: any) => {
       this.responses = data;
+    }, (error) => {
+      this.eventService.emit("alert-error", error);
     })
   }
 

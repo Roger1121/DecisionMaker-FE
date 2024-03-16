@@ -8,6 +8,7 @@ import {AvailableDetailsComponent} from "../../../problem/user/available-details
 import {NgForOf} from "@angular/common";
 import {IdealSolution} from "../../../shared/model/ideal-solution";
 import {HellwigService} from "../hellwig.service";
+import {EventService} from "../../../shared/services/EventService";
 
 @Component({
   selector: 'app-ideal-solution',
@@ -28,7 +29,8 @@ export class IdealSolutionComponent {
               private criteriaService: CriterionService,
               private hellwigService: HellwigService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -41,9 +43,15 @@ export class IdealSolutionComponent {
           for (let criterion of this.criteria) {
             this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
               this.critOptions.push(...(data as CriterionOption[]));
+            }, (error) => {
+              this.eventService.emit("alert-error", error);
             })
           }
+        }, (error) => {
+          this.eventService.emit("alert-error", error);
         });
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
     });
   }
@@ -56,7 +64,7 @@ export class IdealSolutionComponent {
     for (let i = 0; i < this.criteria.length; i++) {
       let select: any = document.getElementById(i.toString(10));
       if (select.value === "default") {
-        alert("Wszystkie kryteria powinny zostać uzupełnione.");
+        this.eventService.emit("alert-error", "Wszystkie kryteria powinny zostać uzupełnione");
         return;
       }
     }
@@ -66,10 +74,11 @@ export class IdealSolutionComponent {
       let solution = new IdealSolution(select.value as number);
       solutions.push(solution);
     }
-    this.hellwigService.saveIdealSolutions(solutions).subscribe((response: any) => {
+    this.hellwigService.saveIdealSolutions(solutions).subscribe((data) => {
+      this.eventService.emit("alert-success", data);
       this.router.navigate(['/solve/hellwig/results/'+this.problem.id]).then();
     }, (error) => {
-      alert("Nie można zapisać wzorca rozwoju: " + error.error.res);
+      this.eventService.emit("alert-error", error);
     })
   }
 }

@@ -5,6 +5,7 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {OptionService} from "../option.service";
 import {Option} from "../../shared/model/option";
 import {CriterionOption} from "../../shared/model/criterion-option";
+import {EventService} from "../../shared/services/EventService";
 
 @Component({
   selector: 'app-add-option-criterion-modal',
@@ -20,7 +21,9 @@ export class AddOptionCriterionModalComponent {
   optionId: number = 0;
   criterionId: number = 0;
 
-  constructor(private activeModal: NgbActiveModal, private optionService: OptionService) {
+  constructor(private activeModal: NgbActiveModal,
+              private optionService: OptionService,
+              private eventService: EventService) {
   }
 
 
@@ -32,9 +35,11 @@ export class AddOptionCriterionModalComponent {
     let criterionOption : CriterionOption = new CriterionOption(this.optionId, this.criterionId, this.optionCriterionForm.get('value')?.getRawValue())
     this.optionService.addOptionCriterion(criterionOption).subscribe(
       (data) => {
+        this.eventService.emit("alert-success", data);
         this.activeModal.close('Success');
       },
       (error) => {
+        this.eventService.emit("alert-error", error);
         this.activeModal.close('Failure');
       }
     );

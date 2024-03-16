@@ -6,6 +6,7 @@ import {ProblemService} from "../../problem.service";
 import {AvailableListItemComponent} from "../available-list-item/available-list-item.component";
 import {ProblemStage} from "../../../shared/model/problem-stage";
 import {UserService} from "../../../user/user.service";
+import {EventService} from "../../../shared/services/EventService";
 
 @Component({
   selector: 'app-available-list',
@@ -28,11 +29,13 @@ export class AvailableListComponent {
     this.loadProblemList();
   }
 
-  constructor(private problemService: ProblemService, private userService: UserService) {}
+  constructor(private problemService: ProblemService,
+              private userService: UserService,
+              private eventService: EventService) {}
   loadProblemList(){
-    this.problemService.getAvailableProblems().subscribe((data: any) => {this.problems =data;}, (error) => alert(error.message));
-    this.problemService.getProblemStages().subscribe((data: any) => {this.problemStages =data;}, (error) => alert(error.message));
-    this.userService.checkUserGroup().subscribe((data: any) => {this.userGroup =data;}, (error) => alert(error.message));
+    this.problemService.getAvailableProblems().subscribe((data: any) => {this.problems =data;}, (error) => this.eventService.emit("alert-error", error));
+    this.problemService.getProblemStages().subscribe((data: any) => {this.problemStages =data;}, (error) => this.eventService.emit("alert-error", error));
+    this.userService.checkUserGroup().subscribe((data: any) => {this.userGroup =data;}, (error) => this.eventService.emit("alert-error", error));
   }
 
   getStageByProblem(problem_id: number|undefined){

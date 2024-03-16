@@ -25,7 +25,9 @@ export class OptionsListComponent {
 
   options: Option[] = [];
 
-  constructor(private optionService: OptionService, private modalService: NgbModal, private eventService: EventService) {
+  constructor(private optionService: OptionService,
+              private modalService: NgbModal,
+              private eventService: EventService) {
     this.eventService.listen('criterion-deleted', (criterionId) => this.loadOptions())
   }
 
@@ -40,6 +42,8 @@ export class OptionsListComponent {
     if (this.problemId) {
       this.optionService.getOptionsByProblemId(this.problemId).subscribe((data: any) => {
         this.options = data;
+      }, (error)=>{
+        this.eventService.emit("alert-error", error);
       })
     }
   }
@@ -50,7 +54,11 @@ export class OptionsListComponent {
     modalRef.result.then(
       (result) => {
         if (result === 'Success') {
-          this.optionService.getOptionsByProblemId(this.problemId).subscribe((options: any) => this.options = options);
+          this.optionService.getOptionsByProblemId(this.problemId).subscribe((options: any) => {
+            this.options = options
+          }, (error) => {
+            this.eventService.emit("alert-error", error);
+          });
         }
       }
     )

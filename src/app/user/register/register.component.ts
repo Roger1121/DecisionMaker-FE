@@ -4,6 +4,7 @@ import {NgIf} from "@angular/common";
 import {UserService} from "../user.service";
 import {Router} from "@angular/router";
 import {Registration} from "../../shared/model/user/registration";
+import {EventService} from "../../shared/services/EventService";
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,9 @@ import {Registration} from "../../shared/model/user/registration";
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService,
+              private router: Router,
+              private eventService: EventService) {
   }
 
   registerForm = new FormGroup({
@@ -33,11 +36,13 @@ export class RegisterComponent {
       this.registerForm.get('passwordConfirm')?.getRawValue(),
       this.registerForm.get('scaleType')?.getRawValue() as number)
     this.userService.register(credentials).subscribe(
-      (response: any) => {
+      (data) => {
+        this.eventService.emit("alert-success", data);
         this.router.navigate(['']).then()
       },
       (error) => {
-        alert(error.toString());
+        this.eventService.emit("alert-error", error);
+        alert(error);
       }
     )
   }

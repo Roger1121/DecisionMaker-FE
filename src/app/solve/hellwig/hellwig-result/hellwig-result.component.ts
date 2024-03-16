@@ -13,6 +13,7 @@ import {OptionWeight} from "../../../shared/model/option-weight";
 import {Option} from "../../../shared/model/option";
 import {HellwigResult} from "../../../shared/model/hellwig-result";
 import {HellwigService} from "../hellwig.service";
+import {EventService} from "../../../shared/services/EventService";
 
 @Component({
   selector: 'app-hellwig-result',
@@ -41,7 +42,8 @@ export class HellwigResultComponent {
               private optionService: OptionService,
               private hellwigService: HellwigService,
               private userService: UserService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -57,25 +59,39 @@ export class HellwigResultComponent {
             })
           }
         });
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
       this.criteriaService.getCriteriaWeights(id).subscribe((data: any) => {
         this.criteriaWeights = data;
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
       this.optionService.getOptionsByProblemId(id).subscribe((data: any) => {
         this.options = data;
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
       this.hellwigService.getOptionWeights(id).subscribe((data: any) => {
         this.optionWeights = data;
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
       this.hellwigService.getIdealSolutions(id).subscribe((data: any) => {
         this.ideals = data;
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
       this.hellwigService.getResults(id).subscribe((data: any) => {
         this.finalRanks = data;
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
     });
     this.userService.checkScaleType().subscribe((scaleType: any) => {
       this.scaleType = scaleType;
+    }, (error) => {
+      this.eventService.emit("alert-error", error);
     })
   }
 
@@ -106,7 +122,7 @@ export class HellwigResultComponent {
     return ideal.length > 0 ? ideal[0] : null;
   }
 
-  getOptionName(option_id : number){
+  getOptionName(option_id: number) {
     let options = this.options.filter(option => option.id === option_id)
     return options.length === 0 ? null : options[0].name;
   }

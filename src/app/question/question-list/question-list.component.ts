@@ -5,6 +5,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Question} from "../../shared/model/question";
 import {QuestionService} from "../question.service";
 import {AddQuestionModalComponent} from "../add-question-modal/add-question-modal.component";
+import {EventService} from "../../shared/services/EventService";
 
 @Component({
   selector: 'app-question-list',
@@ -20,7 +21,9 @@ import {AddQuestionModalComponent} from "../add-question-modal/add-question-moda
 export class QuestionListComponent {
   questions: Question[] = [];
 
-  constructor(private questionService: QuestionService, private modalService: NgbModal) {
+  constructor(private questionService: QuestionService,
+              private modalService: NgbModal,
+              private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -30,6 +33,8 @@ export class QuestionListComponent {
   loadQuestions() {
       this.questionService.getQuestions().subscribe((data: any) => {
         this.questions = data;
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       })
   }
 
@@ -38,9 +43,7 @@ export class QuestionListComponent {
     modalRef.result.then(
       (result) => {
         if (result === 'Success') {
-          this.questionService.getQuestions().subscribe((data: any) => {
-            this.questions = data;
-          })
+          this.loadQuestions();
         }
       }
     )
@@ -48,7 +51,10 @@ export class QuestionListComponent {
 
   deleteQuestion(question_id: any) {
     this.questionService.deleteQuestion(question_id).subscribe((data)=>{
+      this.eventService.emit("alert-success", data);
       this.loadQuestions();
+    }, (error) => {
+      this.eventService.emit("alert-error", error);
     });
   }
 }

@@ -27,8 +27,14 @@ export class ProblemDetailsComponent {
   problem: any = {};
   criteria: Criterion[] = [];
 
-  constructor(private problemService: ProblemService, private criteriaService: CriterionService, private route: ActivatedRoute, private modalService: NgbModal, private eventService: EventService) {
-    this.eventService.listen("delete-criterion", (criterionId) => {this.removeCriterion(criterionId)});
+  constructor(private problemService: ProblemService,
+              private criteriaService: CriterionService,
+              private route: ActivatedRoute,
+              private modalService: NgbModal,
+              private eventService: EventService) {
+    this.eventService.listen("delete-criterion", (criterionId) => {
+      this.removeCriterion(criterionId)
+    });
   }
 
   ngOnInit() {
@@ -36,19 +42,25 @@ export class ProblemDetailsComponent {
       let id = params.get('id');
       this.problemService.getProblem(id).subscribe((problem) => {
         this.problem = problem;
-        this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => this.criteria = criteria);
+        this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {this.criteria = criteria}, (error) => {
+          this.eventService.emit("alert-error", error);
+        });
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
     })
   }
 
-  toggleAvailability(){
+  toggleAvailability() {
     this.problem.is_available = !this.problem.is_available;
-    this.problemService.updateProblem(this.problem, this.problem.id). subscribe((data: any)=>{
-      if(data.is_available){
-        alert("Zadanie jest teraz otwarte. Oczekiwanie na rozwiązania.")
+    this.problemService.updateProblem(this.problem, this.problem.id).subscribe((data: any) => {
+      if (data.is_available) {
+        this.eventService.emit("alert-info", "Zadanie jest teraz otwarte. Oczekiwanie na rozwiązania.");
       } else {
-        alert("Zadanie zostało zamknięte. Brak możliwości zgłaszania rozwiązań.")
+        this.eventService.emit("alert-info", "Zadanie zostało zamknięte. Brak możliwości zgłaszania rozwiązań.");
       }
+    }, (error) => {
+      this.eventService.emit("alert-error", error);
     })
   }
 
@@ -56,18 +68,29 @@ export class ProblemDetailsComponent {
     const modalRef = this.modalService.open(AddCriterionFormComponent);
     modalRef.componentInstance.problemId = this.problem.id;
     modalRef.result.then(
-      (result)=>{
-        if(result==='Success'){
-          this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => this.criteria = criteria);
+      (result) => {
+        if (result === 'Success') {
+          this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
+            this.criteria = criteria
+          }, (error) => {
+            this.eventService.emit("alert-error", error);
+          });
         }
       }
     )
   }
 
-  removeCriterion(criterionId: number){
+  removeCriterion(criterionId: number) {
     this.criteriaService.deleteCriterion(criterionId).subscribe((data) => {
-      this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => this.criteria = criteria);
+      this.eventService.emit("alert-success", data);
+      this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
+        this.criteria = criteria
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
+      });
       this.eventService.emit('criterion-deleted', criterionId);
+    }, (error) => {
+      this.eventService.emit("alert-error", error);
     })
   }
 }

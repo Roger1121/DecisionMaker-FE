@@ -4,6 +4,7 @@ import {CriterionService} from "../../criterion.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Criterion} from "../../../shared/model/criterion";
 import {NgIf} from "@angular/common";
+import {EventService} from "../../../shared/services/EventService";
 
 @Component({
   selector: 'app-add-criterion-form',
@@ -19,7 +20,9 @@ export class AddCriterionFormComponent {
 
   problemId: number = 0;
 
-  constructor(private activeModal: NgbActiveModal, private criterionService: CriterionService){ }
+  constructor(private activeModal: NgbActiveModal,
+              private criterionService: CriterionService,
+              private eventService: EventService){ }
 
 
   criterionFrom = new FormGroup({
@@ -31,9 +34,10 @@ export class AddCriterionFormComponent {
     let criterion = new Criterion(this.criterionFrom.get('name')?.getRawValue(), this.problemId, this.criterionFrom.get('type')?.getRawValue())
     this.criterionService.addCriterion(criterion).subscribe(
       (data) => {
+        this.eventService.emit("alert-success", data);
         this.activeModal.close('Success');
-      },
-      (error) => {
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
         this.activeModal.close('Failure');
       }
     );

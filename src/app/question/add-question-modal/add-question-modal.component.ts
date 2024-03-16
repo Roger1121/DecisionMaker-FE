@@ -5,6 +5,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {QuestionService} from "../question.service";
 import {Question} from "../../shared/model/question";
+import {EventService} from "../../shared/services/EventService";
 
 @Component({
   selector: 'app-add-question-modal',
@@ -19,7 +20,9 @@ import {Question} from "../../shared/model/question";
 })
 export class AddQuestionModalComponent {
 
-  constructor(private activeModal: NgbActiveModal, private questionService: QuestionService) {
+  constructor(private activeModal: NgbActiveModal,
+              private questionService: QuestionService,
+              private eventService: EventService) {
   }
 
   questionForm = new FormGroup({
@@ -30,9 +33,11 @@ export class AddQuestionModalComponent {
     let question : Question = new Question(this.questionForm.get('content')?.getRawValue())
     this.questionService.addQuestion(question).subscribe(
       (data) => {
+        this.eventService.emit("alert-success", data);
         this.activeModal.close('Success');
       },
       (error) => {
+        this.eventService.emit("alert-error", error);
         this.activeModal.close('Failure');
       }
     );

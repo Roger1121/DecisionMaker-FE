@@ -7,6 +7,7 @@ import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
 import {AddCriterionFormComponent} from "../../criterion/admin/add-criterion-form/add-criterion-form.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AddOptionCriterionModalComponent} from "../add-option-criterion-modal/add-option-criterion-modal.component";
+import {EventService} from "../../shared/services/EventService";
 
 @Component({
   selector: 'options-list-item',
@@ -25,12 +26,16 @@ export class OptionsListItemComponent {
 
   optionCriteria: CriterionOption[] = [];
 
-  constructor(private optionService: OptionService, private modalService: NgbModal) {
+  constructor(private optionService: OptionService,
+              private modalService: NgbModal,
+              private eventService: EventService) {
   }
 
   ngOnInit() {
     this.optionService.getOptionCriteria(this.option.id).subscribe((data: any) => {
       this.optionCriteria = data;
+    }, (error) => {
+      this.eventService.emit("alert-error", error);
     })
   }
 
@@ -47,6 +52,8 @@ export class OptionsListItemComponent {
         if (result === 'Success') {
           this.optionService.getOptionCriteria(this.option.id).subscribe((data: any) => {
             this.optionCriteria = data;
+          }, (error) => {
+            this.eventService.emit("alert-error", error);
           })
         }
       }

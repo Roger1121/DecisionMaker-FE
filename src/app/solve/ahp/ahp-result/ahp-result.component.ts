@@ -13,6 +13,7 @@ import {ComparisonItem} from "../../../shared/model/comparison-item";
 import {AvailableDetailsComponent} from "../../../problem/user/available-details/available-details.component";
 import {NgForOf} from "@angular/common";
 import {OptionComparisonItem} from "../../../shared/model/option-comparison-item";
+import {EventService} from "../../../shared/services/EventService";
 
 @Component({
   selector: 'app-ahp-result',
@@ -39,7 +40,8 @@ export class AhpResultComponent {
               private optionService: OptionService,
               private ahpService:AhpService,
               private userService: UserService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private eventService: EventService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -51,25 +53,41 @@ export class AhpResultComponent {
           for (let criterion of this.criteria) {
             this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
               this.critOptions.push(...(data as CriterionOption[]));
+            }, (error) => {
+              this.eventService.emit("alert-error", error);
             })
           }
+        }, (error) => {
+          this.eventService.emit("alert-error", error);
         });
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
       this.criteriaService.getCriteriaWeights(id).subscribe((data: any) => {
         this.criteriaWeights = data;
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
       this.optionService.getOptionsByProblemId(id).subscribe((data: any) => {
         this.options = data;
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
       this.ahpService.getCriteriaMatrix(id).subscribe((data: any) => {
         this.criteriaMatrix = data;
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
       this.ahpService.getOptionMatrices(id).subscribe((data: any) => {
         this.optionMatrices = data;
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
     });
     this.userService.checkScaleType().subscribe((scaleType: any) => {
       this.scaleType = scaleType;
+    }, (error) => {
+      this.eventService.emit("alert-error", error);
     })
   }
 

@@ -11,6 +11,7 @@ import {AhpService} from "./ahp.service";
 import {CriteriaComparison} from "../../shared/model/criteria-comparison";
 import {CriterionWeight} from "../../shared/model/criterion-weight";
 import {OptionComparison} from "../../shared/model/option-comparison";
+import {EventService} from "../../shared/services/EventService";
 
 @Component({
   selector: 'app-ahp',
@@ -35,7 +36,8 @@ export class AhpComponent {
               private userService: UserService,
               private ahpService: AhpService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -51,11 +53,17 @@ export class AhpComponent {
               this.reverseArray[i].push(false);
             }
           }
+        }, (error) => {
+          this.eventService.emit("alert-error", error);
         });
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
     });
     this.userService.checkScaleType().subscribe((scaleType: any) => {
       this.scaleType = scaleType;
+    }, (error) => {
+      this.eventService.emit("alert-error", error);
     })
   }
 
@@ -109,7 +117,10 @@ export class AhpComponent {
       comparisons = this.getDescriptiveValues()
     }
     this.ahpService.saveCriteriaComparisons(comparisons).subscribe((data) => {
+      this.eventService.emit("alert-success", data);
       this.router.navigate(['option/comparison/' + this.problem.id]).then();
+    }, (error) => {
+      this.eventService.emit("alert-error", error);
     });
   }
 

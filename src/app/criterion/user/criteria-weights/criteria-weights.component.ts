@@ -7,6 +7,7 @@ import {AvailableDetailsComponent} from "../../../problem/user/available-details
 import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
 import {UserService} from "../../../user/user.service";
 import {CriterionWeight} from "../../../shared/model/criterion-weight";
+import {EventService} from "../../../shared/services/EventService";
 
 @Component({
   selector: 'criteria-weights',
@@ -29,7 +30,8 @@ export class CriteriaWeightsComponent {
               private criteriaService: CriterionService,
               private userService: UserService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -37,11 +39,19 @@ export class CriteriaWeightsComponent {
       let id = params.get('problemId');
       this.problemService.getProblem(id).subscribe((problem) => {
         this.problem = problem;
-        this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => this.criteria = criteria);
+        this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
+          this.criteria = criteria
+        }, (error) => {
+          this.eventService.emit("alert-error", error);
+        });
+      }, (error) => {
+        this.eventService.emit("alert-error", error);
       });
     });
     this.userService.checkScaleType().subscribe((scaleType: any) => {
       this.scaleType = scaleType;
+    }, (error) => {
+      this.eventService.emit("alert-error", error);
     })
   }
 
@@ -79,13 +89,14 @@ export class CriteriaWeightsComponent {
       weightList = this.getDescriptiveWeights()
     }
     this.criteriaService.saveCriteriaWeights(weightList).subscribe((response: any) => {
+      this.eventService.emit("alert-success", "Wagi kryteriów zostały pomyślnie zapisane");
       if (response === 0) {
-        this.router.navigate(['/solve/hellwig/'+this.problem.id]).then()
+        this.router.navigate(['/solve/hellwig/'+this.problem.id]).then();
       } else {
-        this.router.navigate(['/solve/topsis/'+this.problem.id]).then()
+        this.router.navigate(['/solve/topsis/'+this.problem.id]).then();
       }
     }, (error) => {
-      alert("Nie można zapisać wag kryteriów: " + error.error.res)
+      this.eventService.emit("alert-error", error);
     })
   }
 }
