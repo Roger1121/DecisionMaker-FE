@@ -99,7 +99,8 @@ export class AhpResultComponent {
   }
 
   getOptionMatrix(criterion: number|undefined){
-    return this.optionMatrices.filter(matrix => typeof criterion === "number" && matrix.criterion === criterion)[0].matrix;
+    let options = this.optionMatrices.filter(matrix => typeof criterion === "number" && matrix.criterion === criterion)[0]
+    return options?.matrix;
   }
 
   getCriterionOptionName(option_id: any, criterion_id: any) {

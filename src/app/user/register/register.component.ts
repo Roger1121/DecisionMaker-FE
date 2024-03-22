@@ -42,7 +42,6 @@ export class RegisterComponent {
       },
       (error) => {
         this.eventService.emit("alert-error", error.error);
-        alert(error);
       }
     )
   }
