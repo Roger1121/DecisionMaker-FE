@@ -11,7 +11,7 @@ import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {CriterionWeight} from "../../../shared/model/criterion-weight";
 import {OptionWeight} from "../../../shared/model/option-weight";
 import {Option} from "../../../shared/model/option";
-import {HellwigResult} from "../../../shared/model/hellwig-result";
+import {ProblemResult} from "../../../shared/model/problem-result";
 import {HellwigService} from "../hellwig.service";
 import {EventService} from "../../../shared/services/EventService";
 
@@ -33,7 +33,7 @@ export class HellwigResultComponent {
   options: Option[] = [];
   optionWeights: OptionWeight[] = [];
   ideals: number[] = [];
-  finalRanks: HellwigResult[] = [];
+  finalRanks: ProblemResult[] = [];
   scaleType: number = 0;
   math = Math;
 
@@ -122,8 +122,7 @@ export class HellwigResultComponent {
     return ideal.length > 0 ? ideal[0] : null;
   }
 
-  getOptionName(option_id: number) {
-    let options = this.options.filter(option => option.id === option_id)
-    return options.length === 0 ? null : options[0].name;
+  getOptionRank(optionId: any){
+    return this.finalRanks.filter(rank => rank.option === optionId)[0]
   }
 }

@@ -25,4 +25,7 @@ export class AhpService {
   getOptionMatrices(problem_id: any) {
     return this.http.get('http://localhost:8000/crit-option/martices', {params: new HttpParams().set('problem_id', problem_id)})
   }
+  getResults(problem_id: any){
+    return this.http.get(`http://localhost:8000/solutions/ahp`, {params: new HttpParams().set('problem_id', problem_id)})
+  }
 }

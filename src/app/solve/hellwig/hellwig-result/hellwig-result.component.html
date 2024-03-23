@@ -31,10 +31,27 @@
       <h3>
         Ranking końcowy
       </h3>
-      <div class="inner-group" *ngFor="let result of finalRanks; let i = index;">
-        <h4>{{i+1}}. {{ getOptionName(result.option) }}</h4>
-        <h6>Ocena rozwiązania w skali od 0 do 100</h6>
-        <p>{{math.trunc(result.synth_var * 100)}}</p>
+      <div>
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col" *ngFor="let criterion of criteria">{{ criterion.name }}</th>
+            <th>Ocena rozwiązania w skali od 0 do 100</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let option of options; let i = index;">
+            <th scope="row">{{ option.name }}</th>
+            <td
+              *ngFor="let criterion of criteria; let j = index;">{{ getCriterionOptionName(option.id, criterion.id) }}
+            </td>
+            <td>
+              {{math.trunc(getOptionRank(option.id).synth_var * 100)}}
+            </td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

@@ -14,6 +14,7 @@ import {AvailableDetailsComponent} from "../../../problem/user/available-details
 import {NgForOf} from "@angular/common";
 import {OptionComparisonItem} from "../../../shared/model/option-comparison-item";
 import {EventService} from "../../../shared/services/EventService";
+import {ProblemResult} from "../../../shared/model/problem-result";
 
 @Component({
   selector: 'app-ahp-result',
@@ -31,6 +32,7 @@ export class AhpResultComponent {
   criteriaWeights: CriterionWeight[] = [];
   critOptions: CriterionOption[] = [];
   options: Option[] = [];
+  finalRanks: ProblemResult[] = [];
   scaleType: number = 0;
   criteriaMatrix: ComparisonItem[][] = [];
   optionMatrices: OptionComparisonItem[] = [];
@@ -60,6 +62,11 @@ export class AhpResultComponent {
         }, (error) => {
           this.eventService.emit("alert-error", error.error);
         });
+      }, (error) => {
+        this.eventService.emit("alert-error", error.error);
+      });
+      this.ahpService.getResults(id).subscribe((data: any) => {
+        this.finalRanks = data;
       }, (error) => {
         this.eventService.emit("alert-error", error.error);
       });
@@ -108,4 +115,10 @@ export class AhpResultComponent {
       .filter(option => criterion_id == option.criterion && option_id == option.option)
     return options.length > 0 ? options[0].value : null;
   }
+
+  getOptionRank(optionId: any){
+    return this.finalRanks.filter(rank => rank.option === optionId)[0]
+  }
+
+  protected readonly math = Math;
 }
