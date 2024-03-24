@@ -4,7 +4,7 @@ import {ProblemService} from "../../../problem/problem.service";
 import {CriterionService} from "../../../criterion/criterion.service";
 import {OptionService} from "../../../option/option.service";
 import {UserService} from "../../../user/user.service";
-import {ActivatedRoute, ParamMap} from "@angular/router";
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {Criterion} from "../../../shared/model/criterion";
 import {CriterionWeight} from "../../../shared/model/criterion-weight";
 import {CriterionOption} from "../../../shared/model/criterion-option";
@@ -43,6 +43,7 @@ export class AhpResultComponent {
               private ahpService:AhpService,
               private userService: UserService,
               private route: ActivatedRoute,
+              private router: Router,
               private eventService: EventService) { }
 
   ngOnInit() {
@@ -50,14 +51,53 @@ export class AhpResultComponent {
       let id = params.get('problemId');
       this.problemService.getProblem(id).subscribe((problem) => {
         this.problem = problem;
-        this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
-          this.criteria = criteria;
-          for (let criterion of this.criteria) {
-            this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
-              this.critOptions.push(...(data as CriterionOption[]));
+        this.userService.checkUserGroup().subscribe(data => {
+          if((data + this.problem.group) % 2 === 1){
+            this.eventService.emit("alert-warning", "Dla obecnego problemu decyzyjnego nie jest dostępne rozwiązywanie metodą AHP");
+            this.router.navigate(['/problem/available']).then();
+          } else {
+            this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
+              this.criteria = criteria;
+              for (let criterion of this.criteria) {
+                this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
+                  this.critOptions.push(...(data as CriterionOption[]));
+                }, (error) => {
+                  this.eventService.emit("alert-error", error.error);
+                })
+              }
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
-            })
+            });
+            this.ahpService.getResults(id).subscribe((data: any) => {
+              this.finalRanks = data;
+            }, (error) => {
+              this.eventService.emit("alert-error", error.error);
+            });
+            this.criteriaService.getCriteriaWeights(id).subscribe((data: any) => {
+              this.criteriaWeights = data;
+            }, (error) => {
+              this.eventService.emit("alert-error", error.error);
+            });
+            this.optionService.getOptionsByProblemId(id).subscribe((data: any) => {
+              this.options = data;
+            }, (error) => {
+              this.eventService.emit("alert-error", error.error);
+            });
+            this.ahpService.getCriteriaMatrix(id).subscribe((data: any) => {
+              this.criteriaMatrix = data;
+            }, (error) => {
+              this.eventService.emit("alert-error", error.error);
+            });
+            this.ahpService.getOptionMatrices(id).subscribe((data: any) => {
+              this.optionMatrices = data;
+            }, (error) => {
+              this.eventService.emit("alert-error", error.error);
+            });
+            this.userService.checkScaleType().subscribe((scaleType: any) => {
+              this.scaleType = scaleType;
+            }, (error) => {
+              this.eventService.emit("alert-error", error.error);
+            });
           }
         }, (error) => {
           this.eventService.emit("alert-error", error.error);
@@ -65,37 +105,7 @@ export class AhpResultComponent {
       }, (error) => {
         this.eventService.emit("alert-error", error.error);
       });
-      this.ahpService.getResults(id).subscribe((data: any) => {
-        this.finalRanks = data;
-      }, (error) => {
-        this.eventService.emit("alert-error", error.error);
-      });
-      this.criteriaService.getCriteriaWeights(id).subscribe((data: any) => {
-        this.criteriaWeights = data;
-      }, (error) => {
-        this.eventService.emit("alert-error", error.error);
-      });
-      this.optionService.getOptionsByProblemId(id).subscribe((data: any) => {
-        this.options = data;
-      }, (error) => {
-        this.eventService.emit("alert-error", error.error);
-      });
-      this.ahpService.getCriteriaMatrix(id).subscribe((data: any) => {
-        this.criteriaMatrix = data;
-      }, (error) => {
-        this.eventService.emit("alert-error", error.error);
-      });
-      this.ahpService.getOptionMatrices(id).subscribe((data: any) => {
-        this.optionMatrices = data;
-      }, (error) => {
-        this.eventService.emit("alert-error", error.error);
-      });
     });
-    this.userService.checkScaleType().subscribe((scaleType: any) => {
-      this.scaleType = scaleType;
-    }, (error) => {
-      this.eventService.emit("alert-error", error.error);
-    })
   }
 
   getComparisonValue(comparisonItem: ComparisonItem | undefined) {

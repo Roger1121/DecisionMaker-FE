@@ -43,7 +43,8 @@ export class HellwigResultComponent {
               private hellwigService: HellwigService,
               private userService: UserService,
               private route: ActivatedRoute,
-              private eventService: EventService) {
+              private eventService: EventService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -51,48 +52,59 @@ export class HellwigResultComponent {
       let id = params.get('problemId');
       this.problemService.getProblem(id).subscribe((problem) => {
         this.problem = problem;
-        this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
-          this.criteria = criteria;
-          for (let criterion of this.criteria) {
-            this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
-              this.critOptions.push(...(data as CriterionOption[]));
-            })
+        this.userService.checkUserGroup().subscribe(data => {
+          if ((data + this.problem.group) % 2 === 0) {
+            this.eventService.emit("alert-warning", "Dla obecnego problemu decyzyjnego nie jest dostępne rozwiązywanie metodą Hellwiga");
+            this.router.navigate(['/problem/available']).then();
+          } else {
+            this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
+              this.criteria = criteria;
+              for (let criterion of this.criteria) {
+                this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
+                  this.critOptions.push(...(data as CriterionOption[]));
+                })
+              }
+            }, (error) => {
+              this.eventService.emit("alert-error", error.error);
+            });
+            this.criteriaService.getCriteriaWeights(id).subscribe((data: any) => {
+              this.criteriaWeights = data;
+            }, (error) => {
+              this.eventService.emit("alert-error", error.error);
+            });
+            this.optionService.getOptionsByProblemId(id).subscribe((data: any) => {
+              this.options = data;
+            }, (error) => {
+              this.eventService.emit("alert-error", error.error);
+            });
+            this.hellwigService.getOptionWeights(id).subscribe((data: any) => {
+              this.optionWeights = data;
+            }, (error) => {
+              this.eventService.emit("alert-error", error.error);
+            });
+            this.hellwigService.getIdealSolutions(id).subscribe((data: any) => {
+              this.ideals = data;
+            }, (error) => {
+              this.eventService.emit("alert-error", error.error);
+            });
+            this.hellwigService.getResults(id).subscribe((data: any) => {
+              this.finalRanks = data;
+            }, (error) => {
+              this.eventService.emit("alert-error", error.error);
+            });
+            this.userService.checkScaleType().subscribe((scaleType: any) => {
+              this.scaleType = scaleType;
+            }, (error) => {
+              this.eventService.emit("alert-error", error.error);
+            });
           }
+        }, (error) => {
+          this.eventService.emit("alert-error", error.error);
         });
       }, (error) => {
         this.eventService.emit("alert-error", error.error);
       });
-      this.criteriaService.getCriteriaWeights(id).subscribe((data: any) => {
-        this.criteriaWeights = data;
-      }, (error) => {
-        this.eventService.emit("alert-error", error.error);
-      });
-      this.optionService.getOptionsByProblemId(id).subscribe((data: any) => {
-        this.options = data;
-      }, (error) => {
-        this.eventService.emit("alert-error", error.error);
-      });
-      this.hellwigService.getOptionWeights(id).subscribe((data: any) => {
-        this.optionWeights = data;
-      }, (error) => {
-        this.eventService.emit("alert-error", error.error);
-      });
-      this.hellwigService.getIdealSolutions(id).subscribe((data: any) => {
-        this.ideals = data;
-      }, (error) => {
-        this.eventService.emit("alert-error", error.error);
-      });
-      this.hellwigService.getResults(id).subscribe((data: any) => {
-        this.finalRanks = data;
-      }, (error) => {
-        this.eventService.emit("alert-error", error.error);
-      });
     });
-    this.userService.checkScaleType().subscribe((scaleType: any) => {
-      this.scaleType = scaleType;
-    }, (error) => {
-      this.eventService.emit("alert-error", error.error);
-    })
   }
 
   getCriterionWeight(criterion_id: number | undefined) {
@@ -122,7 +134,7 @@ export class HellwigResultComponent {
     return ideal.length > 0 ? ideal[0] : null;
   }
 
-  getOptionRank(optionId: any){
+  getOptionRank(optionId: any) {
     return this.finalRanks.filter(rank => rank.option === optionId)[0]
   }
 }

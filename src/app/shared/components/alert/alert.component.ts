@@ -33,7 +33,7 @@ export class AlertComponent {
   showWarningAlert(message: string) {
     this.messageService.add(
       {
-        severity: 'warning',
+        severity: 'warn',
         summary: 'Ostrzeżenie',
         detail: message
       }

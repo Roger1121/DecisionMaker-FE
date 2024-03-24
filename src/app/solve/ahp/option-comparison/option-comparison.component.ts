@@ -45,19 +45,33 @@ export class OptionComparisonComponent {
       let id = params.get('problemId');
       this.problemService.getProblem(id).subscribe((problem) => {
         this.problem = problem;
-        this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
-          this.criteria = criteria;
-          for (let criterion of this.criteria) {
-            this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
-              this.critOptions.push(...(data as CriterionOption[]));
-              this.reverseArray.push([]);
-              let c = this.reverseArray.length - 1;
-              for (let i = 0; i < this.critOptions.length; i++) {
-                this.reverseArray[c].push([]);
-                for (let j = 0; j < this.critOptions.length; j++) {
-                  this.reverseArray[c][i].push(false);
-                }
+        this.userService.checkUserGroup().subscribe(data => {
+          if ((data + this.problem.group) % 2 === 1) {
+            this.eventService.emit("alert-warning", "Dla obecnego problemu decyzyjnego nie jest dostępne rozwiązywanie metodą AHP");
+            this.router.navigate(['/problem/available']).then();
+          } else {
+            this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
+              this.criteria = criteria;
+              for (let criterion of this.criteria) {
+                this.criteriaService.getCriterionOptions(criterion.id).subscribe((data: any) => {
+                  this.critOptions.push(...(data as CriterionOption[]));
+                  this.reverseArray.push([]);
+                  let c = this.reverseArray.length - 1;
+                  for (let i = 0; i < this.critOptions.length; i++) {
+                    this.reverseArray[c].push([]);
+                    for (let j = 0; j < this.critOptions.length; j++) {
+                      this.reverseArray[c][i].push(false);
+                    }
+                  }
+                }, (error) => {
+                  this.eventService.emit("alert-error", error.error);
+                });
               }
+            }, (error) => {
+              this.eventService.emit("alert-error", error.error);
+            });
+            this.userService.checkScaleType().subscribe((scaleType: any) => {
+              this.scaleType = scaleType;
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
             });
@@ -68,11 +82,6 @@ export class OptionComparisonComponent {
       }, (error) => {
         this.eventService.emit("alert-error", error.error);
       });
-    });
-    this.userService.checkScaleType().subscribe((scaleType: any) => {
-      this.scaleType = scaleType;
-    }, (error) => {
-      this.eventService.emit("alert-error", error.error);
     });
   }
 
