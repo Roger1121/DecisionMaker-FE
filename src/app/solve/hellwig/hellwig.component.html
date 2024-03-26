@@ -1,9 +1,9 @@
-<div class="container" >
-  <div class="row ctrl-group">
-    <div class="col-md-7">
+<div>
+  <div class="row">
+    <div class="col-md-8">
       <available-details [problem]="problem"/>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-4 sidebar text-light">
       <h1>
         Metoda Hellwiga
       </h1>
@@ -13,10 +13,10 @@
         Na poniższej liście znajdują się wszystkie kryteria wymagające ręcznego określenia ważności opcji.
       </p>
       <div *ngFor="let criterion of getDescriptiveCriteria()">
-        <div class="inner-group">
+        <div>
           <h5>{{criterion.name}}</h5>
           <div *ngFor="let option of getCriterionOptions(criterion.id)">
-            <div class="list-item">
+            <div>
               <p>{{option.value}}</p>
               <ng-container
                 [ngTemplateOutlet]="getScaleType() ? slider : radio"

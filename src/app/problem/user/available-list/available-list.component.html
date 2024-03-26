@@ -1,5 +1,5 @@
-<div class="container">
-  <div class="ctrl-group">
+<div>
+  <div>
     <h1>
       Dostępne problemy decyzyjne
     </h1>
@@ -11,7 +11,7 @@
   Brak problemów do wyświetlenia
 </ng-template>
 <ng-template #problemList>
-  <div class="inner-group">
+  <div>
     <div *ngFor="let problem of problems">
       <available-list-item
         [problem]="problem"

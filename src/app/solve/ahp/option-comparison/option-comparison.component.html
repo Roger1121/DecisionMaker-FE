@@ -1,9 +1,9 @@
-<div class="container">
-  <div class="row ctrl-group">
-    <div class="col-md-7">
+<div>
+  <div class="row">
+    <div class="col-md-8">
       <available-details [problem]="problem"/>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-4 sidebar">
       <h1>
         Metoda AHP
       </h1>
@@ -19,7 +19,7 @@
         <li>Opcja A jest ekstremalnie preferowane względem opcji B</li>
       </ol>
       <p>Wagi 2, 4, 6 i 8 są opcjami pośrednimi.</p>
-      <div class="inner-group" *ngFor="let criterion of criteria; let c = index;">
+      <div *ngFor="let criterion of criteria; let c = index;">
         <h3>{{criterion.name}}</h3>
         <div *ngFor="let option1 of getCriterionOptions(criterion.id); let i = index;">
           <div *ngFor="let option2 of getCriterionOptions(criterion.id); let j = index;">

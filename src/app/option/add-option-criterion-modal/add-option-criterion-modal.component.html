@@ -1,5 +1,5 @@
 <form [formGroup]="optionCriterionForm" (ngSubmit)="$event.preventDefault(); addOptionCriterion()">
-  <div class="ctrl-group">
+  <div>
     <label class="form-label">Wartość</label>
     <input type="text" class="form-control" formControlName="value">
     <div *ngIf="optionCriterionForm.get('value')?.invalid && optionCriterionForm.get('value')?.touched">

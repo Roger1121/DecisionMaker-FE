@@ -2,30 +2,19 @@
 @import "primeng/resources/themes/nano/theme.css";
 @import "primeng/resources/primeng.css";
 
-.ctrl-group{
-  margin: 10px;
-  padding: 5px;
-  border-style: outset;
-  border-radius: 10px;
-  background-color: #B08968;
+:root {
+  --primary-dark: #08487f;
+  --primary-light: #8fcbff;
 }
 
-.inner-group{
-  margin: 10px;
-  padding: 5px;
-  border-style: outset;
-  border-radius: 10px;
-  background-color: #DDB892;
+.sidebar{
+  background-color: var(--primary-dark);
 }
 
-.list-item {
+.inner-group {
+  background-color: var(--primary-light);
+  margin: 10px 5px 10px 5px;
   padding: 5px;
-  border-style: solid;
-  background-color: #DDB892;
-}
-
-.item-border {
-  border-style: solid;
 }
 
 .btn-margin {
@@ -36,11 +25,32 @@
   text-align: right;
 }
 
-.text-light{
-  color: #FFEBCD
+.txt-center {
+  text-align: center;
 }
+
+.text-light{
+  color: #ffffff;
+}
+
+.text-dark{
+  color: #000000;
+}
+
+.fit-content {
+  width: fit-content;
+  height: fit-content;
+  padding: 4px;
+}
+
 body {
-  background: #463f3a;
+  background-image: url("background.jpg");
+  background-size: contain;
+  background-repeat: repeat;
+}
+
+.container{
+  background: #ffffff;
 }
 
 .footer {
@@ -48,6 +58,7 @@ body {
   bottom: 0;
   width: 100%;
 }
+
 html {
   position: relative;
   min-height: 100%;

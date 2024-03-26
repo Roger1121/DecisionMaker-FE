@@ -1,4 +1,4 @@
-<div class="container">
+<div>
   <div *ngIf="questions.length===0; then noOptions else optionsList">
   </div>
   <div class="row">
@@ -8,12 +8,12 @@
   </div>
 </div>
 <ng-template #noOptions>
-  <p class="text-light">
+  <p>
     Do ankiety podsumowującej nie dodano żadnych pytań.
   </p>
 </ng-template>
 <ng-template #optionsList>
-  <div class="ctrl-group">
+  <div>
     <h2>
       Lista pytań
     </h2>

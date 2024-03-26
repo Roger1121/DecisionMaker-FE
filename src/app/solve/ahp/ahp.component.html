@@ -1,9 +1,9 @@
-<div class="container">
-  <div class="row ctrl-group">
-    <div class="col-md-7">
+<div>
+  <div class="row">
+    <div class="col-md-8">
       <available-details [problem]="problem"/>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-4 sidebar text-light">
       <h1>
         Metoda AHP
       </h1>
@@ -22,18 +22,23 @@
       <div *ngFor="let criterion1 of criteria; let i = index;">
         <div *ngFor="let criterion2 of criteria; let j = index;">
           <div class="row inner-group" *ngIf="j > i">
-            <button
-              class="btn btn-primary"
-              type="button"
-              (click)="reverseItem(i, j)">Odwróć kryteria</button>
-            <ng-container
-              [ngTemplateOutlet]="reverseArray[i][j] ? reverseComparison : comparison"
-              [ngTemplateOutletContext]="{criterion1:criterion1, criterion2:criterion2}"
-            ></ng-container>
+            <div class="txt-center">
+              <button
+                class="btn btn-primary fit-content"
+                type="button"
+                (click)="reverseItem(i, j)">&lt;=Odwróć kryteria=&gt;
+              </button>
+            </div>
+            <div class="row text-dark">
+              <ng-container
+                [ngTemplateOutlet]="reverseArray[i][j] ? reverseComparison : comparison"
+                [ngTemplateOutletContext]="{criterion1:criterion1, criterion2:criterion2}"
+              ></ng-container>
+            </div>
           </div>
         </div>
       </div>
-      <div class="btn-right">
+      <div class="btn-right btn-margin">
         <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveCriteriaComparison()">Zapisz
           porównania kryteriów
         </button>
@@ -65,9 +70,11 @@
 </ng-template>
 
 <ng-template #slider let-criterion1='criterion1' let-criterion2='criterion2'>
-  <input id="{{criterion1.id}}{{criterion2.id}}" type="range" class="form-range" min="1" max="9" step="1" value="1"
-         oninput="this.nextElementSibling.value = this.value">
-  <output>1</output>
+  <div class="txt-center">
+    <input id="{{criterion1.id}}{{criterion2.id}}" type="range" class="form-range" min="1" max="9" step="1" value="1"
+           oninput="this.nextElementSibling.value = this.value">
+    <output>1</output>
+  </div>
 </ng-template>
 
 <ng-template #radio let-criterion1='criterion1' let-criterion2='criterion2'>

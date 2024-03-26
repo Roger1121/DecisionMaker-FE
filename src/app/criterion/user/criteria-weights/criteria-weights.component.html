@@ -1,9 +1,9 @@
-<div class="container" >
-  <div class="row ctrl-group">
-    <div class="col-md-7">
+<div>
+  <div class="row">
+    <div class="col-md-8">
       <available-details [problem]="problem"/>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-4 sidebar text-light">
       <h1>
         Określenie wag kryteriów
       </h1>
@@ -13,7 +13,7 @@
         Na poniższej liście znajdują się kryteria, w oparciu o które będą analizowane wszystkie przewidziane w niniejszym problemie warianty decyzyjne.
       </p>
       <div *ngFor="let criterion of criteria">
-        <div class="inner-group">
+        <div>
           <h5>{{criterion.name}}</h5>
           <ng-container
             [ngTemplateOutlet]="getScaleType() === 0 ? slider : radio"

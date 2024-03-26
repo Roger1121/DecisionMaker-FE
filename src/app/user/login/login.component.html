@@ -1,7 +1,7 @@
-<div class="container">
-  <div class="ctrl-group">
+<div>
+  <div>
     <form [formGroup]="loginForm" (ngSubmit)="$event.preventDefault(); login()">
-      <div class="inner-group">
+      <div>
         <label class="form-label">Email</label>
         <input type="text" class="form-control" formControlName="email">
         <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
@@ -31,11 +31,11 @@
       </div>
     </form>
   </div>
-  <div class="container">
-    <p class="text-light">
+  <div>
+    <p>
       Nie pamiętasz hasła? Przejdź <a href="password/recovery/request">tutaj</a> aby je zresetować.
     </p>
-    <p class="text-light">
+    <p>
       Nie masz jeszcze konta? Zarejestruj się <a href="/register">tutaj</a>.
     </p>
   </div>

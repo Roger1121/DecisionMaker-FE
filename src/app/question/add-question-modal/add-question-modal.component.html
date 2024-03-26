@@ -1,5 +1,5 @@
 <form [formGroup]="questionForm" (ngSubmit)="$event.preventDefault(); addQuestion()">
-  <div class="ctrl-group">
+  <div>
     <label class="form-label">Treść pytania</label>
     <input type="text" class="form-control" formControlName="content">
     <div *ngIf="questionForm.get('content')?.invalid && questionForm.get('content')?.touched">
