@@ -10,7 +10,49 @@
              *ngIf="questionForm.get('content')?.hasError('maxlength')"
       >Treść pytania może zawierać maksymalnie 200 znaków</small>
     </div>
+    <label class="form-label">Typ pytania</label>
+    <select class="form-select" formControlName="type" #type (change)='questionTypeChanged(type.value)'>
+      <option value="likert" selected>Pytanie w skali Likerta</option>
+      <option value="opisowe">Pytanie otwarte</option>
+      <option value="warianty">Pytanie zamknięte</option>
+    </select>
   </div>
+
+  <div *ngIf="isAnswersVisibleObs | async">
+    <button
+      type="button"
+      class="btn btn-primary btn-margin"
+      (click)="$event.preventDefault(); addAnswer();"
+    >Dodaj kolejną odpowiedź
+    </button>
+    <div formArrayName="answers">
+      <div
+        *ngFor="let answer of answers.controls; let i = index;"
+        [formGroupName]="i" >
+        <div>
+          <label class="form-label">Treść</label>
+          <input type="text" class="form-control" formControlName="name">
+          <div *ngIf="answer.get('name')?.invalid && answer.get('name')?.touched">
+            <small class="text-danger"
+                   *ngIf="answer.get('name')?.hasError('required')"
+            >Treść odpowiedzi jest wymagana</small>
+            <small class="text-danger"
+                   *ngIf="answer.get('name')?.hasError('maxlength')"
+            >Treść odpowiedzi może zawierać maksymalnie 200 znaków</small>
+          </div>
+        </div>
+        <div class="btn-right">
+          <button
+            type="button"
+            class="btn btn-danger btn-margin"
+            (click)="$event.preventDefault(); removeAnswer(i)"
+          >Usuń odpowiedź
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="btn-right">
     <button
       type="submit"

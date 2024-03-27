@@ -20,4 +20,12 @@ export class QuestionService {
   deleteQuestion(question_id: any){
     return this.http.delete(`http://localhost:8000/question/${question_id}`)
   }
+
+  getAnswers(){
+    return this.http.get('http://localhost:8000/answer');
+  }
+
+  saveAnswers(answers: any){
+    return this.http.post('http://localhost:8000/answer', answers);
+  }
 }

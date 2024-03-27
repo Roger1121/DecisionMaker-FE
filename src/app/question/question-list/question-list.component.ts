@@ -6,20 +6,22 @@ import {Question} from "../../shared/model/question";
 import {QuestionService} from "../question.service";
 import {AddQuestionModalComponent} from "../add-question-modal/add-question-modal.component";
 import {EventService} from "../../shared/services/EventService";
+import {Answer} from "../../shared/model/answer";
 
 @Component({
   selector: 'app-question-list',
   standalone: true,
-    imports: [
-        NgForOf,
-        NgIf,
-        OptionsListItemComponent
-    ],
+  imports: [
+    NgForOf,
+    NgIf,
+    OptionsListItemComponent
+  ],
   templateUrl: './question-list.component.html',
   styleUrl: './question-list.component.css'
 })
 export class QuestionListComponent {
   questions: Question[] = [];
+  answers: Answer[] = [];
 
   constructor(private questionService: QuestionService,
               private modalService: NgbModal,
@@ -31,11 +33,16 @@ export class QuestionListComponent {
   }
 
   loadQuestions() {
-      this.questionService.getQuestions().subscribe((data: any) => {
-        this.questions = data;
-      }, (error) => {
-        this.eventService.emit("alert-error", error.error);
-      })
+    this.questionService.getQuestions().subscribe((data: any) => {
+      this.questions = data;
+    }, (error) => {
+      this.eventService.emit("alert-error", error.error);
+    })
+    this.questionService.getAnswers().subscribe((data: any) => {
+      this.answers = data;
+    }, (error) => {
+      this.eventService.emit("alert-error", error.error);
+    })
   }
 
   addQuestion() {
@@ -50,11 +57,15 @@ export class QuestionListComponent {
   };
 
   deleteQuestion(question_id: any) {
-    this.questionService.deleteQuestion(question_id).subscribe((data)=>{
+    this.questionService.deleteQuestion(question_id).subscribe((data) => {
       this.eventService.emit("alert-success", data);
       this.loadQuestions();
     }, (error) => {
       this.eventService.emit("alert-error", error.error);
     });
+  }
+
+  getAnswersByQuestion(question_id: any){
+    return this.answers.filter(answer => answer.question === question_id);
   }
 }

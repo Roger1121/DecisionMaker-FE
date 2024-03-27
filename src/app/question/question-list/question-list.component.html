@@ -20,6 +20,11 @@
     <div class="row" *ngFor="let question of questions; let i = index">
       <div class="col-md-8">
         <p>{{ i + 1 }}. {{ question.content }}</p>
+        <div *ngIf="question.type === 'warianty'">
+          <ul>
+            <li *ngFor="let answer of getAnswersByQuestion(question.id)">{{answer.name}}</li>
+          </ul>
+        </div>
       </div>
       <div class="col-md-4">
         <button type="button" class="btn btn-danger" (click)="$event.preventDefault(); deleteQuestion(question.id)">Usuń pytanie</button>
