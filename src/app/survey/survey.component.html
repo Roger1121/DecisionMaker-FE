@@ -8,7 +8,7 @@
         [ngTemplateOutletContext]="{question:question}"
       ></ng-container>
     </div>
-    <div class="btn-right">
+    <div class="btn-right" *ngIf="questions.length > responses.length">
       <button class="btn btn-primary" (click)="$event.preventDefault(); saveResponses()">Zapisz</button>
     </div>
   </div>
@@ -18,5 +18,54 @@
   <p>{{ getResponseContent(question.id) }}</p>
 </ng-template>
 <ng-template #addResponse let-question='question'>
-  <input type="text" id="response{{question.id}}"/>
+  <ng-container
+    [ngTemplateOutlet]="question.type === 'otwarte' ? textResponse : question.type === 'likert' ?  likertResponse : optionsResponse"
+    [ngTemplateOutletContext]="{question:question}"
+  ></ng-container>
+</ng-template>
+
+<ng-template #textResponse let-question='question'>
+  <textarea id="response{{question.id}}" rows="4" cols="50"></textarea>
+</ng-template>
+<ng-template #likertResponse let-question='question'>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{question.id}}" id="{{question.id}}1" value="Zdecydowanie się zgadzam">
+    <label class="form-check-label" for="{{question.id}}1">
+      Zdecydowanie się zgadzam
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{question.id}}" id="{{question.id}}2" value="Raczej się zgadzam">
+    <label class="form-check-label" for="{{question.id}}2">
+      Raczej się zgadzam
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{question.id}}" id="{{question.id}}3" value="Nie mam zdania">
+    <label class="form-check-label" for="{{question.id}}3">
+      Nie mam zdania
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{question.id}}" id="{{question.id}}4" value="Raczej się nie zgadzam">
+    <label class="form-check-label" for="{{question.id}}4">
+      Raczej się nie zgadzam
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadio-{{question.id}}" id="{{question.id}}5" value="Zdecydowanie się nie zgadzam">
+    <label class="form-check-label" for="{{question.id}}5">
+      Zdecydowanie się nie zgadzam
+    </label>
+  </div>
+</ng-template>
+<ng-template #optionsResponse let-question='question'>
+  <div *ngFor="let answer of getAnswersByQuestion(question.id); let i = index;">
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="flexRadio-{{question.id}}" id="{{question.id}}{{i}}" value="{{answer.name}}">
+      <label class="form-check-label" for="{{question.id}}5">
+        {{answer.name}}
+      </label>
+    </div>
+  </div>
 </ng-template>
