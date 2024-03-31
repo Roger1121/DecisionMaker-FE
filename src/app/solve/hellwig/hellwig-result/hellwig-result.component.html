@@ -3,7 +3,7 @@
     <div class="col-md-8">
       <available-details [problem]="problem"/>
     </div>
-    <div class="col-md-4 sidebar">
+    <div class="col-md-4 sidebar text-light">
       <h1>
         Metoda Hellwiga - wyniki
       </h1>
@@ -11,7 +11,7 @@
         Poniżej zaprezentowane są opcje wybrane podczas rozwiązywania problemu oraz ranking końcowy analizowanych opcji.
       </p>
       <h3>Wagi kryteriów</h3>
-      <div *ngFor="let criterion of criteria">
+      <div class="inner-group text-dark" *ngFor="let criterion of criteria">
         <h4>{{ criterion.name }}</h4>
         <p>{{ getCriterionWeight(criterion.id) }}</p>
         <h5>Wagi opcji</h5>
@@ -24,9 +24,11 @@
       <h3>
         Wzorzec rozwoju
       </h3>
-      <div *ngFor="let criterion of criteria">
-        <h5>{{ criterion.name }}</h5>
-        <p>{{ getIdealForCriterion(criterion.id)?.value }}</p>
+      <div class="inner-group text-dark">
+        <div *ngFor="let criterion of criteria">
+          <h5>{{ criterion.name }}</h5>
+          <p>{{ getIdealForCriterion(criterion.id)?.value }}</p>
+        </div>
       </div>
       <h3>
         Ranking końcowy
@@ -47,7 +49,7 @@
               *ngFor="let criterion of criteria; let j = index;">{{ getCriterionOptionName(option.id, criterion.id) }}
             </td>
             <td>
-              {{math.trunc(getOptionRank(option.id).synth_var * 100)}}
+              {{ math.trunc(getOptionRank(option.id).synth_var * 100) }}
             </td>
           </tr>
           </tbody>

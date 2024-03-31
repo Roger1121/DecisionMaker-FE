@@ -8,16 +8,16 @@
         Metoda Hellwiga
       </h1>
       <p>
-        Metoda Hellwiga jest metodą porządkowania liniowego opartą na porównaniu analizowanych rozwiązań z rozwiązaniem idealnym.
-        Porównanie takie wymaga jednak ręcznego określenia numerycznych wartości opcji dla kryteriów wyrażonych w skali opisowej.
-        Na poniższej liście znajdują się wszystkie kryteria wymagające ręcznego określenia ważności opcji.
+        Metoda Hellwiga jest metodą porządkowania liniowego opartą na porównaniu analizowanych rozwiązań z rozwiązaniem
+        idealnym. Porównanie takie wymaga jednak ręcznego określenia numerycznych wartości opcji dla kryteriów wyrażonych w skali
+        opisowej. Na poniższej liście znajdują się wszystkie kryteria wymagające ręcznego określenia ważności opcji.
       </p>
       <div *ngFor="let criterion of getDescriptiveCriteria()">
         <div>
-          <h5>{{criterion.name}}</h5>
+          <h5>{{ criterion.name }}</h5>
           <div *ngFor="let option of getCriterionOptions(criterion.id)">
-            <div>
-              <p>{{option.value}}</p>
+            <div class="inner-group text-dark">
+              <p>{{ option.value }}</p>
               <ng-container
                 [ngTemplateOutlet]="getScaleType() ? slider : radio"
                 [ngTemplateOutletContext]="{option:option}"
@@ -26,8 +26,10 @@
           </div>
         </div>
       </div>
-      <div class="btn-right">
-        <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveOptionWeights()">Zapisz wagi opcji</button>
+      <div class="btn-right btn-margin">
+        <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveOptionWeights()">Zapisz wagi
+          opcji
+        </button>
       </div>
     </div>
   </div>
@@ -35,9 +37,11 @@
 
 
 <ng-template #slider let-option='option'>
-  <input id="{{option.id}}" type="range" class="form-range" min="1" max="100" step="1" value="50"
-         oninput="this.nextElementSibling.value = this.value">
-  <output>50</output>
+  <div class="txt-center">
+    <input id="{{option.id}}" type="range" class="form-range" min="1" max="100" step="1" value="50"
+           oninput="this.nextElementSibling.value = this.value">
+    <output>50</output>
+  </div>
 </ng-template>
 
 <ng-template #radio let-option='option'>

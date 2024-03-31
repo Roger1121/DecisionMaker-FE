@@ -9,29 +9,35 @@
       </h1>
       <p>
         Pierwszym etapem analizy problemu jest ustalenie ważności poszczególnych kryteriów decyzyjnych.
-        Pozwala nam to określić, jak bardzo od danego kryterium będzie zależała końcowa ocena każdego z końcowych rozwiązań problemu.
-        Na poniższej liście znajdują się kryteria, w oparciu o które będą analizowane wszystkie przewidziane w niniejszym problemie warianty decyzyjne.
+        Pozwala nam to określić, jak bardzo od danego kryterium będzie zależała końcowa ocena każdego z końcowych
+        rozwiązań problemu.
+        Na poniższej liście znajdują się kryteria, w oparciu o które będą analizowane wszystkie przewidziane w
+        niniejszym problemie warianty decyzyjne.
       </p>
       <div *ngFor="let criterion of criteria">
-        <div>
-          <h5>{{criterion.name}}</h5>
+        <div class="inner-group text-dark">
+          <h5>{{ criterion.name }}</h5>
           <ng-container
             [ngTemplateOutlet]="getScaleType() === 0 ? slider : radio"
             [ngTemplateOutletContext]="{criterion:criterion}"
           ></ng-container>
         </div>
       </div>
-      <div class="btn-right">
-        <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveCriteriaWeights()">Zapisz wagi kryteriów</button>
+      <div class="btn-right btn-margin">
+        <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveCriteriaWeights()">Zapisz
+          wagi kryteriów
+        </button>
       </div>
     </div>
   </div>
 </div>
 
 <ng-template #slider let-criterion='criterion'>
-  <input id="{{criterion.id}}" type="range" class="form-range" min="1" max="100" step="1" value="50"
-         oninput="this.nextElementSibling.value = this.value">
-  <output>50</output>
+  <div class="txt-center">
+    <input id="{{criterion.id}}" type="range" class="form-range" min="1" max="100" step="1" value="50"
+           oninput="this.nextElementSibling.value = this.value">
+    <output>50</output>
+  </div>
 </ng-template>
 
 <ng-template #radio let-criterion='criterion'>
@@ -54,7 +60,8 @@
     </label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="flexRadio-{{criterion.id}}" id="{{criterion.id}}4" value="50" checked>
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion.id}}" id="{{criterion.id}}4" value="50"
+           checked>
     <label class="form-check-label" for="{{criterion.id}}4">
       Ani ważne, ani nieważne
     </label>

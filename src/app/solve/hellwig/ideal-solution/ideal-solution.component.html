@@ -3,7 +3,7 @@
     <div class="col-md-8">
       <available-details [problem]="problem"/>
     </div>
-    <div class="col-md-4 sidebar">
+    <div class="col-md-4 sidebar text-light">
       <h1>
         Metoda Hellwiga - wyznaczanie wzorca rozwoju
       </h1>
@@ -12,7 +12,7 @@
         Aby znaleźć takie rozwiązanie, dla każdego z badanych kryteriów należy wskazać najbardziej atrakcyjną spośród dostępnych opcji.
       </p>
       <div *ngFor="let criterion of criteria; let i = index;">
-        <div>
+        <div class="inner-group text-dark">
           <h5>{{criterion.name}}</h5>
           <select class="form-select" id="{{i}}">
             <option value="default"></option>
@@ -21,7 +21,7 @@
           </select>
         </div>
       </div>
-      <div class="btn-right">
+      <div class="btn-right btn-margin">
         <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveIdealSolution()">Zapisz wzorzec rozwoju</button>
       </div>
     </div>
