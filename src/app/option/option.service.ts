@@ -4,9 +4,7 @@ import {catchError} from "rxjs";
 import {ErrorHandlerService} from "../shared/services/ErrorHandlerService";
 import {Option} from "../shared/model/option";
 import {CriterionOption} from "../shared/model/criterion-option";
-import {OptionWeight} from "../shared/model/option-weight";
-import {IdealSolution} from "../shared/model/ideal-solution";
-
+import {environment} from "../../environments/environment"
 @Injectable({
   providedIn: 'root'
 })
@@ -16,26 +14,26 @@ export class OptionService {
   }
 
   getOptionsByProblemId(problem_id: any) {
-    return this.http.get('http://localhost:8000/option', {params: new HttpParams().set('problem_id', problem_id)}).pipe(catchError(this.errorHandler.handleWebError))
+    return this.http.get(environment.API_URL+'/option', {params: new HttpParams().set('problem_id', problem_id)}).pipe(catchError(this.errorHandler.handleWebError))
   }
 
   getOptionCriteria(option_id: any) {
-    return this.http.get('http://localhost:8000/crit-option', {params: new HttpParams().set('option_id', option_id)}).pipe(catchError(this.errorHandler.handleWebError))
+    return this.http.get(environment.API_URL+'/crit-option', {params: new HttpParams().set('option_id', option_id)}).pipe(catchError(this.errorHandler.handleWebError))
   }
 
   addOption(option: Option) {
-    return this.http.post('http://localhost:8000/option', option)
+    return this.http.post(environment.API_URL+'/option', option)
   }
 
   addOptionCriterion(optionCriteria: CriterionOption) {
-    return this.http.post('http://localhost:8000/crit-option', optionCriteria)
+    return this.http.post(environment.API_URL+'/crit-option', optionCriteria)
   }
 
   updateOption(option: Option) {
-    return this.http.put('http://localhost:8000/option', option)
+    return this.http.put(environment.API_URL+'/option', option)
   }
 
   deleteOption(option_id: any){
-    return this.http.delete(`http://localhost:8000/option/${option_id}`)
+    return this.http.delete(environment.API_URL+`/option/${option_id}`)
   }
 }
