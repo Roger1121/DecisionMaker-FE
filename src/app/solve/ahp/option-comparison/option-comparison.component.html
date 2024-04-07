@@ -25,25 +25,27 @@
       </details>
       <div *ngFor="let criterion of criteria; let c = index;">
         <div class="inner-group text-dark">
-          <h3>{{ criterion.name }}</h3>
-          <div *ngFor="let option1 of getCriterionOptions(criterion.id); let i = index;">
-            <div *ngFor="let option2 of getCriterionOptions(criterion.id); let j = index;">
-              <div class="row" *ngIf="j > i">
-                <div class="txt-center">
-                  <button
-                    class="btn btn-primary"
-                    type="button"
-                    (click)="reverseItem(c, i, j)"
-                  >Odwróć opcje
-                  </button>
+          <details>
+            <summary><h3 style="display:inline-block;">{{ criterion.name }}</h3></summary>
+            <div *ngFor="let option1 of getCriterionOptions(criterion.id); let i = index;">
+              <div *ngFor="let option2 of getCriterionOptions(criterion.id); let j = index;">
+                <div class="row" *ngIf="j > i">
+                  <div class="txt-center">
+                    <button
+                      class="btn btn-primary"
+                      type="button"
+                      (click)="reverseItem(c, i, j)"
+                    >Odwróć opcje
+                    </button>
+                  </div>
+                  <ng-container
+                    [ngTemplateOutlet]="reverseArray[c][i][j] ? reverseComparison : comparison"
+                    [ngTemplateOutletContext]="{option1:option1, option2:option2}"
+                  ></ng-container>
                 </div>
-                <ng-container
-                  [ngTemplateOutlet]="reverseArray[c][i][j] ? reverseComparison : comparison"
-                  [ngTemplateOutletContext]="{option1:option1, option2:option2}"
-                ></ng-container>
               </div>
             </div>
-          </div>
+          </details>
         </div>
       </div>
       <div class="btn-right btn-margin">
