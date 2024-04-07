@@ -31,6 +31,7 @@ export class AddProblemFormComponent {
   problemForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(200)]),
     description: new FormControl('', [Validators.required, Validators.maxLength(2000)]),
+    description_preview: new FormControl('', [Validators.required, Validators.maxLength(300)]),
     group: new FormControl('', [Validators.required, Validators.maxLength(200)]),
     criteria: new FormArray([
       new FormGroup({
@@ -56,7 +57,7 @@ export class AddProblemFormComponent {
   }
 
   submitForm() {
-    let problem = new Problem(this.problemForm.get('name')?.getRawValue(), this.problemForm.get('description')?.getRawValue(), false, this.problemForm.get('group')?.getRawValue(), 0);
+    let problem = new Problem(this.problemForm.get('name')?.getRawValue(), this.problemForm.get('description')?.getRawValue(),  this.problemForm.get('description_preview')?.getRawValue(), false, this.problemForm.get('group')?.getRawValue(), 0);
     this.problemService.addProblem(problem).subscribe(
       (data) => {
         const problem = data as Problem;

@@ -20,6 +20,16 @@
                *ngIf="problemForm.get('description')?.hasError('maxlength')"
         >Opis może zawierać maksymalnie 2000 znaków</small>
       </div>
+      <label class="form-label">Podgląd opisu</label>
+      <textarea rows="4" class="form-control" formControlName="description_preview"></textarea>
+      <div *ngIf="problemForm.get('description_preview')?.invalid && problemForm.get('description_preview')?.touched">
+        <small class="text-danger"
+               *ngIf="problemForm.get('description_preview')?.hasError('required')"
+        >Podgląd opisu jest wymagany</small>
+        <small class="text-danger"
+               *ngIf="problemForm.get('description_preview')?.hasError('maxlength')"
+        >Podgląd opisu może zawierać maksymalnie 300 znaków</small>
+      </div>
       <label>Grupa</label>
       <input type="number" class="form-control" formControlName="group">
       <div *ngIf="problemForm.get('group')?.invalid && problemForm.get('group')?.touched">
