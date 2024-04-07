@@ -71,7 +71,7 @@ export class CriteriaWeightsComponent {
   getDescriptiveWeights(): CriterionWeight[] {
     let weightList: CriterionWeight[] = [];
     for (let criterion of this.criteria) {
-      for (let i = 1; i <= 5; i++) {
+      for (let i = 1; i <= 7; i++) {
         let radio: any = document.getElementById(criterion.id?.toString(10) + i.toString(10));
         if (radio.checked) {
           weightList.push(new CriterionWeight(criterion.id, radio.value));

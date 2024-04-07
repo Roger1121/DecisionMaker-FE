@@ -2,15 +2,12 @@ import {Component} from '@angular/core';
 import {AvailableDetailsComponent} from "../../problem/user/available-details/available-details.component";
 import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
 import {Criterion} from "../../shared/model/criterion";
-import {CriterionOption} from "../../shared/model/criterion-option";
 import {ProblemService} from "../../problem/problem.service";
 import {CriterionService} from "../../criterion/criterion.service";
 import {UserService} from "../../user/user.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {AhpService} from "./ahp.service";
 import {CriteriaComparison} from "../../shared/model/criteria-comparison";
-import {CriterionWeight} from "../../shared/model/criterion-weight";
-import {OptionComparison} from "../../shared/model/option-comparison";
 import {EventService} from "../../shared/services/EventService";
 
 @Component({

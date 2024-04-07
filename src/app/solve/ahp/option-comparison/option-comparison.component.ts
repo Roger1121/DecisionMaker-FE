@@ -8,7 +8,6 @@ import {CriterionService} from "../../../criterion/criterion.service";
 import {UserService} from "../../../user/user.service";
 import {AhpService} from "../ahp.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {CriteriaComparison} from "../../../shared/model/criteria-comparison";
 import {OptionComparison} from "../../../shared/model/option-comparison";
 import {EventService} from "../../../shared/services/EventService";
 

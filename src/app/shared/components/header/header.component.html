@@ -16,9 +16,8 @@
       <li class="nav-item" *ngIf="(isAdminObs | async) === false && (isAuthenticatedObs | async)">
         <a class="nav-link" routerLink="survey">Ankieta ewaluacyjna</a>
       </li>
-      <li class="nav-item" *ngIf="(isAuthenticatedObs | async) === false">
-        <a class="nav-link" routerLink="">Zaloguj</a>
-      </li>
+    </ul>
+    <ul class="navbar-nav flex-grow-2 padded">
       <li class="nav-item" *ngIf="(isAuthenticatedObs | async) === true" (click)="logout()">
         <a class="nav-link" routerLink="">Wyloguj</a>
       </li>

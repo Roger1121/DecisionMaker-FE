@@ -7,4 +7,5 @@ li {
 }
 li:before {
   content: counter(odd-numbers) " - ";
+  font-weight:bold;
 }

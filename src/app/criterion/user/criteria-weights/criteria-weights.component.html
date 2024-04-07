@@ -7,13 +7,16 @@
       <h1>
         Określenie wag kryteriów
       </h1>
-      <p>
-        Pierwszym etapem analizy problemu jest ustalenie ważności poszczególnych kryteriów decyzyjnych.
-        Pozwala nam to określić, jak bardzo od danego kryterium będzie zależała końcowa ocena każdego z końcowych
-        rozwiązań problemu.
-        Na poniższej liście znajdują się kryteria, w oparciu o które będą analizowane wszystkie przewidziane w
-        niniejszym problemie warianty decyzyjne.
-      </p>
+      <details open>
+        <summary><b>Pokaż/Ukryj opis etapu</b></summary>
+        <p>
+          Pierwszym etapem analizy problemu jest ustalenie ważności poszczególnych kryteriów decyzyjnych.
+          Pozwala nam to określić, jak bardzo od danego kryterium będzie zależała końcowa ocena każdego z końcowych
+          rozwiązań problemu.
+          Na poniższej liście znajdują się kryteria, w oparciu o które będą analizowane wszystkie przewidziane w
+          niniejszym problemie warianty decyzyjne.
+        </p>
+      </details>
       <div *ngFor="let criterion of criteria">
         <div class="inner-group text-dark">
           <h5>{{ criterion.name }}</h5>
@@ -73,14 +76,14 @@
     </label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="flexRadio-{{criterion.id}}" id="{{criterion.id}}5" value="17">
-    <label class="form-check-label" for="{{criterion.id}}5">
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion.id}}" id="{{criterion.id}}6" value="17">
+    <label class="form-check-label" for="{{criterion.id}}6">
       Nieważne
     </label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="flexRadio-{{criterion.id}}" id="{{criterion.id}}5" value="1">
-    <label class="form-check-label" for="{{criterion.id}}5">
+    <input class="form-check-input" type="radio" name="flexRadio-{{criterion.id}}" id="{{criterion.id}}7" value="1">
+    <label class="form-check-label" for="{{criterion.id}}7">
       Zdecydowanie nieważne
     </label>
   </div>

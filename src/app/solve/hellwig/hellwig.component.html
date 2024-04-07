@@ -7,11 +7,16 @@
       <h1>
         Metoda Hellwiga
       </h1>
-      <p>
-        Metoda Hellwiga jest metodą porządkowania liniowego opartą na porównaniu analizowanych rozwiązań z rozwiązaniem
-        idealnym. Porównanie takie wymaga jednak ręcznego określenia numerycznych wartości opcji dla kryteriów wyrażonych w skali
-        opisowej. Na poniższej liście znajdują się wszystkie kryteria wymagające ręcznego określenia ważności opcji.
-      </p>
+      <details open>
+        <summary><b>Pokaż/Ukryj opis etapu</b></summary>
+        <p>
+          Metoda Hellwiga jest metodą porządkowania liniowego opartą na porównaniu analizowanych rozwiązań z
+          rozwiązaniem
+          idealnym. Porównanie takie wymaga jednak ręcznego określenia numerycznych wartości opcji dla kryteriów
+          wyrażonych w skali
+          opisowej. Na poniższej liście znajdują się wszystkie kryteria wymagające ręcznego określenia ważności opcji.
+        </p>
+      </details>
       <div *ngFor="let criterion of getDescriptiveCriteria()">
         <div>
           <h5>{{ criterion.name }}</h5>
@@ -76,14 +81,14 @@
     </label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="flexRadio-{{option.id}}" id="{{option.id}}5" value="17">
-    <label class="form-check-label" for="{{option.id}}5">
+    <input class="form-check-input" type="radio" name="flexRadio-{{option.id}}" id="{{option.id}}6" value="17">
+    <label class="form-check-label" for="{{option.id}}6">
       Niedobre
     </label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="flexRadio-{{option.id}}" id="{{option.id}}5" value="1">
-    <label class="form-check-label" for="{{option.id}}5">
+    <input class="form-check-input" type="radio" name="flexRadio-{{option.id}}" id="{{option.id}}7" value="1">
+    <label class="form-check-label" for="{{option.id}}7">
       Zdecydowanie niedobre
     </label>
   </div>

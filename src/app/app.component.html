@@ -1,6 +1,13 @@
-<app-header/>
 <app-alert/>
-<div class="container with-bottom-space">
-  <router-outlet/>
+<app-header/>
+<div style="
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: Calc(100% - 56px - 80px);">
+  <div class="container" >
+    <router-outlet/>
+  </div>
 </div>
 <app-footer/>
+
