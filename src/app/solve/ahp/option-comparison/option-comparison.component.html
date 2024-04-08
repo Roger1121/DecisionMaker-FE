@@ -26,7 +26,7 @@
       <div *ngFor="let criterion of criteria; let c = index;">
         <div class="inner-group text-dark">
           <details>
-            <summary><h3 style="display:inline-block;">{{ criterion.name }}</h3></summary>
+            <summary><h3 class="inline-display">{{ criterion.name }}</h3></summary>
             <div *ngFor="let option1 of getCriterionOptions(criterion.id); let i = index;">
               <div *ngFor="let option2 of getCriterionOptions(criterion.id); let j = index;">
                 <div class="row" *ngIf="j > i">

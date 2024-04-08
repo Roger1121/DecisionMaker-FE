@@ -1,0 +1,6 @@
+.main-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: Calc(100% - 56px - 80px);
+}
