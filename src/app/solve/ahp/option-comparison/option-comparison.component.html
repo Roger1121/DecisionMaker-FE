@@ -1,27 +1,26 @@
 <div>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
       <available-details [problem]="problem"/>
     </div>
-    <div class="col-md-4 sidebar text-light">
+    <div class="col-md-5 sidebar text-light">
       <h1>
         Metoda AHP
       </h1>
       <details open>
         <summary><b>Pokaż/Ukryj opis metody</b></summary>
         <p>
-          Metoda AHP jest metodą porządkowania bazującą na porównaniach parami i określeniu siły preferencji jednej
-          opcji
-          względem drugiej.
+          Metoda AHP jest metodą porządkowania bazującą na porównaniach parami i określeniu siły preferencji
+          opcji A względem opcji B.
         </p>
-        <ol>
+        <ol *ngIf="getScaleType()">
           <li>Opcje A i B są sobie równoważne</li>
           <li>Opcja A jest słabo preferowane względem opcji B</li>
           <li>Opcja A jest silnie preferowane względem opcji B</li>
           <li>Opcja A jest bardzo silnie preferowane względem opcji B</li>
           <li>Opcja A jest ekstremalnie preferowane względem opcji B</li>
         </ol>
-        <p>Wagi <b>2</b>, <b>4</b>, <b>6</b> i <b>8</b> są opcjami pośrednimi.</p>
+        <p *ngIf="getScaleType()">Wagi <b>2</b>, <b>4</b>, <b>6</b> i <b>8</b> są opcjami pośrednimi.</p>
       </details>
       <div *ngFor="let criterion of criteria; let c = index;">
         <div class="inner-group text-dark">

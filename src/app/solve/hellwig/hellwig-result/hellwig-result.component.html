@@ -1,60 +1,62 @@
 <div>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
       <available-details [problem]="problem"/>
     </div>
-    <div class="col-md-4 sidebar text-light">
+    <div class="col-md-5 sidebar text-light">
       <h1>
         Metoda Hellwiga - wyniki
       </h1>
       <p>
         Poniżej zaprezentowane są opcje wybrane podczas rozwiązywania problemu oraz ranking końcowy analizowanych opcji.
       </p>
-      <h3>Wagi kryteriów</h3>
-      <div class="inner-group text-dark" *ngFor="let criterion of criteria">
-        <h4>{{ criterion.name }}</h4>
-        <p>{{ getCriterionWeight(criterion.id) }}</p>
-        <h5>Wagi opcji</h5>
-        <div *ngFor="let option of options">
-          <h6>{{ option.name }}</h6>
-          <p>{{ getCriterionOptionName(option.id, criterion.id) }}
-            ---> {{ getOptionWeight(option.id, criterion.id) }}</p>
+      <details>
+        <summary><h3 class="inline-display">Wagi kryteriów</h3></summary>
+        <div class="inner-group text-dark" *ngFor="let criterion of criteria">
+          <h4>{{ criterion.name }}</h4>
+          <p>{{ getCriterionWeight(criterion.id) }}</p>
+          <h5>Wagi opcji</h5>
+          <div *ngFor="let option of options">
+            <h6>{{ option.name }}</h6>
+            <p>{{ getCriterionOptionName(option.id, criterion.id) }}
+              ---> {{ getOptionWeight(option.id, criterion.id) }}</p>
+          </div>
         </div>
-      </div>
-      <h3>
-        Wzorzec rozwoju
-      </h3>
-      <div class="inner-group text-dark">
-        <div *ngFor="let criterion of criteria">
-          <h5>{{ criterion.name }}</h5>
-          <p>{{ getIdealForCriterion(criterion.id)?.value }}</p>
+      </details>
+      <details>
+        <summary><h3 class="inline-display">Wzorzec rozwoju</h3></summary>
+        <div class="inner-group text-dark">
+          <div *ngFor="let criterion of criteria">
+            <h5>{{ criterion.name }}</h5>
+            <p>{{ getIdealForCriterion(criterion.id)?.value }}</p>
+          </div>
         </div>
-      </div>
-      <h3>
-        Ranking końcowy
-      </h3>
-      <div>
-        <table class="table table-bordered">
-          <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col" *ngFor="let criterion of criteria">{{ criterion.name }}</th>
-            <th>Ocena rozwiązania w skali od 0 do 100</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let option of options; let i = index;">
-            <th scope="row">{{ option.name }}</th>
-            <td
-              *ngFor="let criterion of criteria; let j = index;">{{ getCriterionOptionName(option.id, criterion.id) }}
-            </td>
-            <td>
-              {{ math.trunc(getOptionRank(option.id).synth_var * 100) }}
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
+      </details>
+      <details>
+        <summary><h3 class="inline-display">Ranking końcowy</h3></summary>
+        <div>
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col" *ngFor="let criterion of criteria">{{ criterion.name }}</th>
+              <th>Ocena rozwiązania w skali od 0 do 100</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let option of options; let i = index;">
+              <th scope="row">{{ option.name }}</th>
+              <td
+                *ngFor="let criterion of criteria; let j = index;">{{ getCriterionOptionName(option.id, criterion.id) }}
+              </td>
+              <td>
+                {{ math.trunc(getOptionRank(option.id).synth_var * 100) }}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
     </div>
   </div>
 </div>

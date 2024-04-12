@@ -1,17 +1,17 @@
 <div>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
       <available-details [problem]="problem"/>
     </div>
-    <div class="col-md-4 sidebar text-light">
+    <div class="col-md-5 sidebar text-light">
       <h1>
         Metoda AHP - wyniki
       </h1>
       <p>
         Poniżej zaprezentowane są opcje wybrane podczas rozwiązywania problemu oraz ranking końcowy analizowanych opcji.
       </p>
-      <div>
-        <h3>Macierz porównań kryteriów</h3>
+      <details>
+        <summary><h3 class="inline-display">Macierz porównań kryteriów</h3></summary>
         <table class="table table-bordered">
           <thead>
           <tr>
@@ -28,7 +28,9 @@
           </tr>
           </tbody>
         </table>
-        <h3>Macierze porównań opcji</h3>
+      </details>
+      <details>
+        <summary><h3 class="inline-display">Macierze porównań opcji</h3></summary>
         <div *ngFor="let criterion of criteria">
           <table class="table table-bordered">
             <thead>
@@ -50,7 +52,9 @@
             </tbody>
           </table>
         </div>
-        <h3>Ranking końcowy</h3>
+      </details>
+      <details>
+        <summary><h3 class="inline-display">Ranking końcowy</h3></summary>
         <div>
           <table class="table table-bordered">
             <thead>
@@ -67,13 +71,13 @@
                 *ngFor="let criterion of criteria; let j = index;">{{ getCriterionOptionName(option.id, criterion.id) }}
               </td>
               <td>
-                {{math.trunc(getOptionRank(option.id).synth_var * 100)}}
+                {{ math.trunc(getOptionRank(option.id).synth_var * 100) }}
               </td>
             </tr>
             </tbody>
           </table>
         </div>
-      </div>
+      </details>
     </div>
   </div>
 </div>

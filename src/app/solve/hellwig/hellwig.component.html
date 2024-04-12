@@ -1,9 +1,9 @@
 <div>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
       <available-details [problem]="problem"/>
     </div>
-    <div class="col-md-4 sidebar text-light">
+    <div class="col-md-5 sidebar text-light">
       <h1>
         Metoda Hellwiga
       </h1>
@@ -18,8 +18,8 @@
         </p>
       </details>
       <div *ngFor="let criterion of getDescriptiveCriteria()">
-        <div>
-          <h5>{{ criterion.name }}</h5>
+        <details>
+          <summary><h5 class="inline-display">{{ criterion.name }}</h5></summary>
           <div *ngFor="let option of getCriterionOptions(criterion.id)">
             <div class="inner-group text-dark">
               <p>{{ option.value }}</p>
@@ -29,7 +29,7 @@
               ></ng-container>
             </div>
           </div>
-        </div>
+        </details>
       </div>
       <div class="btn-right btn-margin">
         <button type="button" class="btn btn-primary" (click)="$event.preventDefault(); saveOptionWeights()">Zapisz wagi
