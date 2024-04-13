@@ -1,18 +1,15 @@
 import { Component } from '@angular/core';
 import {NgIf} from "@angular/common";
-import {PaginatorModule} from "primeng/paginator";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {UserService} from "../../user.service";
 import {Router} from "@angular/router";
 import {EventService} from "../../../shared/services/EventService";
-import {Login} from "../../../shared/model/user/login";
 
 @Component({
   selector: 'app-password-recovery-request',
   standalone: true,
     imports: [
         NgIf,
-        PaginatorModule,
         ReactiveFormsModule
     ],
   templateUrl: './password-recovery-request.component.html',

@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
-import {PaginatorModule} from "primeng/paginator";
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {QuestionService} from "../question.service";
@@ -8,14 +7,12 @@ import {Question} from "../../shared/model/question";
 import {EventService} from "../../shared/services/EventService";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Answer} from "../../shared/model/answer";
-import {Criterion} from "../../shared/model/criterion";
 
 @Component({
   selector: 'app-add-question-modal',
   standalone: true,
   imports: [
     NgIf,
-    PaginatorModule,
     ReactiveFormsModule,
     NgForOf,
     AsyncPipe

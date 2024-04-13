@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {NgIf} from "@angular/common";
-import {PaginatorModule} from "primeng/paginator";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {UserService} from "../user.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
@@ -12,7 +11,6 @@ import {EventService} from "../../shared/services/EventService";
   standalone: true,
     imports: [
         NgIf,
-        PaginatorModule,
         ReactiveFormsModule
     ],
   templateUrl: './password-recovery.component.html',
