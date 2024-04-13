@@ -34,5 +34,5 @@ export const routes: Routes = [
   {path: 'question', component: QuestionListComponent},
   {path: 'survey', component: SurveyComponent},
   {path: 'recovery', component: PasswordRecoveryRequestComponent},
-  {path: 'password/reset/:token', component: PasswordRecoveryComponent}
+  {path: 'reset/:token', component: PasswordRecoveryComponent}
 ];
