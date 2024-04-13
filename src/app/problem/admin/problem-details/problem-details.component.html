@@ -10,7 +10,7 @@
           [checked]="problem.is_available"
           (click)="toggleAvailability()">
         <label>Zmień dostępność zadania</label>
-        <p>{{ problem.description }}</p>
+        <div [innerHTML]="problem.description"></div>
       </div>
     </div>
     <div class="col-md-6">
