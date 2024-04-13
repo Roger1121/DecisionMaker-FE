@@ -25,7 +25,8 @@ export class AlertComponent {
       {
         severity: 'error',
         summary: 'Błąd',
-        detail: message
+        detail: message,
+        life: 10000
       }
     );
   }

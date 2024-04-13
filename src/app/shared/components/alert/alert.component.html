@@ -1,1 +1,6 @@
-<p-toast></p-toast>
+
+<p-toast >
+  <ng-template let-message pTemplate="message">
+    <p innerHtml="{{message.detail}}"></p>
+  </ng-template>
+</p-toast>
