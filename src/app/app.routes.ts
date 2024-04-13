@@ -33,6 +33,6 @@ export const routes: Routes = [
   {path: 'option/comparison/:problemId', component: OptionComparisonComponent},
   {path: 'question', component: QuestionListComponent},
   {path: 'survey', component: SurveyComponent},
-  {path: 'password/recovery', component: PasswordRecoveryRequestComponent},
+  {path: 'recovery', component: PasswordRecoveryRequestComponent},
   {path: 'password/reset/:token', component: PasswordRecoveryComponent}
 ];
