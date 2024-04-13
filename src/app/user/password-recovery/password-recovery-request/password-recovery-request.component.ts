@@ -31,7 +31,7 @@ export class PasswordRecoveryRequestComponent {
     this.userService.requestRecovery({email:email}).subscribe(
       (data: any) => {
         this.eventService.emit("alert-success", data);
-        this.router.navigate(['']).then();
+        this.router.navigate(['/']).then();
       },
       (error) => {
         this.eventService.emit("alert-error", error.error);

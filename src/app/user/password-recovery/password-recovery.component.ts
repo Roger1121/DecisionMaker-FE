@@ -4,8 +4,6 @@ import {PaginatorModule} from "primeng/paginator";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {UserService} from "../user.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {Registration} from "../../shared/model/user/registration";
-import {CriterionOption} from "../../shared/model/criterion-option";
 import {PasswordReset} from "../../shared/model/user/password-reset";
 import {EventService} from "../../shared/services/EventService";
 
