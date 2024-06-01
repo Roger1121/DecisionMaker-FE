@@ -72,7 +72,7 @@
   <div class="col-md-8">
     <ng-container
       [ngTemplateOutlet]="getScaleType() ? slider : radio"
-      [ngTemplateOutletContext]="{option1:option1, option2:option2}"
+      [ngTemplateOutletContext]="{option1:option2, option2:option1}"
     ></ng-container>
   </div>
   <div class="col-md-2"><b>{{ option1.value }}</b></div>
