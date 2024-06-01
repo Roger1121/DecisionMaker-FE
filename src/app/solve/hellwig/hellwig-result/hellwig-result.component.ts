@@ -50,13 +50,10 @@ export class HellwigResultComponent {
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       let id = params.get('problemId');
+      let user_id = params.get('userId');
       this.problemService.getProblem(id).subscribe((problem) => {
         this.problem = problem;
         this.userService.checkUserGroup().subscribe(data => {
-          if ((data + this.problem.group) % 2 === 0) {
-            this.eventService.emit("alert-warning", "Dla obecnego problemu decyzyjnego nie jest dostępne rozwiązywanie metodą Hellwiga");
-            this.router.navigate(['/problem/available']).then();
-          } else {
             this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
               this.criteria = criteria;
               for (let criterion of this.criteria) {
@@ -67,7 +64,7 @@ export class HellwigResultComponent {
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
             });
-            this.criteriaService.getCriteriaWeights(id).subscribe((data: any) => {
+            this.criteriaService.getCriteriaWeights(id, user_id).subscribe((data: any) => {
               this.criteriaWeights = data;
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
@@ -77,17 +74,17 @@ export class HellwigResultComponent {
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
             });
-            this.hellwigService.getOptionWeights(id).subscribe((data: any) => {
+            this.hellwigService.getOptionWeights(id, user_id).subscribe((data: any) => {
               this.optionWeights = data;
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
             });
-            this.hellwigService.getIdealSolutions(id).subscribe((data: any) => {
+            this.hellwigService.getIdealSolutions(id, user_id).subscribe((data: any) => {
               this.ideals = data;
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
             });
-            this.hellwigService.getResults(id).subscribe((data: any) => {
+            this.hellwigService.getResults(id, user_id).subscribe((data: any) => {
               this.finalRanks = data;
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
@@ -97,7 +94,6 @@ export class HellwigResultComponent {
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
             });
-          }
         }, (error) => {
           this.eventService.emit("alert-error", error.error);
         });

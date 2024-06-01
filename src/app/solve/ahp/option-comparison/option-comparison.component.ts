@@ -45,10 +45,7 @@ export class OptionComparisonComponent {
       this.problemService.getProblem(id).subscribe((problem) => {
         this.problem = problem;
         this.userService.checkUserGroup().subscribe(data => {
-          if ((data + this.problem.group) % 2 === 1) {
-            this.eventService.emit("alert-warning", "Dla obecnego problemu decyzyjnego nie jest dostępne rozwiązywanie metodą AHP");
-            this.router.navigate(['/problem/available']).then();
-          } else {
+
             this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
               this.criteria = criteria;
               for (let criterion of this.criteria) {
@@ -74,7 +71,6 @@ export class OptionComparisonComponent {
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
             });
-          }
         }, (error) => {
           this.eventService.emit("alert-error", error.error);
         });
@@ -145,7 +141,7 @@ export class OptionComparisonComponent {
     }
     this.ahpService.saveOptionComparisons(comparisons).subscribe((data) => {
       this.eventService.emit("alert-success", data);
-      this.router.navigate(['solve/ahp/results/' + this.problem.id]).then();
+      this.router.navigate(['solve/ahp/results/' + this.problem.id+'/1']).then();
     }, (error) => {
       this.eventService.emit("alert-error", error.error);
     });

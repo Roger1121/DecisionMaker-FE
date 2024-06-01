@@ -64,6 +64,6 @@ export class AvailableListItemComponent {
           break;
       }
     }
-    this.router.navigate([url, this.problem.id]).then();
+    this.router.navigate([url, this.problem.id, 1]).then();
   }
 }

@@ -44,10 +44,6 @@ export class HellwigComponent {
       this.problemService.getProblem(id).subscribe((problem) => {
         this.problem = problem;
         this.userService.checkUserGroup().subscribe(data => {
-          if((data + this.problem.group) % 2 === 0){
-            this.eventService.emit("alert-warning", "Dla obecnego problemu decyzyjnego nie jest dostępne rozwiązywanie metodą Hellwiga");
-            this.router.navigate(['/problem/available']).then();
-          } else {
             this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
               this.criteria = criteria;
               for (let criterion of this.criteria) {
@@ -65,7 +61,6 @@ export class HellwigComponent {
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
             });
-          }
         }, (error) => {
           this.eventService.emit("alert-error", error.error);
         });

@@ -49,7 +49,7 @@ export class CriterionService {
     return this.http.get(environment.API_URL+'/crit-option', {params: new HttpParams().set('criterion_id', criterion_id)}).pipe(catchError(this.errorHandler.handleWebError))
   }
 
-  getCriteriaWeights(problem_id: any) {
-    return this.http.get(environment.API_URL+`/criterion/weights`, {params: new HttpParams().set('problem_id', problem_id)})
+  getCriteriaWeights(problem_id: any, user_id: any) {
+    return this.http.get(environment.API_URL+`/criterion/weights`, {params: new HttpParams().set('problem_id', problem_id).set('user_id', user_id)})
   }
 }

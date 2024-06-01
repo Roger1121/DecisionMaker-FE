@@ -15,18 +15,18 @@ export class HellwigService {
     return this.http.post(environment.API_URL+'/crit-option/weights', weightList)
   }
 
-  getIdealSolutions(problem_id: any) {
-    return this.http.get(environment.API_URL+'/solutions', {params: new HttpParams().set('problem_id', problem_id)})
+  getIdealSolutions(problem_id: any, user_id: any) {
+    return this.http.get(environment.API_URL+'/solutions', {params: new HttpParams().set('problem_id', problem_id).set('user_id', user_id)})
   }
 
   saveIdealSolutions(solutions: IdealSolution[]) {
     return this.http.post(environment.API_URL+'/solutions', solutions)
   }
 
-  getOptionWeights(problem_id: any) {
-    return this.http.get(environment.API_URL+`/crit-option/weights`, {params: new HttpParams().set('problem_id', problem_id)})
+  getOptionWeights(problem_id: any, user_id: any) {
+    return this.http.get(environment.API_URL+`/crit-option/weights`, {params: new HttpParams().set('problem_id', problem_id).set('user_id', user_id)})
   }
-  getResults(problem_id: any){
-    return this.http.get(environment.API_URL+`/solutions/hellwig`, {params: new HttpParams().set('problem_id', problem_id)})
+  getResults(problem_id: any, user_id: any){
+    return this.http.get(environment.API_URL+`/solutions/hellwig`, {params: new HttpParams().set('problem_id', problem_id).set('user_id', user_id)})
   }
 }

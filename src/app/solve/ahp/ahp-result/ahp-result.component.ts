@@ -49,13 +49,10 @@ export class AhpResultComponent {
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       let id = params.get('problemId');
+      let user_id = params.get('userId');
       this.problemService.getProblem(id).subscribe((problem) => {
         this.problem = problem;
         this.userService.checkUserGroup().subscribe(data => {
-          if((data + this.problem.group) % 2 === 1){
-            this.eventService.emit("alert-warning", "Dla obecnego problemu decyzyjnego nie jest dostępne rozwiązywanie metodą AHP");
-            this.router.navigate(['/problem/available']).then();
-          } else {
             this.criteriaService.getCriteriaByProblemId(this.problem.id).subscribe((criteria: any) => {
               this.criteria = criteria;
               for (let criterion of this.criteria) {
@@ -68,12 +65,12 @@ export class AhpResultComponent {
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
             });
-            this.ahpService.getResults(id).subscribe((data: any) => {
+            this.ahpService.getResults(id, user_id).subscribe((data: any) => {
               this.finalRanks = data;
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
             });
-            this.criteriaService.getCriteriaWeights(id).subscribe((data: any) => {
+            this.criteriaService.getCriteriaWeights(id, user_id).subscribe((data: any) => {
               this.criteriaWeights = data;
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
@@ -83,12 +80,12 @@ export class AhpResultComponent {
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
             });
-            this.ahpService.getCriteriaMatrix(id).subscribe((data: any) => {
+            this.ahpService.getCriteriaMatrix(id, user_id).subscribe((data: any) => {
               this.criteriaMatrix = data;
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
             });
-            this.ahpService.getOptionMatrices(id).subscribe((data: any) => {
+            this.ahpService.getOptionMatrices(id, user_id).subscribe((data: any) => {
               this.optionMatrices = data;
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
@@ -98,7 +95,6 @@ export class AhpResultComponent {
             }, (error) => {
               this.eventService.emit("alert-error", error.error);
             });
-          }
         }, (error) => {
           this.eventService.emit("alert-error", error.error);
         });

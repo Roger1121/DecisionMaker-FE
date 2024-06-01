@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {SurveyService} from "./survey.service";
 import {EventService} from "../shared/services/EventService";
-import {Router} from "@angular/router";
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
 import {Question} from "../shared/model/question";
 import {QuestionResponse} from "../shared/model/question-response";
@@ -24,27 +24,32 @@ export class SurveyComponent {
   protected questions: Question[] = [];
   protected responses: QuestionResponse[] = [];
   answers: Answer[] = [];
+  user_id: any;
 
   constructor(private questionService: QuestionService,
               private surveyService: SurveyService,
               private eventService: EventService,
+              private route: ActivatedRoute,
               private router: Router) {
   }
 
   ngOnInit() {
-    this.surveyService.checkAvailable().subscribe((data) => {
-      if (data) {
-        this.loadQuestions();
-      } else {
-        this.eventService.emit("alert-info", "Ankieta ewaluacyjna jest dostępna dopiero po rozwiązaniu dwóch zadań.");
-        this.router.navigate(['/problem/available']).then();
-      }
-    }, (error) => {
-      this.eventService.emit("alert-error", error.error);
-    })
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.user_id = params.get('userId');
+      this.surveyService.checkAvailable(this.user_id).subscribe((data) => {
+        if (data) {
+          this.loadQuestions(this.user_id);
+        } else {
+          this.eventService.emit("alert-info", "Ankieta ewaluacyjna jest dostępna dopiero po rozwiązaniu dwóch zadań.");
+          this.router.navigate(['/problem/available']).then();
+        }
+      }, (error) => {
+        this.eventService.emit("alert-error", error.error);
+      })
+    });
   }
 
-  private loadQuestions() {
+  private loadQuestions(user_id: any) {
     this.questionService.getQuestions().subscribe((data: any) => {
       this.questions = data;
     }, (error) => {
@@ -55,7 +60,7 @@ export class SurveyComponent {
     }, (error) => {
       this.eventService.emit("alert-error", error.error);
     });
-    this.surveyService.getResponses().subscribe((data: any) => {
+    this.surveyService.getResponses(user_id).subscribe((data: any) => {
       this.responses = data;
     }, (error) => {
       this.eventService.emit("alert-error", error.error);
@@ -114,7 +119,7 @@ export class SurveyComponent {
       }
     });
     this.surveyService.saveResponses(responses).subscribe((data) => {
-      this.surveyService.getResponses().subscribe((data: any) => {
+      this.surveyService.getResponses(this.user_id).subscribe((data: any) => {
         this.responses = data;
       }, (error) => {
         this.eventService.emit("alert-error", error.error);

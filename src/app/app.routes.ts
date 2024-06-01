@@ -27,12 +27,12 @@ export const routes: Routes = [
   {path: 'criteria/weights/:problemId', component: CriteriaWeightsComponent},
   {path: 'solve/hellwig/:problemId', component: HellwigComponent},
   {path: 'solve/hellwig/ideal/:problemId', component: IdealSolutionComponent},
-  {path: 'solve/hellwig/results/:problemId', component: HellwigResultComponent},
-  {path: 'solve/ahp/results/:problemId', component: AhpResultComponent},
+  {path: 'solve/hellwig/results/:problemId/:userId', component: HellwigResultComponent},
+  {path: 'solve/ahp/results/:problemId/:userId', component: AhpResultComponent},
   {path: 'criteria/comparison/:problemId', component: AhpComponent},
   {path: 'option/comparison/:problemId', component: OptionComparisonComponent},
   {path: 'question', component: QuestionListComponent},
-  {path: 'survey', component: SurveyComponent},
+  {path: 'survey/:userId', component: SurveyComponent},
   {path: 'recovery', component: PasswordRecoveryRequestComponent},
   {path: ':token', component: PasswordRecoveryComponent}
 ];
